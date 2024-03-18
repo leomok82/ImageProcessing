@@ -10,7 +10,7 @@ Image::Image(const std::string& path) : data(nullptr), width(0), height(0), chan
 
 Image::~Image() {
     if (data) {
-        stbi_image_free(data); // Free the image data when the image object is destroyed
+        stbi_image_free(data);
     }
 }
 

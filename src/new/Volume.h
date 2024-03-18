@@ -1,13 +1,10 @@
-// Volume.h
 #ifndef VOLUME_H
 #define VOLUME_H
 
 #include <vector>
 #include <string>
 #include <filesystem>
-#include "stb_image.h"
-
-namespace fs = std::filesystem;
+#include "Image.h" // Update to include Image.h instead of stb_image.h
 
 class Volume {
 public:

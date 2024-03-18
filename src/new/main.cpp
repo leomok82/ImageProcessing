@@ -22,8 +22,7 @@ int main() {
     std::cin >> operationType;
 
     if (operationType == 1) {
-        // Load the 2D image
-        Image image(path); // This assumes your Image constructor handles loading
+        Image image(path);
 
         int width, height, channels;
         image.getDimensions(width, height, channels);

@@ -38,14 +38,25 @@ void FilterInputHandler::applyFilter(int filterType, unsigned char* data, int wi
         }
         case 3: {
             // Edge Detection
-            int edgeType;
-            std::cout << "Select Edge Detection Type:" << std::endl;
-            std::cout << "1. Sobel" << std::endl;
-            std::cout << "2. Prewitt" << std::endl;
-            std::cout << "3. Scharr" << std::endl;
-            std::cin >> edgeType;
+            bool temp = true;
+            while (temp == true) {
+                int edgeType;
+                std::cout << "Select Edge Detection Type:" << std::endl;
+                std::cout << "1. Sobel" << std::endl;
+                std::cout << "2. Prewitt" << std::endl;
+                std::cout << "3. Scharr" << std::endl;
+                std::cout << "4. End" << std::endl;
+                std::cin >> edgeType;
+        
+                if (edgeType > 0 && edgeType < 4){
+                    filter = EdgeDetectionFilter::create(edgeType);
+                }
+                else
+                {
+                    break;    
+                }
+            }
 
-            filter = EdgeDetectionFilter::create(edgeType);
             break;
         }
         default:

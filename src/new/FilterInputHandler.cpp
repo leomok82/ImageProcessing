@@ -16,6 +16,9 @@ void FilterInputHandler::applyFilter(int filterType, unsigned char* data, int wi
             std::cout << "1. Grayscale" << std::endl;
             std::cout << "2. Brightness" << std::endl;
             std::cout << "3. Histogram Equalisation" << std::endl;
+            std::cout << "5. Thresholding" << std::endl;
+            std::cout << "5. Salt and Pepper Noise" << std::endl;
+
             std::cin >> correctionType;
 
             filter = ColourCorrectionFilter::create(correctionType);

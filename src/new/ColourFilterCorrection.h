@@ -19,10 +19,26 @@ public:
 // Concrete Brightness filter class
 class BrightnessFilter : public ColourCorrectionFilter {
 public:
-    BrightnessFilter(int value); // Constructor to set brightness value
     void apply(unsigned char* data, int width, int height, int channels) override;
-private:
-    int brightnessValue; // Brightness adjustment value
+};
+
+// Concrete Brightness filter class
+class HistogramEqualizerFilter : public ColourCorrectionFilter {
+public:
+    void apply(unsigned char* data, int width, int height, int channels) override;
+};
+
+// Concrete Brightness filter class
+class ThresholdingFilter : public ColourCorrectionFilter {
+public:
+    void apply(unsigned char* data, int width, int height, int channels) override;
+};
+
+// Concrete Salt and Pepper Noise filter class
+class SaltAndPepperNoiseFilter : public ColourCorrectionFilter {
+public:
+    // SaltAndPepperNoiseFilter(float noisePercentage); // Constructor to set noise percentage
+    void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
 

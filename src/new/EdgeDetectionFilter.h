@@ -4,28 +4,30 @@
 #include "Filter.h"
 #include <memory>
 
-// Abstract class for edge detection filters
+// Abstract base class for edge detection filters
 class EdgeDetectionFilter : public Filter {
 public:
     static std::unique_ptr<Filter> create(int type);
 };
 
-// Concrete Sobel filter class
+// Sobel Filter
 class SobelFilter : public EdgeDetectionFilter {
 public:
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
-// Concrete Prewitt filter class
+// Prewitt Filter
 class PrewittFilter : public EdgeDetectionFilter {
 public:
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
-// Concrete Scharr filter class
+// Custom Edge Detection Filter (Example: Scharr)
 class ScharrFilter : public EdgeDetectionFilter {
 public:
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
+
+// Add more filters as needed...
 
 #endif // EDGEDETECTIONFILTER_H

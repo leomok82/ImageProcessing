@@ -62,6 +62,7 @@ void HistogramEqualizerFilter::apply(unsigned char* data, int width, int height,
 }
 
 void ThresholdingFilter::apply(unsigned char* data, int width, int height, int channels) {
+    
     std::cout << "Not implemented yet." << std::endl;
 
 }

@@ -28,7 +28,7 @@ public:
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
-// Concrete Brightness filter class
+// Concrete ThresholdingFilter filter class
 class ThresholdingFilter : public ColourCorrectionFilter {
 public:
     void apply(unsigned char* data, int width, int height, int channels) override;
@@ -40,6 +40,7 @@ public:
     // SaltAndPepperNoiseFilter(float noisePercentage); // Constructor to set noise percentage
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
+
 
 
 #endif // COLOURCORRECTIONFILTER_H

@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include "Image.h"
+#include "Volume.h"
 #include "FilterInputHandler.h"
 #include "FilterInputHandler3D.h"
 #define STB_IMAGE_IMPLEMENTATION
@@ -20,16 +22,16 @@ int main() {
     std::cin >> operationType;
 
     if (operationType == 1) {
+        // Load the 2D image
+        Image image(path); // This assumes your Image constructor handles loading
+
+        // Since Image does not expose its data, assume it has methods to get dimensions and pixel data
         int width, height, channels;
-        unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
-        if (data == nullptr) {
-            std::cerr << "Failed to load image. Please ensure the file path is correct." << std::endl;
-            return -1;
-        }
+        image.getDimensions(width, height, channels); // Adjust if your actual method differs
 
-        std::cout << "Image loaded successfully!" << std::endl;
-        std::cout << "Width: " << width << ", Height: " << height << ", Channels: " << channels << std::endl;
+        unsigned char* data = image.getData(); // Assuming there's a method to get the image data
 
+        // Ask user for the filter type
         std::cout << "Select the type of filter for 2D image processing:" << std::endl;
         std::cout << "1. Colour Correction" << std::endl;
         std::cout << "2. Image Blur" << std::endl;
@@ -38,21 +40,18 @@ int main() {
         int filterType;
         std::cin >> filterType;
 
-        // Delegate the application of the selected filter to the FilterInputHandler
+        // Apply the selected filter
         FilterInputHandler::applyFilter(filterType, data, width, height, channels);
 
-        // Prompt for saving the modified image
+        // Save the modified image
         std::string outputPath;
         std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
         std::cin >> outputPath;
 
-        if (!stbi_write_png(outputPath.c_str(), width, height, channels, data, width * channels)) {
-            std::cerr << "Failed to save the modified image." << std::endl;
-        } else {
-            std::cout << "Modified image saved to " << outputPath << std::endl;
-        }
+        // Assuming Image class has a save method
+        image.save(outputPath); // Adjust if your actual method for saving images differs
         
-        stbi_image_free(data);
+        // stbi_image_free(data);
 
     } else if (operationType == 2) {
         Volume volume;
@@ -79,12 +78,6 @@ int main() {
         std::string outputPath;
         std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
         std::cin >> outputPath;
-
-        // if (!stbi_write_png(outputPath.c_str(), width, height, channels, data, width * channels)) {
-        //     std::cerr << "Failed to save the modified image." << std::endl;
-        // } else {
-        //     std::cout << "Modified image saved to " << outputPath << std::endl;
-        // }
 
     } else {
         std::cerr << "Invalid operation type selected." << std::endl;

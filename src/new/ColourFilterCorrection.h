@@ -25,4 +25,5 @@ private:
     int brightnessValue; // Brightness adjustment value
 };
 
+
 #endif // COLOURCORRECTIONFILTER_H

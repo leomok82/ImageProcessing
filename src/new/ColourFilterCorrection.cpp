@@ -7,7 +7,6 @@ std::unique_ptr<Filter> ColourCorrectionFilter::create(int type) {
         case 1: // Grayscale
             return std::make_unique<GrayscaleFilter>();
         case 2: // Brightness
-            // Here you would normally get the delta value from user input
             return std::make_unique<BrightnessFilter>(50); // Example placeholder
         default:
             std::cerr << "Unknown colour correction filter type." << std::endl;
@@ -48,3 +47,4 @@ void BrightnessFilter::apply(unsigned char* data, int width, int height, int cha
         }
     }
 }
+

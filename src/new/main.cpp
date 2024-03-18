@@ -22,14 +22,12 @@ int main() {
     std::cin >> operationType;
 
     if (operationType == 1) {
-        // Load the 2D image
-        Image image(path); // This assumes your Image constructor handles loading
+        Image image(path);
 
-        // Since Image does not expose its data, assume it has methods to get dimensions and pixel data
         int width, height, channels;
-        image.getDimensions(width, height, channels); // Adjust if your actual method differs
+        image.getDimensions(width, height, channels);
 
-        unsigned char* data = image.getData(); // Assuming there's a method to get the image data
+        unsigned char* data = image.getData();
 
         // Ask user for the filter type
         std::cout << "Select the type of filter for 2D image processing:" << std::endl;
@@ -40,7 +38,6 @@ int main() {
         int filterType;
         std::cin >> filterType;
 
-        // Apply the selected filter
         FilterInputHandler::applyFilter(filterType, data, width, height, channels);
 
         // Save the modified image
@@ -50,8 +47,6 @@ int main() {
 
         // Assuming Image class has a save method
         image.save(outputPath); // Adjust if your actual method for saving images differs
-        
-        // stbi_image_free(data);
 
     } else if (operationType == 2) {
         Volume volume;

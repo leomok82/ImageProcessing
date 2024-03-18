@@ -8,29 +8,28 @@
 #include "stb_image_write.h"
 
 int main() {
-    std::string filepath;
-    std::cout << "Enter the path to the image or data volume: ";
-    std::cin >> filepath;
-
-    // Attempt to load the image
-    int width, height, channels;
-    unsigned char* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
-    if (data == nullptr) {
-        std::cerr << "Failed to load image. Please ensure the file path is correct." << std::endl;
-        return -1;
-    }
-
-    std::cout << "Image loaded successfully!" << std::endl;
-    std::cout << "Width: " << width << ", Height: " << height << ", Channels: " << channels << std::endl;
+    std::string path;
+    std::cout << "Enter the path to the image or folder containing data volume: ";
+    std::cin >> path;
 
     std::cout << "Select the type of operation:" << std::endl;
     std::cout << "1. 2D image processing" << std::endl;
-    std::cout << "2. 3D data volume processing (Not Implemented)" << std::endl;
+    std::cout << "2. 3D data volume processing" << std::endl;
 
     int operationType;
     std::cin >> operationType;
 
     if (operationType == 1) {
+        int width, height, channels;
+        unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+        if (data == nullptr) {
+            std::cerr << "Failed to load image. Please ensure the file path is correct." << std::endl;
+            return -1;
+        }
+
+        std::cout << "Image loaded successfully!" << std::endl;
+        std::cout << "Width: " << width << ", Height: " << height << ", Channels: " << channels << std::endl;
+
         std::cout << "Select the type of filter for 2D image processing:" << std::endl;
         std::cout << "1. Colour Correction" << std::endl;
         std::cout << "2. Image Blur" << std::endl;
@@ -52,10 +51,12 @@ int main() {
         } else {
             std::cout << "Modified image saved to " << outputPath << std::endl;
         }
+        
+        stbi_image_free(data);
+
     } else if (operationType == 2) {
-        // Load 3D Volume
         Volume volume;
-        if (!volume.loadFromFile(filepath)) {
+        if (!volume.loadFromFolder(path)) {
             std::cerr << "Failed to load 3D volume data." << std::endl;
             return -1;
         }
@@ -79,17 +80,15 @@ int main() {
         std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
         std::cin >> outputPath;
 
-        if (!stbi_write_png(outputPath.c_str(), width, height, channels, data, width * channels)) {
-            std::cerr << "Failed to save the modified image." << std::endl;
-        } else {
-            std::cout << "Modified image saved to " << outputPath << std::endl;
-        }
+        // if (!stbi_write_png(outputPath.c_str(), width, height, channels, data, width * channels)) {
+        //     std::cerr << "Failed to save the modified image." << std::endl;
+        // } else {
+        //     std::cout << "Modified image saved to " << outputPath << std::endl;
+        // }
 
     } else {
         std::cerr << "Invalid operation type selected." << std::endl;
     }
-
-    stbi_image_free(data);
 
     return 0;
 }

@@ -1,4 +1,4 @@
-// Filter3D.h
+// Filter3D.h adjustments
 #ifndef FILTER3D_H
 #define FILTER3D_H
 

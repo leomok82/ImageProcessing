@@ -67,12 +67,18 @@ int main() {
         int filterType;
         std::cin >> filterType;
 
-        FilterInputHandler3D::applyFilter(filterType, volume);
+        // FilterInputHandler3D::applyFilter(filterType, volume);
 
         // Prompt for saving the modified image
         std::string outputPath;
-        std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
-        std::cin >> outputPath;
+        std::cout << "Enter the output folder path for the slices: ";
+        std::cin >> outputPath; // Use this for saving slices
+
+        // Ensure the folder exists, or create it
+        std::filesystem::create_directories(outputPath);
+
+        // Apply the filter as before
+        FilterInputHandler3D::applyFilter(filterType, volume); // Modify applyFilter to accept outputPath
 
     } else {
         std::cerr << "Invalid operation type selected." << std::endl;

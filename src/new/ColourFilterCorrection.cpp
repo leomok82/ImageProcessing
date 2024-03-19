@@ -127,7 +127,9 @@ void ThresholdingFilter::apply(unsigned char* data, int width, int height, int c
             ColorHSV hsvColor = rgbToHsv(rgbColor);
             
             // Apply threshold on the Value channel
-            hsvColor.v = (hsvColor.v > threshold / 255.0) ? 1.0 : 0; // Threshold and set value
+            hsvColor.v = (hsvColor.v > threshold / 255.0 +hsvColor.s * std::min(threshold/255.0, 1-threshold/255.0)) ? 1.0 : 0; // Threshold and set value
+
+
             hsvColor.s = 0; // Remove saturation for pure black/white
             
             ColorRGB newColor = hsvToRgb(hsvColor);

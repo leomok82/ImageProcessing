@@ -96,42 +96,42 @@ void MedianBlurFilter::apply(unsigned char* data, int width, int height, int cha
 // }
 
 // 这个是滑动窗口的，并且跑那个老头没有问题的
-// void BoxBlurFilter::apply(unsigned char* data, int width, int height, int channels) {
-//     std::cout << "Applying Box Blur Filter" << std::endl;
+void BoxBlurFilter::apply(unsigned char* data, int width, int height, int channels) {
+    std::cout << "Applying Box Blur Filter" << std::endl;
 
-//     int halfKernel = 11 / 2;
+    int halfKernel = 11 / 2;
 
-//     // 滑动窗口并应用模糊滤波器
-//     for (int y = 0; y < height; ++y) {
-//         for (int x = 0; x < width; ++x) {
-//             for (int c = 0; c < channels; ++c) {
-//                 int windowSum = 0;
-//                 int windowCount = 0;
+    // 滑动窗口并应用模糊滤波器
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            for (int c = 0; c < channels; ++c) {
+                int windowSum = 0;
+                int windowCount = 0;
 
-//                 // 计算窗口内像素的总和和数量
-//                 for (int ky = -halfKernel; ky <= halfKernel; ++ky) {
-//                     for (int kx = -halfKernel; kx <= halfKernel; ++kx) {
-//                         int nx = x + kx;
-//                         int ny = y + ky;
-//                         if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-//                             int i = (ny * width + nx) * channels + c;
-//                             windowSum += data[i]; // 将像素的值加入窗口总和中
-//                             ++windowCount; // 增加窗口中像素的数量
-//                         }
-//                     }
-//                 }
+                // 计算窗口内像素的总和和数量
+                for (int ky = -halfKernel; ky <= halfKernel; ++ky) {
+                    for (int kx = -halfKernel; kx <= halfKernel; ++kx) {
+                        int nx = x + kx;
+                        int ny = y + ky;
+                        if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                            int i = (ny * width + nx) * channels + c;
+                            windowSum += data[i]; // 将像素的值加入窗口总和中
+                            ++windowCount; // 增加窗口中像素的数量
+                        }
+                    }
+                }
 
-//                 // 计算窗口中像素的平均值，并将当前像素的值设置为平均值
-//                 int i = (y * width + x) * channels + c;
-//                 if (windowCount > 0) {
-//                     data[i] = static_cast<unsigned char>(windowSum / windowCount);
-//                 } else {
-//                     data[i] = 0; // 处理位于边界之外的像素
-//                 }
-//             }
-//         }
-//     }
-// }
+                // 计算窗口中像素的平均值，并将当前像素的值设置为平均值
+                int i = (y * width + x) * channels + c;
+                if (windowCount > 0) {
+                    data[i] = static_cast<unsigned char>(windowSum / windowCount);
+                } else {
+                    data[i] = 0; // 处理位于边界之外的像素
+                }
+            }
+        }
+    }
+}
 
 //  void BoxBlurFilter::apply(unsigned char* data, int width, int height, int channels) {
 //     std::cout << "Applying Box Blur Filter" << std::endl;

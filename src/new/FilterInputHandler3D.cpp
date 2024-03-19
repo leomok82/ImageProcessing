@@ -5,24 +5,24 @@
 
 void FilterInputHandler3D::applyFilter(int filterType, Volume& volume) {
     std::unique_ptr<Filter3D> filter;
+    int kernelSize;
+
+    std::cout << "Enter kernel size for the 3D Filter (3 for 3x3x3, 5 for 5x5x5): ";
+    std::cin >> kernelSize;
+    if (kernelSize != 3 && kernelSize != 5) {
+        std::cerr << "Invalid kernel size. Please enter 3 or 5." << std::endl;
+        return; // Early exit if invalid kernel size is entered
+    }
 
     switch (filterType) {
-        case 1: {
-            // 3D Gaussian Filter
-            int kernelSize;
-            std::cout << "Enter kernel size for 3D Gaussian Filter (e.g., 3 for 3x3x3): ";
-            std::cin >> kernelSize;
-
+        case 1: { // 3D Gaussian Filter
             filter = std::make_unique<Gaussian3DFilter>(kernelSize);
             break;
         }
-        case 2: {
-            // 3D Median Filter
-            int kernelSize;
-            std::cout << "Enter kernel size for 3D Median Filter (e.g., 3 for 3x3x3): ";
-            std::cin >> kernelSize;
-
-            filter = std::make_unique<Median3DFilter>(kernelSize);
+        case 2: { // 3D Median Filter - Placeholder
+            // Currently, the median filter is a placeholder that performs no action.
+            std::cout << "Median filter is a placeholder for future implementation." << std::endl;
+            // filter = std::make_unique<Median3DFilter>(kernelSize); // Placeholder for future functionality
             break;
         }
         default:
@@ -35,7 +35,9 @@ void FilterInputHandler3D::applyFilter(int filterType, Volume& volume) {
         return;
     }
 
-    // Apply the selected filter to the volume
-    filter->apply(volume);
-    std::cout << "3D Filter applied successfully." << std::endl;
+    // Apply the selected filter to the volume, if applicable
+    if (filterType == 1) { // Only apply if Gaussian Filter
+        filter->apply(volume);
+        std::cout << "3D Filter applied successfully." << std::endl;
+    }
 }

@@ -57,3 +57,14 @@ void Volume::getDimensions(int& w, int& h, int& d) const {
     h = height;
     d = depth;
 }
+
+// Method to get a reference to the volume data
+const std::vector<unsigned char>& Volume::getData() const {
+    return data;
+}
+
+// Method to set the volume data
+void Volume::setData(const std::vector<unsigned char>& newData) {
+    data = newData;
+}
+

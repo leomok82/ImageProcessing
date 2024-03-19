@@ -16,6 +16,7 @@ public:
     void getDimensions(int& width, int& height, int& depth) const;
     const std::vector<unsigned char>& getData() const;
     void setData(const std::vector<unsigned char>& newData);
+    void saveSlices(const std::string& directoryPath) const;
 
 private:
     std::vector<unsigned char> data;

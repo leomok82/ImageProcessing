@@ -67,7 +67,7 @@ int main() {
         int filterType;
         std::cin >> filterType;
 
-        // FilterInputHandler3D::applyFilter(filterType, volume);
+        FilterInputHandler3D::applyFilter(filterType, volume); // Modify applyFilter to accept outputPath
 
         // Prompt for saving the modified image
         std::string outputPath;
@@ -78,7 +78,9 @@ int main() {
         std::filesystem::create_directories(outputPath);
 
         // Apply the filter as before
-        FilterInputHandler3D::applyFilter(filterType, volume); // Modify applyFilter to accept outputPath
+        // FilterInputHandler3D::applyFilter(filterType, volume); // Modify applyFilter to accept outputPath
+
+        volume.saveSlices(outputPath);
 
     } else {
         std::cerr << "Invalid operation type selected." << std::endl;

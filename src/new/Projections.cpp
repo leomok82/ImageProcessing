@@ -85,7 +85,7 @@ Slice Projections::AIP(const Volume& volume, int startSlice, int endSlice) {
 
     if (startSlice< 0 || endSlice > depth|| startSlice > endSlice){
         std::cerr << "Invalid range provided." << std::endl;
-        return Slice(0, 0, result);
+        return Slice(0, 0, {});
     }
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {

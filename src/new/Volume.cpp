@@ -1,42 +1,48 @@
 #include "Volume.h"
 #include "stb_image_write.h"
 #include <iostream>
-#include <algorithm> // Include this for std::sort
 #include <vector>
 #include <filesystem>
-#include <iostream>
+#include <regex>
+#include <map>
 
 Volume::Volume() : width(0), height(0), depth(0) {}
 
 Volume::~Volume() {}
 
 bool Volume::loadFromFolder(const std::string& folderpath) {
-    std::vector<std::string> filePaths;
-    int w = 0, h = 0, c = 0;
-    
-    // Collect all file paths
+    std::regex indexPattern("(\\d+)");
+    std::smatch match;
+    std::map<int, std::string> sortedFiles;
+
+    // Iterate through the directory and match the file names to the regex
     for (const auto& entry : std::filesystem::directory_iterator(folderpath)) {
         if (entry.is_regular_file()) {
-            filePaths.push_back(entry.path().string());
+            std::string filename = entry.path().filename().string();
+            // Skip .DS_Store and other non-matching files
+            if (std::regex_search(filename, match, indexPattern)) {
+                int index = std::stoi(match[1].str());
+                sortedFiles[index] = entry.path().string();
+            } else {
+                // Just output a warning instead of returning false
+                std::cerr << "Warning: Skipping non-indexed file: " << filename << std::endl;
+            }
         }
     }
 
-    // Sort the file paths to ensure order
-    std::sort(filePaths.begin(), filePaths.end());
-
-    // Load images in sorted order
-    for (const auto& filePath : filePaths) {
+    // Now sortedFiles contains all files, sorted by their extracted index
+    int w = 0, h = 0, c = 0;
+    for (const auto& [index, filePath] : sortedFiles) {
         Image img(filePath);
         
-        if (!w && !h) { // Initialize dimensions based on the first image
+        if (!w && !h) {
             img.getDimensions(w, h, c);
             width = w;
             height = h;
-            depth = 0; // Initialize depth
-            data.reserve(width * height * c); // Reserve space
+            depth = 0;
+            data.reserve(width * height * c);
         }
         
-        // Verify image dimensions and channels
         int imgWidth, imgHeight, imgChannels;
         img.getDimensions(imgWidth, imgHeight, imgChannels);
         if (imgWidth != w || imgHeight != h || imgChannels != c) {
@@ -45,8 +51,8 @@ bool Volume::loadFromFolder(const std::string& folderpath) {
         }
         
         unsigned char* imgData = img.getData();
-        data.insert(data.end(), imgData, imgData + (w * h * c)); // Append data
-        depth++; // Increment depth
+        data.insert(data.end(), imgData, imgData + (w * h * c));
+        depth++;
     }
 
     if (depth == 0) {

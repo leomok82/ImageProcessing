@@ -1,31 +1,69 @@
 #ifndef IMAGEBLURFILTER_H
 #define IMAGEBLURFILTER_H
-
+#include "Image.h"
 #include "Filter.h"
+#include <cmath>
 #include <memory>
+#include <iostream>
+#include "Utils.h"
 
-// Abstract class for image blur filters
-class ImageBlurFilter : public Filter {
-public:
-    static std::unique_ptr<Filter> create(int type);
+
+class ImageBlurFilter : public Filter
+{
+    // int kernelSize;
+    public:
+        ImageBlurFilter(int kernelSize) : kernelSize(kernelSize) {}
+
+        static std::unique_ptr<Filter> create(int type, int kernelSize);
+
+        // Provide interface for derived classes that need to process Image objects
+        virtual void apply(Image &img)
+        {
+            // // Default implementation or left for subclass to override
+            std::cout << "Image processing not supported by this filter." << std::endl;
+            }
+
+    protected:
+        int kernelSize;
 };
 
-// Concrete Median Blur filter class
-class MedianBlurFilter : public ImageBlurFilter {
+class MedianBlurFilter : public ImageBlurFilter
+{
 public:
-    void apply(unsigned char* data, int width, int height, int channels) override;
+    MedianBlurFilter(int kernelSize) : ImageBlurFilter(kernelSize) {}
+
+    void apply(unsigned char *data, int width, int height, int channels) override;
 };
+
+
+
 
 // Concrete Box Blur filter class
 class BoxBlurFilter : public ImageBlurFilter {
 public:
+    BoxBlurFilter(int kernelSize) : ImageBlurFilter(kernelSize) {}
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
 // Concrete Gaussian Blur filter class
-class GaussianBlurFilter : public ImageBlurFilter {
-public:
-    void apply(unsigned char* data, int width, int height, int channels) override;
+// class GaussianBlurFilter : public ImageBlurFilter {
+// public:
+//     GaussianBlurFilter(int kernelSize) : ImageBlurFilter(kernelSize) {}
+
+//     void apply(unsigned char* data, int width, int height, int channels) override;
+// };
+class GaussianBlurFilter : public ImageBlurFilter
+{
+    public:
+        GaussianBlurFilter(int kernelSize) : ImageBlurFilter(kernelSize){};
+
+        void apply(unsigned char *data, int width, int height, int channels) override;
+
+    private:
+        void calculateGaussianWeights(float sigma, int kernelSize, std::vector<float> &weights);
+        int mirrorIndex(int index, int maxIndex);
+        void applyGaussianBlurOnRow(unsigned char *data, int width, int height, int channels, const std::vector<float> &weights, unsigned char *output);
+        void applyGaussianBlurOnColumn(unsigned char *data, int width, int height, int channels, const std::vector<float> &weights, unsigned char *output);
 };
 
 #endif // IMAGEBLURFILTER_H

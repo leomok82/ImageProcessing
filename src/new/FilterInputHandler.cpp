@@ -27,13 +27,16 @@ void FilterInputHandler::applyFilter(int filterType, unsigned char* data, int wi
         case 2: {
             // Image Blur
             int blurType;
+            int kernelSize;
             std::cout << "Select Blur Type:" << std::endl;
             std::cout << "1. Median" << std::endl;
             std::cout << "2. Box" << std::endl;
             std::cout << "3. Gaussian" << std::endl;
             std::cin >> blurType;
+            std::cout << "Select kernel size (3 for 3x3):" << std::endl;
+            std::cin >> kernelSize;
 
-            filter = ImageBlurFilter::create(blurType);
+            filter = ImageBlurFilter::create(blurType,kernelSize);
             break;
         }
         case 3: {

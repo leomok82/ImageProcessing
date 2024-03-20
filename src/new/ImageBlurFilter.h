@@ -41,6 +41,7 @@ public:
 // Concrete Box Blur filter class
 class BoxBlurFilter : public ImageBlurFilter {
 public:
+    BoxBlurFilter(int kernelSize) : ImageBlurFilter(kernelSize) {}
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 

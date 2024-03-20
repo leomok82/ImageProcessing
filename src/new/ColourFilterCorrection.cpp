@@ -9,13 +9,22 @@ std::unique_ptr<Filter> ColourCorrectionFilter::create(int type) {
         case 1: // Grayscale
             return std::make_unique<GrayscaleFilter>();
         case 2: // Brightness
-            return std::make_unique<BrightnessFilter>(); 
+            int delta;
+            std::cout << "Enter brightness delta (-255 to 255):";
+            std::cin >> delta;
+            return std::make_unique<BrightnessFilter>(delta); 
         case 3: // Histogram Equalization
             return std::make_unique<HistogramEqualizerFilter>();
         case 4: // Thresholding
-            return std::make_unique<ThresholdingFilter>();
+            int threshold;
+            std::cout << "Enter threshold (0 to 255):";
+            std::cin >> threshold;
+            return std::make_unique<ThresholdingFilter>(threshold);
         case 5: // Salt and Pepper Noise
-            return std::make_unique<SaltAndPepperNoiseFilter>();
+            int noisePercentage;
+            std::cout << "Enter Noise Percentage (0-100):";
+            std::cin >> noisePercentage;
+            return std::make_unique<SaltAndPepperNoiseFilter>(noisePercentage);
         default:
             std::cerr << "Unknown colour correction filter type." << std::endl;
             return nullptr;
@@ -40,15 +49,11 @@ void GrayscaleFilter::apply(unsigned char* data, int width, int height, int chan
 }
 
 void BrightnessFilter::apply(unsigned char* data, int width, int height, int channels) {
-    int delta;
-    std::cout << "Enter brightness delta (-255 to 255):";
-    std::cin >> delta;
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             unsigned char* pixel = data + (y * width + x) * channels;
             for (int c = 0; c < channels; ++c) {
                 if (channels == 4 && c == 3) continue; // Skip alpha
-
                 int value = pixel[c] + delta;
                 pixel[c] = static_cast<unsigned char>(std::max(0, std::min(255, value)));
             }
@@ -109,13 +114,11 @@ void HistogramEqualizerFilter::apply(unsigned char* data, int width, int height,
         }
     }
 
-    std::cout << "Histogram equalization applied." << std::endl;
+    // std::cout << "Histogram equalization applied." << std::endl;
 }
 
 void ThresholdingFilter::apply(unsigned char* data, int width, int height, int channels) {
-        int threshold;
-        std::cout << "Enter threshold (0 to 255):";
-        std::cin >> threshold;
+
     if (channels == 1) { // For grayscale images
         for (int i = 0; i < width * height; i++) {
             data[i] = (data[i] > threshold) ? 255 : 0;
@@ -127,7 +130,9 @@ void ThresholdingFilter::apply(unsigned char* data, int width, int height, int c
             ColorHSV hsvColor = rgbToHsv(rgbColor);
             
             // Apply threshold on the Value channel
-            hsvColor.v = (hsvColor.v > threshold / 255.0) ? 1.0 : 0; // Threshold and set value
+            hsvColor.v = (hsvColor.v > threshold / 255.0 +hsvColor.s * std::min(threshold/255.0, 1-threshold/255.0)) ? 1.0 : 0; // Threshold and set value
+
+
             hsvColor.s = 0; // Remove saturation for pure black/white
             
             ColorRGB newColor = hsvToRgb(hsvColor);
@@ -136,14 +141,10 @@ void ThresholdingFilter::apply(unsigned char* data, int width, int height, int c
             data[index + 2] = newColor.b;
         }
     }
-
-    std::cout << "Thresholding applied." << std::endl;
 }
 
 void SaltAndPepperNoiseFilter::apply(unsigned char* data, int width, int height, int channels) {
-    int noisePercentage;
-    std::cout << "Enter Noise Percentage (0-100):";
-    std::cin >> noisePercentage;
+
     srand(static_cast<unsigned>(time(nullptr))); // Seed the random number generator
 
     int totalPixels = width * height;

@@ -45,8 +45,7 @@ int main() {
         std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
         std::cin >> outputPath;
 
-        // Assuming Image class has a save method
-        image.save(outputPath); // Adjust if your actual method for saving images differs
+        image.save(outputPath);
 
     } else if (operationType == 2) {
         Volume volume;

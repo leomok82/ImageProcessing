@@ -30,20 +30,40 @@ public:
 };
 
 // Concrete Brightness filter class
-class HistogramEqualizerFilter : public ColourCorrectionFilter {
+class HistogramEqualizerFilter : public ColourCorrectionFilter{
 public:
-    void apply(unsigned char* data, int width, int height, int channels) override;
+    HistogramEqualizerFilter(bool useHSL = false) : useHSL(useHSL) {}
+    void setuseHSL(bool newuseHSL) {
+        useHSL = newuseHSL;
+    }
+    virtual ~HistogramEqualizerFilter() {}
+    virtual void apply(unsigned char* data, int width, int height, int channels) override;
+private:
+    bool useHSL;
+    void equalizeGrayscale(unsigned char* data, int width, int height);
+    void equalizeHSV(unsigned char* data, int width, int height, int channels);
+    void equalizeHSL(unsigned char* data, int width, int height, int channels);
 };
 
+
 // Concrete ThresholdingFilter filter class
+
 class ThresholdingFilter : public ColourCorrectionFilter {
 private:
     int threshold;
+    bool useHSL;
+    void thresholdGrayscale(unsigned char* data, int width, int height);
+    void thresholdHSV(unsigned char* data, int width, int height, int channels);
+    void thresholdHSL(unsigned char* data, int width, int height, int channels);
 public:
     // Constructor that sets the threshold
-    ThresholdingFilter(int thresholdValue) : threshold(thresholdValue) {}
+    ThresholdingFilter(int thresholdValue, bool useHSL = false) 
+        : threshold(thresholdValue), useHSL(useHSL) {}
     void setThreshold(int newThreshold) {
         threshold = newThreshold;
+    }
+    void setuseHSL(bool newuseHSL) {
+        useHSL = newuseHSL;
     }
     void apply(unsigned char* data, int width, int height, int channels) override;
 };

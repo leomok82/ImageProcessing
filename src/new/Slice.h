@@ -26,6 +26,7 @@ public:
     // Getter methods for width and height might be useful for further processing
     int getWidth() const { return width; }
     int getHeight() const { return height; }
+    std::vector<unsigned char> getData() const { return data; }
 };
 
 #endif // SLICE_H

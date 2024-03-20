@@ -93,7 +93,7 @@ Slice Projections::MIP(const Volume& volume, int startSlice, int endSlice) {
 
 }
 
-Slice Projections::MinIP(const Volume& volume, int startSlice, int endSlice) {
+Slice Projections::AIP(const Volume& volume, int startSlice, int endSlice) {
     //set the dimensions
     int channels = 3;
     int width, height, depth;

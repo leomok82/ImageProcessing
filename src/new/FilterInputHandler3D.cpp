@@ -20,9 +20,7 @@ void FilterInputHandler3D::applyFilter(int filterType, Volume& volume) {
             break;
         }
         case 2: { // 3D Median Filter - Placeholder
-            // Currently, the median filter is a placeholder that performs no action.
-            std::cout << "Median filter is a placeholder for future implementation." << std::endl;
-            // filter = std::make_unique<Median3DFilter>(kernelSize); // Placeholder for future functionality
+            filter = std::make_unique<Median3DFilter>(kernelSize); // Placeholder for future functionality
             break;
         }
         default:
@@ -35,9 +33,6 @@ void FilterInputHandler3D::applyFilter(int filterType, Volume& volume) {
         return;
     }
 
-    // Apply the selected filter to the volume, if applicable
-    if (filterType == 1) { // Only apply if Gaussian Filter
-        filter->apply(volume);
-        std::cout << "3D Filter applied successfully." << std::endl;
-    }
+    filter->apply(volume);
+    std::cout << "3D Filter applied successfully." << std::endl;
 }

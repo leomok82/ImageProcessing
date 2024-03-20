@@ -3,6 +3,7 @@
 #include <algorithm> // For std::max and std::min
 #include <iostream>
 #include <numeric>
+#include <vector>
 
 std::unique_ptr<Filter> ColourCorrectionFilter::create(int type) {
     switch (type) {

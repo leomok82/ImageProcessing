@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-Slice Projections::MinIP(const Volume& volume, int startSlice, int endSlice) {
+std::vector<unsigned char> Projections::MinIP(const Volume& volume, int startSlice, int endSlice) {
     std::cout << "Dummy MinIP from slices " << startSlice << " to " << endSlice << std::endl;
 
     //set the dimensions
@@ -16,7 +16,7 @@ Slice Projections::MinIP(const Volume& volume, int startSlice, int endSlice) {
 
     if (startSlice< 0 || endSlice > depth || startSlice > endSlice){
         std::cerr << "Invalid range provided." << std::endl;
-        return Slice(0, 0, {});
+        return result;
     }
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
@@ -34,11 +34,14 @@ Slice Projections::MinIP(const Volume& volume, int startSlice, int endSlice) {
            
         }
     }
-    return Slice(width, height, result);
+    
+    return result;
 
 }
 
-Slice Projections::MIP(const Volume& volume, int startSlice, int endSlice) {
+
+
+std::vector<unsigned char> Projections::MIP(const Volume& volume, int startSlice, int endSlice) {
     std::cout << "Dummy MIP from slices " << startSlice << " to " << endSlice << std::endl;
     //set the dimensions
     int channels = 3;
@@ -50,7 +53,7 @@ Slice Projections::MIP(const Volume& volume, int startSlice, int endSlice) {
 
     if (startSlice< 0 || endSlice > depth|| startSlice > endSlice){
         std::cerr << "Invalid range provided." << std::endl;
-        return Slice(0, 0, {});
+        return result;
     }
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
@@ -70,11 +73,11 @@ Slice Projections::MIP(const Volume& volume, int startSlice, int endSlice) {
             }
         }
     }
-    return Slice(width, height, result);
+    return result;
 
 }
 
-Slice Projections::AIP(const Volume& volume, int startSlice, int endSlice) {
+std::vector<unsigned char> Projections::AIP(const Volume& volume, int startSlice, int endSlice) {
     //set the dimensions
     int channels = 3;
     int width, height, depth;
@@ -85,7 +88,7 @@ Slice Projections::AIP(const Volume& volume, int startSlice, int endSlice) {
 
     if (startSlice< 0 || endSlice > depth|| startSlice > endSlice){
         std::cerr << "Invalid range provided." << std::endl;
-        return Slice(0, 0, {});
+        return result;
     }
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
@@ -99,5 +102,5 @@ Slice Projections::AIP(const Volume& volume, int startSlice, int endSlice) {
             }
         }
     }
-    return Slice(width, height, result);
+    return result;
 }

@@ -6,6 +6,12 @@
 #include <string>
 #include <algorithm> // For std::min and std::max
 #include "stb_image_write.h" // Needed for saving slices if using stb_image_write in Slice
+#include "Filter3D.h"
+#include "Utils.h" // Make sure this includes the QuickSelect and related functions
+#include <vector>
+#include <iostream>
+#include <algorithm>
+
 
 
 // std::vector<double> createGaussianKernel(double sigma, int kernelSize) {
@@ -193,7 +199,47 @@ void Gaussian3DFilter::apply(Volume& volume) {
 }
 
 void Median3DFilter::apply(Volume& volume) {
-    // Placeholder for the 3D Median filter algorithm
     std::cout << "Applying 3D Median Filter with kernel size: " << kernelSize << std::endl;
-    // Actual filtering logic goes here
+
+    int width, height, depth;
+    volume.getDimensions(width, height, depth);
+
+    std::vector<unsigned char> originalData = volume.getData();
+    std::vector<unsigned char> resultData = originalData; // Initialize the result data with the original data
+
+    int range = kernelSize / 2;
+    std::vector<unsigned char> neighborhood; // This will hold the neighborhood voxels
+
+    for (int z = 0; z < depth; ++z) {
+        std::cout << "Processing slice " << z << " of " << depth << std::endl;
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                neighborhood.clear();
+
+                // Collect the neighborhood voxels
+                for (int kz = -range; kz <= range; ++kz) {
+                    for (int ky = -range; ky <= range; ++ky) {
+                        for (int kx = -range; kx <= range; ++kx) {
+                            int nx = std::clamp(x + kx, 0, width - 1);
+                            int ny = std::clamp(y + ky, 0, height - 1);
+                            int nz = std::clamp(z + kz, 0, depth - 1);
+
+                            neighborhood.push_back(originalData[nz * width * height + ny * width + nx]);
+                        }
+                    }
+                }
+
+                // Use QuickSelect to find the median in the neighborhood
+                int medianIndex = neighborhood.size() / 2;
+                unsigned char medianValue = quickSelect(neighborhood, 0, neighborhood.size() - 1, medianIndex + 1);
+
+                // Update the voxel value in the result data
+                resultData[z * width * height + y * width + x] = medianValue;
+            }
+        }
+    }
+
+    volume.setData(resultData);
+
+    std::cout << "3D Median filter applied successfully." << std::endl;
 }

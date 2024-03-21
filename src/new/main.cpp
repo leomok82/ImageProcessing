@@ -66,15 +66,72 @@ int main() {
             return -1;
         }
         bool status = true;
-        while (status ==true) 
-        {
+
+        int boolSlice = 0;
+
+        while (status ==true) {
+            // slicing application
+            std::cout << "Would you like to slice?" << std::endl;
+            std::cout << "1. Yes" << std::endl;
+            std::cout << "2. No" << std::endl;
+            std::cin >> boolSlice;
+
+            if (boolSlice == 1) {
+                std::cout << "Select the axis to slice along:" << std::endl;
+                std::cout << "1. X-axis (creating Y-Z plane slices)" << std::endl; // Clarified for user understanding
+                std::cout << "2. Y-axis (creating X-Z plane slices)" << std::endl; // Clarified for user understanding
+                std::cout << "3. Z-axis (creating X-Y plane slices)" << std::endl; // Clarified for user understanding
+                int axis;
+                std::cin >> axis;
+
+                std::string plane;
+                switch (axis) {
+                    case 1: plane = "yz"; break; // Adjusted based on new understanding
+                    case 2: plane = "xz"; break; // Adjusted based on new understanding
+                    case 3: plane = "xy"; break; // This remains the same
+                    default:
+                        std::cerr << "Invalid axis selected." << std::endl;
+                        continue; // Skip to the next iteration of the loop if invalid
+                }
+
+                int sliceNumber;
+                std::cout << "Enter the slice number (coordinate indices start from 1): ";
+                std::cin >> sliceNumber;
+
+                // Validate the slice number based on the chosen plane
+                bool isValidSlice = true;
+                if ((plane == "yz" && (sliceNumber < 1 || sliceNumber > width)) ||
+                    (plane == "xz" && (sliceNumber < 1 || sliceNumber > height)) ||
+                    (plane == "xy" && (sliceNumber < 1 || sliceNumber > depth))) {
+                    std::cerr << "Invalid slice number for the selected axis." << std::endl;
+                    isValidSlice = false;
+                }
+
+                if (isValidSlice) {
+                    // Create a slice
+                    Slice slice = Slice::fromVolume(volume, plane, sliceNumber);
+
+                    // Save the slice
+                    std::string outputPath;
+                    std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
+                    std::cin >> outputPath;
+
+                    slice.saveToFile(outputPath);
+                }
+
+                break;
+            
+            } else {
+                status = false;
+            }
+            
+            
             std::cout << "Would you like to filter?" << std::endl;
             std::cout << "1. Yes" << std::endl;
             std::cout << "2. No" << std::endl;
             int boolFilter;
             std::cin >> boolFilter;
-            if (boolFilter ==1)
-            {
+            if (boolFilter ==1) {
                 // Filter Application
                 std::cout << "Select the type of 3D filter to apply:" << std::endl;
                 std::cout << "1. 3D Gaussian Filter" << std::endl;
@@ -89,79 +146,77 @@ int main() {
                 std::cout << "2. No" << std::endl;
                 int saveSlices;
                 std::cin >> saveSlices;
-                if (saveSlices==1)
-                {
+                if (saveSlices==1) {
 
-                // Prompt for saving the modified image
-                std::string outputPath;
-                std::cout << "Enter the output folder path for the slices: ";
-                std::cin >> outputPath; // Use this for saving slices
+                    // Prompt for saving the modified image
+                    std::string outputPath;
+                    std::cout << "Enter the output folder path for the slices: ";
+                    std::cin >> outputPath; // Use this for saving slices
 
-                
-                // Ensure the folder exists, or create it
-                std::filesystem::create_directories(outputPath);
+                    
+                    // Ensure the folder exists, or create it
+                    std::filesystem::create_directories(outputPath);
 
 
-                volume.saveSlices(outputPath);
+                    volume.saveSlices(outputPath);
                 }
-            }
-            else
-            {
+            } else {
                 status = false;
             }
         }
-        //Projection application
-        std::cout << "Select the type of projection to apply:" << std::endl;
-        std::cout << "1. Max IP" << std::endl;
-        std::cout << "2. Min IP" << std::endl;
-        std::cout << "3. Average IP" << std::endl;
-        int projectionType;
-        std::cin >> projectionType;
-        if (projectionType < 1 || projectionType > 3)
-        {
-            std::cerr << "Invalid projection type selected." << std::endl;
-        }
-        // Get the range of slices for the projection
-        int endSlice;
-        int startSlice;
 
-        
-        std:: cout << "Enter the lower limit of slices for the projection: " << std::endl;
-        
-        std::cin >> startSlice;
-        std:: cout << "Enter the upper limit of slices for the projection: " << std::endl;
-        
-        std::cin >> endSlice;
 
-        // output vector
-        std::vector<unsigned char> output;
+        if (boolSlice<1) {
+            //Projection application
+            std::cout << "Select the type of projection to apply:" << std::endl;
+            std::cout << "1. Max IP" << std::endl;
+            std::cout << "2. Min IP" << std::endl;
+            std::cout << "3. Average IP" << std::endl;
+            int projectionType;
+            std::cin >> projectionType;
 
-        // Apply the selected projection
-        switch (projectionType)
-        {
-            case 1:
-                output = Projections::MIP(volume, startSlice, endSlice);
-                break;
-            case 2:
-                output = Projections::MinIP(volume, startSlice, endSlice);
-                break;
-            case 3:
-                output = Projections::AIP(volume, startSlice, endSlice);
-                break;
-            default:
+            if (projectionType < 1 || projectionType > 3) {
                 std::cerr << "Invalid projection type selected." << std::endl;
-                break;
-        }       
-        std::string outputPath;
-        std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
-        std::cin >> outputPath;     
-        unsigned char* outputData = output.data();
-        stbi_write_png(outputPath.c_str(), width, height, 3, outputData, width * 3);
-    
-        
+            }
+            // Get the range of slices for the projection
+            int endSlice;
+            int startSlice;
 
-    } else {
-        std::cerr << "Invalid operation type selected." << std::endl;
+            
+            std:: cout << "Enter the lower limit of slices for the projection: " << std::endl;
+            
+            std::cin >> startSlice;
+            std:: cout << "Enter the upper limit of slices for the projection: " << std::endl;
+            
+            std::cin >> endSlice;
+
+            // output vector
+            std::vector<unsigned char> output;
+
+            // Apply the selected projection
+            switch (projectionType) {
+                case 1:
+                    output = Projections::MIP(volume, startSlice, endSlice);
+                    break;
+                case 2:
+                    output = Projections::MinIP(volume, startSlice, endSlice);
+                    break;
+                case 3:
+                    output = Projections::AIP(volume, startSlice, endSlice);
+                    break;
+                default:
+                    std::cerr << "Invalid projection type selected." << std::endl;
+                    break;
+            }       
+            std::string outputPath;
+            std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
+            std::cin >> outputPath;     
+            unsigned char* outputData = output.data();
+            stbi_write_png(outputPath.c_str(), width, height, 3, outputData, width * 3);    
+
+        } else {
+            std::cerr << "Invalid operation type selected." << std::endl;
+        }
     }
 
     return 0;

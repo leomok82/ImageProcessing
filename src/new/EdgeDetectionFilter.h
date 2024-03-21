@@ -28,6 +28,9 @@ public:
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
-// Add more filters as needed...
+class RobertsCrossFilter : public EdgeDetectionFilter {
+public:
+    void apply(unsigned char* data, int width, int height, int channels) override;
+};
 
 #endif // EDGEDETECTIONFILTER_H

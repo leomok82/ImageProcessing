@@ -2,18 +2,26 @@
 #include "Slice.h"
 #include "Volume.h"
 #include <algorithm> // For std::clamp
+#include <numeric> // For std::accumulate
 
-// Static factory method implementation
-Slice Slice::fromVolume(const Volume& volume, const std::string& plane, int index) {
+#include "Slice.h"
+#include "Volume.h"
+#include <vector>
+#include <string>
+
+Slice Slice::fromVolume(const Volume& volume, const std::string& plane, int coordinate) {
     int width, height, depth;
     volume.getDimensions(width, height, depth);
     std::vector<unsigned char> sliceData;
+
+    // Adjust for 1-based indexing provided by users
+    coordinate -= 1;
 
     if (plane == "xz") {
         sliceData.resize(width * depth);
         for (int z = 0; z < depth; ++z) {
             for (int x = 0; x < width; ++x) {
-                sliceData[z * width + x] = volume.getVoxel(x, index, z);
+                sliceData[z * width + x] = volume.getVoxel(x, coordinate, z);
             }
         }
         return Slice(width, depth, sliceData);
@@ -21,19 +29,24 @@ Slice Slice::fromVolume(const Volume& volume, const std::string& plane, int inde
         sliceData.resize(height * depth);
         for (int z = 0; z < depth; ++z) {
             for (int y = 0; y < height; ++y) {
-                sliceData[z * height + y] = volume.getVoxel(index, y, z);
+                sliceData[z * height + y] = volume.getVoxel(coordinate, y, z);
             }
         }
         return Slice(height, depth, sliceData);
+    } else if (plane == "xy") {
+        // Assuming "xy" slicing is essentially getting a single slice as originally provided in the volume
+        sliceData.resize(width * height);
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                sliceData[y * width + x] = volume.getVoxel(x, y, coordinate);
+            }
+        }
+        return Slice(width, height, sliceData);
     }
-    // Handle other planes if necessary
 
-    // Return an empty slice if plane is unrecognized or in case of an error
     return Slice(0, 0, {});
 }
 
-// Add to Slice.cpp
-#include <numeric> // For std::accumulate
 
 Slice Slice::thinSlabAIP(const Volume& volume, int startSlice, int endSlice) {
     int width, height, depth;
@@ -70,4 +83,8 @@ Slice Slice::thinSlabMIP(const Volume& volume, int startSlice, int endSlice) {
     }
 
     return Slice(width, height, projectionData);
+}
+
+void Slice::saveToFile(const std::string& filePath) const {
+    stbi_write_png(filePath.c_str(), width, height, 1, data.data(), width);
 }

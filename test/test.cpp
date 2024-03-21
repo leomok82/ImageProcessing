@@ -1,5 +1,9 @@
 #include "test.h"
 #include "../src/new/ColourFilterCorrection.h"
+#include "../src/new/ImageBlurFilter.h"
+#include "../src/new/EdgeDetectionFilter.h"
+
+
 #include <iostream>
 #include <cmath>
 #include <numeric>
@@ -291,3 +295,50 @@ void testBoxBlur()
     // Assert if the actual output matches the expected output
     assertArrayEquals("2D BoxBlur Test:", expectedVector, actualVector);
 }
+
+
+
+
+// Generate a test image with left side black and right side white
+void generateTestImage(std::vector<unsigned char>& image, int width, int height) {
+    // Initialize the test image, left half black, right half white
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            int index = (y * width + x) * 3;
+            if (x < width / 2) {
+                image[index] = image[index + 1] = image[index + 2] = 0; // Left half black
+            } else {
+                image[index] = image[index + 1] = image[index + 2] = 255; // Right half white
+            }
+        }
+    }
+}
+
+void runFiltersTest() {
+    const int width = 3, height = 3;
+    std::vector<unsigned char> testImage(width * height * 3);
+    generateTestImage(testImage, width, height);
+
+    // List of filters
+    std::vector<std::pair<std::string, std::unique_ptr<Filter>>> filters;
+    filters.emplace_back("Sobel Filter Test ", std::make_unique<SobelFilter>());
+    filters.emplace_back("Prewitt Filter Test ", std::make_unique<PrewittFilter>());
+    filters.emplace_back("Scharr Filter Test ", std::make_unique<ScharrFilter>());
+    filters.emplace_back("Robert Filter Test with the 1st Image", std::make_unique<RobertFilter>());
+
+    // Iterate and test each filter
+    for (auto& filterPair : filters) {
+        std::vector<unsigned char> imageCopy = testImage; // Create a copy of the image for each filter
+        filterPair.second->apply(imageCopy.data(), width, height, 3); // Apply the filter
+
+        // Verify the pixel next to the edge, expecting the first pixel on the right to be white
+        int testIndex = (height / 2 * width + width / 2) * 3;
+        unsigned char edgeResponse = imageCopy[testIndex];
+
+        // Use assertEquals for verification
+        assertEquals<unsigned char>(filterPair.first, 255, edgeResponse);
+    }
+}
+
+
+

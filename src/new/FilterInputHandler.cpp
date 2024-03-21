@@ -5,8 +5,17 @@
 #include <memory>
 #include <iostream>
 
-void FilterInputHandler::applyFilter(int filterType, unsigned char* data, int width, int height, int channels) {
+void FilterInputHandler::applyFilter(unsigned char* data, int width, int height, int channels) {
     std::unique_ptr<Filter> filter;
+
+    // Ask user for the filter type
+    std::cout << "Select the type of filter for 2D image processing:" << std::endl;
+    std::cout << "1. Colour Correction" << std::endl;
+    std::cout << "2. Image Blur" << std::endl;
+    std::cout << "3. Edge Detection" << std::endl;
+
+    int filterType;
+    std::cin >> filterType;
 
     switch (filterType) {
         case 1: {
@@ -99,18 +108,9 @@ void FilterInputHandler::applyFilter(int filterType, unsigned char* data, int wi
 
                 if (edgeType > 0 && edgeType < 5) {
                     filter = EdgeDetectionFilter::create(edgeType);
-                    // filter->apply(data, width, height, channels);
                 } else {
                     break;    
                 }
-        
-                // if (edgeType > 0 && edgeType < 4){
-                //     filter = EdgeDetectionFilter::create(edgeType);
-                // }
-                // else
-                // {
-                //     break;    
-                // }
             }
             break;
         }

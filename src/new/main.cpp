@@ -10,6 +10,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 #include "Projections.h"
+#include "SliceInputHandler.h"
 
 int main() {
     std::string path;
@@ -31,18 +32,8 @@ int main() {
 
         unsigned char* data = image.getData();
 
-        // Ask user for the filter type
-        std::cout << "Select the type of filter for 2D image processing:" << std::endl;
-        std::cout << "1. Colour Correction" << std::endl;
-        std::cout << "2. Image Blur" << std::endl;
-        std::cout << "3. Edge Detection" << std::endl;
+        FilterInputHandler::applyFilter(data, width, height, channels);
 
-        int filterType;
-        std::cin >> filterType;
-
-        FilterInputHandler::applyFilter(filterType, data, width, height, channels);
-
-        // Save the modified image
         std::string outputPath;
         std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
         std::cin >> outputPath;
@@ -77,54 +68,14 @@ int main() {
             std::cin >> boolSlice;
 
             if (boolSlice == 1) {
-                std::cout << "Select the axis to slice along:" << std::endl;
-                std::cout << "1. X-axis (creating Y-Z plane slices)" << std::endl; // Clarified for user understanding
-                std::cout << "2. Y-axis (creating X-Z plane slices)" << std::endl; // Clarified for user understanding
-                std::cout << "3. Z-axis (creating X-Y plane slices)" << std::endl; // Clarified for user understanding
-                int axis;
-                std::cin >> axis;
 
-                std::string plane;
-                switch (axis) {
-                    case 1: plane = "yz"; break; // Adjusted based on new understanding
-                    case 2: plane = "xz"; break; // Adjusted based on new understanding
-                    case 3: plane = "xy"; break; // This remains the same
-                    default:
-                        std::cerr << "Invalid axis selected." << std::endl;
-                        continue; // Skip to the next iteration of the loop if invalid
-                }
-
-                int sliceNumber;
-                std::cout << "Enter the slice number (coordinate indices start from 1): ";
-                std::cin >> sliceNumber;
-
-                // Validate the slice number based on the chosen plane
-                bool isValidSlice = true;
-                if ((plane == "yz" && (sliceNumber < 1 || sliceNumber > width)) ||
-                    (plane == "xz" && (sliceNumber < 1 || sliceNumber > height)) ||
-                    (plane == "xy" && (sliceNumber < 1 || sliceNumber > depth))) {
-                    std::cerr << "Invalid slice number for the selected axis." << std::endl;
-                    isValidSlice = false;
-                }
-
-                if (isValidSlice) {
-                    // Create a slice
-                    Slice slice = Slice::fromVolume(volume, plane, sliceNumber);
-
-                    // Save the slice
-                    std::string outputPath;
-                    std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
-                    std::cin >> outputPath;
-
-                    slice.saveToFile(outputPath);
-                }
+                SliceInputHandler::applySlice(volume, width, height, depth);
 
                 break;
             
             } else {
                 status = false;
             }
-            
             
             std::cout << "Would you like to filter?" << std::endl;
             std::cout << "1. Yes" << std::endl;

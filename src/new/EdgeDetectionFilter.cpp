@@ -39,11 +39,13 @@ void setKernel(int type, int (&gx)[3][3], int (&gy)[3][3], int& kernel_size) {
             kernel_size = 3;
             break;
         case 2: // Prewitt
-            std::fill_n(&gx[0][0], 9, 1); // Set all elements to 1
-            std::fill_n(&gy[0][0], 9, 1); // Set all elements to 1
-            gx[1][0] = gx[1][2] = gy[0][1] = gy[2][1] = 0;
-            gx[0][0] = gx[2][2] = gy[0][0] = gy[2][2] = -1;
-            gx[0][2] = gx[2][0] = gy[0][2] = gy[2][0] = 1;
+            gx[0][0] = -1; gx[0][1] = 0; gx[0][2] = 1;
+            gx[1][0] = -1; gx[1][1] = 0; gx[1][2] = 1;
+            gx[2][0] = -1; gx[2][1] = 0; gx[2][2] = 1;
+
+            gy[0][0] = -1; gy[0][1] = -1; gy[0][2] = -1;
+            gy[1][0] =  0; gy[1][1] =  0; gy[1][2] =  0;
+            gy[2][0] =  1; gy[2][1] =  1; gy[2][2] =  1;
             kernel_size = 3;
             break;
         case 3: // Scharr

@@ -36,7 +36,7 @@ std::unique_ptr<Filter> ImageBlurFilter::create(int type, int kernelSize, double
 
 void MedianBlurFilter::apply(unsigned char *data, int width, int height, int channels)
 {
-    std::cout << "Applying MedianBlurFilter to raw data." << std::endl;
+    std::cout << "Applying Median Blur Filter." << std::endl;
 
     // Prepare vector for output image data
     std::vector<unsigned char> output(width * height * channels);
@@ -90,7 +90,7 @@ void BoxBlurFilter::apply(unsigned char *data, int width, int height, int channe
 
     int halfKernel = kernelSize / 2;
 
-    // 滑动窗口并应用模糊滤波器
+    // Slide window and apply blur filter
     for (int y = 0; y < height; ++y)
     {
         for (int x = 0; x < width; ++x)
@@ -100,7 +100,7 @@ void BoxBlurFilter::apply(unsigned char *data, int width, int height, int channe
                 int windowSum = 0;
                 int windowCount = 0;
 
-                // 计算窗口内像素的总和和数量
+                // Calculate the sum and count of pixels within the window
                 for (int ky = -halfKernel; ky <= halfKernel; ++ky)
                 {
                     for (int kx = -halfKernel; kx <= halfKernel; ++kx)
@@ -110,13 +110,13 @@ void BoxBlurFilter::apply(unsigned char *data, int width, int height, int channe
                         if (nx >= 0 && nx < width && ny >= 0 && ny < height)
                         {
                             int i = (ny * width + nx) * channels + c;
-                            windowSum += data[i]; // 将像素的值加入窗口总和中
-                            ++windowCount;        // 增加窗口中像素的数量
+                            windowSum += data[i]; // Add the pixel value to the window sum
+                            ++windowCount;        // Increase the count of pixels in the window
                         }
                     }
                 }
 
-                // 计算窗口中像素的平均值，并将当前像素的值设置为平均值
+                // Calculate the average pixel value in the window and set the current pixel to this average
                 int i = (y * width + x) * channels + c;
                 if (windowCount > 0)
                 {
@@ -124,7 +124,7 @@ void BoxBlurFilter::apply(unsigned char *data, int width, int height, int channe
                 }
                 else
                 {
-                    data[i] = 0; // 处理位于边界之外的像素
+                    data[i] = 0; // Handle pixels outside the boundary
                 }
             }
         }

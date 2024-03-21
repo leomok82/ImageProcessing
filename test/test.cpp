@@ -221,15 +221,15 @@ void printImageData(const unsigned char *data, int width, int height, int channe
 
 void testGaussianBlur()
 {
-    //
+    // Test data for Gaussian Blur
     unsigned char inputData[] = {
         1, 2, 50, 80, 50,
         3, 4, 80, 120, 80,
         5, 6, 50, 80, 50,
         7, 8, 9, 10, 11,
         12, 13, 14, 15, 16};
-    //
 
+    // Expected output data after applying Gaussian Blur
     unsigned char expectedOutput[] = {
         1, 20, 51, 70, 69,
         3, 21, 52, 72, 70,
@@ -238,33 +238,35 @@ void testGaussianBlur()
         10, 11, 12, 13, 13};
 
     int width = 5, height = 5, channels = 1, kernelsize = 3;
+    // Uncomment to print input data
     // printImageData(inputData, width, height, channels);
     double sigma = 2.0;
     GaussianBlurFilter gaussianFilter(kernelsize, sigma);
 
     gaussianFilter.apply(inputData, width, height, channels);
+    // Uncomment to print output data
     // printImageData(inputData, width, height, channels);
 
-    // 将期望的输出数据转换为 vector 方便比较
+    // Convert the expected output data to a vector for easy comparison
     std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
 
-    // 创建实际输出数据的 vector
+    // Create a vector for the actual output data
     std::vector<unsigned char> actualVector(std::begin(inputData), std::end(inputData));
 
-    // 断言实际输出与期望输出是否相等
+    // Assert if the actual output matches the expected output
     assertArrayEquals("2D GaussianBlur Test:", expectedVector, actualVector);
 }
 
 void testBoxBlur()
 {
-    //
+    // Test data for Box Blur
     unsigned char inputData[] = {
         1, 2, 3, 4,
         5, 6, 7, 8,
         9, 10, 11, 12,
         13, 14, 15, 16};
-    //
 
+    // Expected output data after applying Box Blur
     unsigned char expectedOutput[] = {
         3, 4, 5, 6,
         6, 6, 7, 8,
@@ -272,18 +274,20 @@ void testBoxBlur()
         11, 11, 12, 12};
 
     int width = 4, height = 4, channels = 1, kernelsize = 3;
+    // Uncomment to print input data
     // printImageData(inputData, width, height, channels);
     BoxBlurFilter boxFilter(kernelsize);
 
     boxFilter.apply(inputData, width, height, channels);
+    // Uncomment to print output data
     // printImageData(inputData, width, height, channels);
 
-    // 将期望的输出数据转换为 vector 方便比较
+    // Convert the expected output data to a vector for easy comparison
     std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
 
-    // 创建实际输出数据的 vector
+    // Create a vector for the actual output data
     std::vector<unsigned char> actualVector(std::begin(inputData), std::end(inputData));
 
-    // 断言实际输出与期望输出是否相等
+    // Assert if the actual output matches the expected output
     assertArrayEquals("2D BoxBlur Test:", expectedVector, actualVector);
 }

@@ -15,7 +15,6 @@ bool Volume::loadFromFolder(const std::string& folderpath) {
     std::smatch match;
     std::map<int, std::string> sortedFiles;
 
-    // Iterate through the directory and match the file names to the regex
     for (const auto& entry : std::filesystem::directory_iterator(folderpath)) {
         if (entry.is_regular_file()) {
             std::string filename = entry.path().filename().string();
@@ -24,7 +23,6 @@ bool Volume::loadFromFolder(const std::string& folderpath) {
                 int index = std::stoi(match[1].str());
                 sortedFiles[index] = entry.path().string();
             } else {
-                // Just output a warning instead of returning false
                 std::cerr << "Warning: Skipping non-indexed file: " << filename << std::endl;
             }
         }

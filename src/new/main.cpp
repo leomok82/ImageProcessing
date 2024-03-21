@@ -67,7 +67,7 @@ int main() {
         }
         bool status = true;
 
-        int boolSlice = 0;
+        int boolSlice = 2;
 
         while (status ==true) {
             // slicing application
@@ -166,7 +166,7 @@ int main() {
         }
 
 
-        if (boolSlice<1) {
+        if (boolSlice>1) {
             //Projection application
             std::cout << "Select the type of projection to apply:" << std::endl;
             std::cout << "1. Max IP" << std::endl;

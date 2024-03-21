@@ -166,37 +166,3 @@ int main() {
 
     return 0;
 }
-
-// Simple testing: Function to calculate the number of pixels in an image 
-// int calculateImagePixels(const char *filename)
-// {
-//     int width, height, channels;
-
-//     // Use stb_image.h to read the image
-//     unsigned char *img = stbi_load(filename, &width, &height, &channels, 0);
-//     if (img == nullptr)
-//     {
-//         std::cerr << "Error in loading the image" << std::endl;
-//         return -1; // Return -1 if loading fails
-//     }
-
-//     int totalPixels = width * height; // Calculate total pixels
-//     std::cout << "Image Width x Height: " << width << " x " << height << std::endl;
-//     std::cout << "Total Pixels: " << totalPixels << std::endl;
-//     std::cout << "Channels: " << channels << std::endl;
-
-//     // Free the memory allocated for the image
-//     stbi_image_free(img);
-
-//     return totalPixels;
-// }
-
-// int main()
-// {
-//     const char *filename = "/Users/tz2523/GP3_Yen/now_processiing/advanced-programming-group-yen/src/new/graceNoise_MedianBlur.png";
-//     calculateImagePixels(filename);
-
-//     const char *test = "/Users/tz2523/GP3_Yen/now_processiing/advanced-programming-group-yen/output_noise.png";
-//     calculateImagePixels(test);
-//     return 0;
-// }

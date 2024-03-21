@@ -28,17 +28,73 @@ void FilterInputHandler::applyFilter(int filterType, unsigned char* data, int wi
             // Image Blur
             int blurType;
             int kernelSize;
+            double sigma = 0.0;
+
             std::cout << "Select Blur Type:" << std::endl;
             std::cout << "1. Median" << std::endl;
             std::cout << "2. Box" << std::endl;
             std::cout << "3. Gaussian" << std::endl;
-            std::cin >> blurType;
-            std::cout << "Select kernel size (3 for 3x3):" << std::endl;
-            std::cin >> kernelSize;
 
-            filter = ImageBlurFilter::create(blurType,kernelSize);
+            // Loop until a valid blur type is entered
+            while (true)
+            {
+                std::cin >> blurType;
+                if (std::cin.fail() || blurType < 1 || blurType > 3)
+                {
+                    std::cin.clear();                                                   // Clear error flag
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore characters after wrong input
+                    std::cout << "Invalid blur type. Please enter 1 for Median, 2 for Box, or 3 for Gaussian:" << std::endl;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            std::cout << "Select kernel size (odd number, e.g., 3 for 3x3):" << std::endl;
+            // Loop until a valid kernel size is entered
+            while (true)
+            {
+                std::cin >> kernelSize;
+                if (std::cin.fail() || kernelSize % 2 == 0)
+                {
+                    std::cin.clear();                                                   // Clear error flag
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore characters after wrong input
+                    std::cout << "Invalid kernel size. Please enter an odd number:" << std::endl;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (blurType == 3)
+            { // Gaussian
+                std::cout << "Enter sigma value (positive number):" << std::endl;
+                // Loop until a valid sigma value is entered
+                while (true)
+                {
+                    std::cin >> sigma;
+                    if (std::cin.fail() || sigma <= 0.0)
+                    {
+                        std::cin.clear();                                                   // Clear error flag
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore characters after wrong input
+                        std::cout << "Invalid sigma value. Please enter a positive number:" << std::endl;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                filter = ImageBlurFilter::create(blurType, kernelSize, sigma);
+            }
+            else
+            {
+                filter = ImageBlurFilter::create(blurType, kernelSize);
+            }
             break;
         }
+
         case 3: {
             // Edge Detection
             bool temp = true;

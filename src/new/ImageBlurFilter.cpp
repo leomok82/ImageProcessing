@@ -1,28 +1,42 @@
 #include "ImageBlurFilter.h"
 #include <iostream>
 
-std::unique_ptr<Filter> ImageBlurFilter::create(int type, int kernelSize) {
-    
-    switch (type) {
-        case 1:
-            std::cout << "Now you are in the MedianBlurFilter create function" << std::endl;
-            return std::make_unique<MedianBlurFilter>(kernelSize);
-        case 2:
-            std::cout << "Now you are in the BoxBlurFilter create function" << std::endl;
-            return std::make_unique<BoxBlurFilter>(kernelSize);
-        case 3:
-            std::cout << "Now you are in the GaussianBlurFilter create function" << std::endl;
-            return std::make_unique<GaussianBlurFilter>(kernelSize);
-        default:
-            std::cerr << "Unknown image blur filter type." << std::endl;
-            return nullptr;
+std::unique_ptr<Filter> ImageBlurFilter::create(int type, int kernelSize)
+{
+
+    switch (type)
+    {
+    case 1:
+        //  std::cout << "Now you are in the MedianBlurFilter create function" << std::endl;
+        return std::make_unique<MedianBlurFilter>(kernelSize);
+    case 2:
+        // std::cout << "Now you are in the BoxBlurFilter create function" << std::endl;
+        return std::make_unique<BoxBlurFilter>(kernelSize);
+    // case 3:
+    //     std::cout << "Now you are in the GaussianBlurFilter create function" << std::endl;
+    //     return std::make_unique<GaussianBlurFilter>(kernelSize);
+    default:
+        std::cerr << "Unknown image blur filter type." << std::endl;
+        return nullptr;
+    }
+}
+std::unique_ptr<Filter> ImageBlurFilter::create(int type, int kernelSize, double sigma)
+{
+    if (type == 3)
+    { // Gaussian
+        std::cout << "Now you are in the GaussianBlurFilter create function with sigma" << std::endl;
+        return std::make_unique<GaussianBlurFilter>(kernelSize, sigma);
+    }
+    else
+    {
+        std::cerr << "Sigma parameter is only applicable for GaussianBlurFilter." << std::endl;
+        return nullptr;
     }
 }
 
-
-void MedianBlurFilter::apply(unsigned char *data, int width, int height, int channels) 
+void MedianBlurFilter::apply(unsigned char *data, int width, int height, int channels)
 {
-    std::cout << "Applying MedianBlurFilter to raw data." << std::endl;
+    std::cout << "Applying Median Blur Filter." << std::endl;
 
     // Prepare vector for output image data
     std::vector<unsigned char> output(width * height * channels);
@@ -59,9 +73,8 @@ void MedianBlurFilter::apply(unsigned char *data, int width, int height, int cha
                         neighborhood.push_back(data[(ny * width + nx) * channels + c]);
                     }
                 }
-
                 // Find median of the neighborhood using quick select algorithm
-                unsigned char median = quickSelect(neighborhood, 0, neighborhood.size() - 1, neighborhood.size() / 2);
+                unsigned char median = quickSelect(neighborhood, 0, neighborhood.size() - 1, neighborhood.size() / 2 + 1);
                 output[(y * width + x) * channels + c] = median;
             }
         }
@@ -71,67 +84,74 @@ void MedianBlurFilter::apply(unsigned char *data, int width, int height, int cha
     std::copy(output.begin(), output.end(), data);
 }
 
-
-// 这个是滑动窗口的，并且跑那个老头没有问题的
-void BoxBlurFilter::apply(unsigned char* data, int width, int height, int channels) {
+void BoxBlurFilter::apply(unsigned char *data, int width, int height, int channels)
+{
     std::cout << "Applying Box Blur Filter" << std::endl;
 
     int halfKernel = kernelSize / 2;
 
-    // 滑动窗口并应用模糊滤波器
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-            for (int c = 0; c < channels; ++c) {
+    // Slide window and apply blur filter
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            for (int c = 0; c < channels; ++c)
+            {
                 int windowSum = 0;
                 int windowCount = 0;
 
-                // 计算窗口内像素的总和和数量
-                for (int ky = -halfKernel; ky <= halfKernel; ++ky) {
-                    for (int kx = -halfKernel; kx <= halfKernel; ++kx) {
+                // Calculate the sum and count of pixels within the window
+                for (int ky = -halfKernel; ky <= halfKernel; ++ky)
+                {
+                    for (int kx = -halfKernel; kx <= halfKernel; ++kx)
+                    {
                         int nx = x + kx;
                         int ny = y + ky;
-                        if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                        if (nx >= 0 && nx < width && ny >= 0 && ny < height)
+                        {
                             int i = (ny * width + nx) * channels + c;
-                            windowSum += data[i]; // 将像素的值加入窗口总和中
-                            ++windowCount; // 增加窗口中像素的数量
+                            windowSum += data[i]; // Add the pixel value to the window sum
+                            ++windowCount;        // Increase the count of pixels in the window
                         }
                     }
                 }
 
-                // 计算窗口中像素的平均值，并将当前像素的值设置为平均值
+                // Calculate the average pixel value in the window and set the current pixel to this average
                 int i = (y * width + x) * channels + c;
-                if (windowCount > 0) {
+                if (windowCount > 0)
+                {
                     data[i] = static_cast<unsigned char>(windowSum / windowCount);
-                } else {
-                    data[i] = 0; // 处理位于边界之外的像素
+                }
+                else
+                {
+                    data[i] = 0; // Handle pixels outside the boundary
                 }
             }
         }
     }
 }
 
-
 void GaussianBlurFilter::apply(unsigned char *data, int width, int height, int channels)
 {
     std::cout << "Applying Gaussian Blur Filter" << std::endl;
-    std::vector<float> weights(kernelSize);
-    calculateGaussianWeights(1.0f, kernelSize, weights);
+    std::vector<double> weights(kernelSize);
+    calculateGaussianWeights(sigma, kernelSize, weights);
 
     std::vector<unsigned char> temp(width * height * channels);
     applyGaussianBlurOnRow(data, width, height, channels, weights, temp.data());
     applyGaussianBlurOnColumn(temp.data(), width, height, channels, weights, data);
 }
 
-void GaussianBlurFilter::calculateGaussianWeights(float sigma, int kernelSize, std::vector<float> &weights)
+void GaussianBlurFilter::calculateGaussianWeights(double sigma, int kernelSize, std::vector<double> &weights)
 {
-    float sum = 0.0f;
+    double sum = 0.0;
     int halfSize = kernelSize / 2;
     for (int i = -halfSize; i <= halfSize; ++i)
     {
         weights[i + halfSize] = exp(-(i * i) / (2 * sigma * sigma));
         sum += weights[i + halfSize];
     }
-    for (float &weight : weights)
+    for (double &weight : weights)
     {
         weight /= sum;
     }
@@ -146,7 +166,7 @@ int GaussianBlurFilter::mirrorIndex(int index, int maxIndex)
     return index;
 }
 
-void GaussianBlurFilter::applyGaussianBlurOnRow(unsigned char *data, int width, int height, int channels, const std::vector<float> &weights, unsigned char *output)
+void GaussianBlurFilter::applyGaussianBlurOnRow(unsigned char *data, int width, int height, int channels, const std::vector<double> &weights, unsigned char *output)
 {
     int halfSize = kernelSize / 2;
     for (int y = 0; y < height; ++y)
@@ -155,19 +175,19 @@ void GaussianBlurFilter::applyGaussianBlurOnRow(unsigned char *data, int width, 
         {
             for (int c = 0; c < channels; ++c)
             {
-                float sum = 0.0f;
+                double sum = 0.0;
                 for (int k = -halfSize; k <= halfSize; ++k)
                 {
                     int nx = mirrorIndex(x + k, width - 1);
                     sum += data[(y * width + nx) * channels + c] * weights[k + halfSize];
                 }
-                output[(y * width + x) * channels + c] = static_cast<unsigned char>(std::max(0.0f, std::min(255.0f, sum)));
+                output[(y * width + x) * channels + c] = static_cast<unsigned char>(std::max(0.0, std::min(255.0, sum)));
             }
         }
     }
 }
 
-void GaussianBlurFilter::applyGaussianBlurOnColumn(unsigned char *data, int width, int height, int channels, const std::vector<float> &weights, unsigned char *output)
+void GaussianBlurFilter::applyGaussianBlurOnColumn(unsigned char *data, int width, int height, int channels, const std::vector<double> &weights, unsigned char *output)
 {
     int halfSize = kernelSize / 2;
     for (int x = 0; x < width; ++x)
@@ -176,15 +196,14 @@ void GaussianBlurFilter::applyGaussianBlurOnColumn(unsigned char *data, int widt
         {
             for (int c = 0; c < channels; ++c)
             {
-                float sum = 0.0f;
+                double sum = 0.0;
                 for (int k = -halfSize; k <= halfSize; ++k)
                 {
                     int ny = mirrorIndex(y + k, height - 1);
                     sum += data[(ny * width + x) * channels + c] * weights[k + halfSize];
                 }
-                output[(y * width + x) * channels + c] = static_cast<unsigned char>(std::max(0.0f, std::min(255.0f, sum)));
+                output[(y * width + x) * channels + c] = static_cast<unsigned char>(std::max(0.0, std::min(255.0, sum)));
             }
         }
     }
 }
-

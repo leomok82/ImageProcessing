@@ -19,6 +19,38 @@ void assertEquals(const std::string& testName, const T& expected, const U& actua
     }
 }
 
+template <typename T>
+void assertArrayEquals(const std::string &testName, const std::vector<T> &expected, const std::vector<T> &actual)
+{
+    if (expected.size() != actual.size())
+    {
+        std::cout << testName << ": FAIL - Array sizes do not match. Expected size: "
+                  << expected.size() << ", Actual size: " << actual.size() << std::endl;
+        return; // Early return if sizes don't match
+    }
+
+    bool isEqual = true;
+    for (size_t i = 0; i < expected.size(); ++i)
+    {
+        if (expected[i] != actual[i])
+        {
+            isEqual = false;
+            break;
+        }
+    }
+
+    std::cout << testName << ": " << (isEqual ? "PASS" : "FAIL") << std::endl;
+    if (!isEqual)
+    {
+        std::cout << "Arrays do not match:" << std::endl;
+        for (size_t i = 0; i < expected.size(); ++i)
+        {
+            std::cout << "At index " << i << " Expected: " << expected[i]
+                      << ", Actual: " << actual[i] << std::endl;
+        }
+    }
+}
+
 // Apply the filter to a known RGB value and check if the result is the expected grayscale value.
 void testGrayscaleFilter() {
     GrayscaleFilter filter;
@@ -126,4 +158,136 @@ void testSaltAndPepperNoiseFilter() {
     // Assert that the actual noise percentage is within an acceptable range of the expected value
     double tolerance = 5.0;  // Allow some variance due to the randomness
     assertEquals("Salt and Pepper Noise Filter ", true, actualNoisePercentage >= noisePercentage - tolerance && actualNoisePercentage <= noisePercentage + tolerance);
+}
+
+void testMedianBlur()
+{
+    unsigned char inputData[] = {
+        50, 80, 50,
+        80, 120, 80,
+        50, 80, 50};
+
+    unsigned char expectedOutput[] = {
+        80, 80, 80,
+        80, 80, 80,
+        80, 80, 80};
+    int width = 3, height = 3, channels = 1, kernelSize = 3;
+    MedianBlurFilter medianFilter(kernelSize);
+    medianFilter.apply(inputData, width, height, channels);
+
+    std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
+    std::vector<unsigned char> actualVector(std::begin(inputData), std::end(inputData));
+    assertArrayEquals("2D MedianBlur Test:", expectedVector, actualVector);
+}
+
+void testQuickSelect()
+{
+    // Test cases
+    // std::vector<unsigned char> test1 = {7, 10, 4, 3, 20, 15, 7};
+    std::vector<unsigned char> test1 = {6, 5, 4, 3, 7, 1, 2};
+    std::vector<unsigned char> test2 = {12, 3, 5, 7, 4, 19, 26};
+
+    // Expected results
+    unsigned char expected1 = 1;  // Assuming quickSelect is for finding kth smallest, and k1=1 means the smallest element
+    unsigned char expected2 = 4;  // The median of test1
+    unsigned char expected3 = 26; // The largest element in test2
+
+    // Perform tests
+    unsigned char result1 = quickSelect(test1, 0, test1.size() - 1, 1);
+    unsigned char result2 = quickSelect(test1, 0, test1.size() - 1, test1.size() / 2 + 1); // Median is at position (size/2 + 1) for 1-based index
+    unsigned char result3 = quickSelect(test2, 0, test2.size() - 1, test2.size());         // Largest element
+
+    // Assert results
+    assertEquals("Test QuickSelect: The smallest element", expected1, result1);
+    assertEquals("Test QuickSelect: The median element", expected2, result2);
+    assertEquals("Test QuickSelect: The largest element", expected3, result3);
+}
+
+void printImageData(const unsigned char *data, int width, int height, int channels)
+{
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            for (int c = 0; c < channels; ++c)
+            {
+                int index = (y * width + x) * channels + c;
+                std::cout << static_cast<int>(data[index]) << " ";
+            }
+        }
+        std::cout << std::endl;
+    }
+}
+
+void testGaussianBlur()
+{
+    // Test data for Gaussian Blur
+    unsigned char inputData[] = {
+        1, 2, 50, 80, 50,
+        3, 4, 80, 120, 80,
+        5, 6, 50, 80, 50,
+        7, 8, 9, 10, 11,
+        12, 13, 14, 15, 16};
+
+    // Expected output data after applying Gaussian Blur
+    unsigned char expectedOutput[] = {
+        1, 20, 51, 70, 69,
+        3, 21, 52, 72, 70,
+        5, 18, 40, 54, 53,
+        7, 13, 22, 27, 27,
+        10, 11, 12, 13, 13};
+
+    int width = 5, height = 5, channels = 1, kernelsize = 3;
+    // Uncomment to print input data
+    // printImageData(inputData, width, height, channels);
+    double sigma = 2.0;
+    GaussianBlurFilter gaussianFilter(kernelsize, sigma);
+
+    gaussianFilter.apply(inputData, width, height, channels);
+    // Uncomment to print output data
+    // printImageData(inputData, width, height, channels);
+
+    // Convert the expected output data to a vector for easy comparison
+    std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
+
+    // Create a vector for the actual output data
+    std::vector<unsigned char> actualVector(std::begin(inputData), std::end(inputData));
+
+    // Assert if the actual output matches the expected output
+    assertArrayEquals("2D GaussianBlur Test:", expectedVector, actualVector);
+}
+
+void testBoxBlur()
+{
+    // Test data for Box Blur
+    unsigned char inputData[] = {
+        1, 2, 3, 4,
+        5, 6, 7, 8,
+        9, 10, 11, 12,
+        13, 14, 15, 16};
+
+    // Expected output data after applying Box Blur
+    unsigned char expectedOutput[] = {
+        3, 4, 5, 6,
+        6, 6, 7, 8,
+        9, 10, 11, 11,
+        11, 11, 12, 12};
+
+    int width = 4, height = 4, channels = 1, kernelsize = 3;
+    // Uncomment to print input data
+    // printImageData(inputData, width, height, channels);
+    BoxBlurFilter boxFilter(kernelsize);
+
+    boxFilter.apply(inputData, width, height, channels);
+    // Uncomment to print output data
+    // printImageData(inputData, width, height, channels);
+
+    // Convert the expected output data to a vector for easy comparison
+    std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
+
+    // Create a vector for the actual output data
+    std::vector<unsigned char> actualVector(std::begin(inputData), std::end(inputData));
+
+    // Assert if the actual output matches the expected output
+    assertArrayEquals("2D BoxBlur Test:", expectedVector, actualVector);
 }

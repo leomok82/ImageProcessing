@@ -3,6 +3,7 @@
 
 #include <string>
 #include "../src/new/ColourFilterCorrection.h"
+#include "../src/new/ImageBlurFilter.h"
 #include "../src/new/Image.h"
 #include "../src/new/Volume.h"
 
@@ -16,12 +17,17 @@ void reportTest(const std::string& testName, bool result);
 
 template<typename T, typename U>
 void assertEquals(const std::string& testName, const T& expected, const U& actual);
+template <typename T>
+void assertArrayEquals(const std::string &testName, const std::vector<T> &expected, const std::vector<T> &actual);
 
 void testGrayscaleFilter();
 void testBrightnessFilter();
 void testHistogramEqualizerFilter();
 void testThresholdingFilter();
 void testSaltAndPepperNoiseFilter();
-
+void testGaussianBlur();
+void testMedianBlur();
+void testBoxBlur();
+void testQuickSelect();
 
 #endif // TEST_H

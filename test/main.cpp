@@ -12,6 +12,10 @@ int main() {
     testHistogramEqualizerFilter();
     testThresholdingFilter();
     testSaltAndPepperNoiseFilter();
+    testMedianBlur();
+    testQuickSelect();
+    testGaussianBlur();
+    testBoxBlur();
 
     // testLoadApplyAndSaveImage();
     return 0;

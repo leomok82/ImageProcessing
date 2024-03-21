@@ -11,6 +11,7 @@
 #include "stb_image_write.h"
 #include "Projections.h"
 #include "SliceInputHandler.h"
+#include "ProjectionInputHandler.h"
 
 int main() {
     std::string path;
@@ -60,7 +61,7 @@ int main() {
 
         int boolSlice = 2;
 
-        while (status ==true) {
+        while (status==true) {
             // slicing application
             std::cout << "Would you like to slice?" << std::endl;
             std::cout << "1. Yes" << std::endl;
@@ -68,9 +69,7 @@ int main() {
             std::cin >> boolSlice;
 
             if (boolSlice == 1) {
-
                 SliceInputHandler::applySlice(volume, width, height, depth);
-
                 break;
             
             } else {
@@ -83,14 +82,8 @@ int main() {
             int boolFilter;
             std::cin >> boolFilter;
             if (boolFilter ==1) {
-                // Filter Application
-                std::cout << "Select the type of 3D filter to apply:" << std::endl;
-                std::cout << "1. 3D Gaussian Filter" << std::endl;
-                std::cout << "2. 3D Median Filter" << std::endl;
-                int filterType;
-                std::cin >> filterType;
-
-                FilterInputHandler3D::applyFilter(filterType, volume); // Modify applyFilter to accept outputPath
+                
+                FilterInputHandler3D::applyFilter(volume); // Modify applyFilter to accept outputPath
                 std::cout << "3D Filter applied successfully." << std::endl;
                 std::cout << "Would you like to save the slices?" << std::endl;
                 std::cout << "1. Yes" << std::endl;
@@ -98,67 +91,55 @@ int main() {
                 int saveSlices;
                 std::cin >> saveSlices;
                 if (saveSlices==1) {
-
-                    // Prompt for saving the modified image
-                    std::string outputPath;
-                    std::cout << "Enter the output folder path for the slices: ";
-                    std::cin >> outputPath; // Use this for saving slices
-
-                    
-                    // Ensure the folder exists, or create it
-                    std::filesystem::create_directories(outputPath);
-
-
-                    volume.saveSlices(outputPath);
+                    volume.saveSlices();
                 }
             } else {
                 status = false;
             }
         }
 
-
         if (boolSlice>1) {
-            //Projection application
-            std::cout << "Select the type of projection to apply:" << std::endl;
-            std::cout << "1. Max IP" << std::endl;
-            std::cout << "2. Min IP" << std::endl;
-            std::cout << "3. Average IP" << std::endl;
-            int projectionType;
-            std::cin >> projectionType;
+            // //Projection application
+            // std::cout << "Select the type of projection to apply:" << std::endl;
+            // std::cout << "1. Max IP" << std::endl;
+            // std::cout << "2. Min IP" << std::endl;
+            // std::cout << "3. Average IP" << std::endl;
+            // int projectionType;
+            // std::cin >> projectionType;
 
-            if (projectionType < 1 || projectionType > 3) {
-                std::cerr << "Invalid projection type selected." << std::endl;
-            }
-            // Get the range of slices for the projection
-            int endSlice;
-            int startSlice;
-
+            // if (projectionType < 1 || projectionType > 3) {
+            //     std::cerr << "Invalid projection type selected." << std::endl;
+            // }
+            // // Get the range of slices for the projection
+            // int endSlice;
+            // int startSlice;
             
-            std:: cout << "Enter the lower limit of slices for the projection: " << std::endl;
+            // std:: cout << "Enter the lower limit of slices for the projection: " << std::endl;
             
-            std::cin >> startSlice;
-            std:: cout << "Enter the upper limit of slices for the projection: " << std::endl;
+            // std::cin >> startSlice;
+            // std:: cout << "Enter the upper limit of slices for the projection: " << std::endl;
             
-            std::cin >> endSlice;
+            // std::cin >> endSlice;
 
-            // output vector
-            std::vector<unsigned char> output;
+            // // output vector
+            // std::vector<unsigned char> output;
 
-            // Apply the selected projection
-            switch (projectionType) {
-                case 1:
-                    output = Projections::MIP(volume, startSlice, endSlice);
-                    break;
-                case 2:
-                    output = Projections::MinIP(volume, startSlice, endSlice);
-                    break;
-                case 3:
-                    output = Projections::AIP(volume, startSlice, endSlice);
-                    break;
-                default:
-                    std::cerr << "Invalid projection type selected." << std::endl;
-                    break;
-            }       
+            // // Apply the selected projection
+            // switch (projectionType) {
+            //     case 1:
+            //         output = Projections::MIP(volume, startSlice, endSlice);
+            //         break;
+            //     case 2:
+            //         output = Projections::MinIP(volume, startSlice, endSlice);
+            //         break;
+            //     case 3:
+            //         output = Projections::AIP(volume, startSlice, endSlice);
+            //         break;
+            //     default:
+            //         std::cerr << "Invalid projection type selected." << std::endl;
+            //         break;
+            // }       
+            std::__1::vector<unsigned char> output = ProjectionInputHandler3D::applyFilter(volume);
             std::string outputPath;
             std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
             std::cin >> outputPath;     

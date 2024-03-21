@@ -5,7 +5,7 @@
 
 class FilterInputHandler3D {
 public:
-    static void applyFilter(int filterType, Volume& volume);
+    static void applyFilter(Volume& volume);
 };
 
 #endif // FILTERINPUTHANDLER3D_H

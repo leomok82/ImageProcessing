@@ -147,7 +147,6 @@ void applyGaussianFilter3D(const std::vector<std::vector<std::vector<double>>>& 
     int range = kernelSize / 2;
 
     for (int z = 0; z < depth; ++z) {
-        std::cout << "Processing slice " << z << " of " << depth << std::endl;
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
                 double filteredValue = 0.0;
@@ -211,7 +210,6 @@ void Median3DFilter::apply(Volume& volume) {
     std::vector<unsigned char> neighborhood; // This will hold the neighborhood voxels
 
     for (int z = 0; z < depth; ++z) {
-        std::cout << "Processing slice " << z << " of " << depth << std::endl;
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
                 neighborhood.clear();

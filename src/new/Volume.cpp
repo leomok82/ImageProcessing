@@ -92,12 +92,20 @@ void Volume::setData(const std::vector<unsigned char>& newData) {
     data = newData;
 }
 
-void Volume::saveSlices(const std::string& directoryPath) const {
+void Volume::saveSlices() const {
+    // Prompt for saving the modified image
+    std::string outputPath;
+    std::cout << "Enter the output folder path for the slices: ";
+    std::cin >> outputPath; // Use this for saving slices
+    // Ensure the folder exists, or create it
+    std::filesystem::create_directories(outputPath);
+
+
     int numDigits = std::to_string(depth).length();
     for (int z = 0; z < depth; ++z) {
         std::string sliceNum = std::to_string(z + 1);
         std::string leadingZeros(numDigits - sliceNum.length(), '0');
-        std::string filePath = directoryPath + "/slice_" + leadingZeros + sliceNum + ".png";
+        std::string filePath = outputPath + "/slice_" + leadingZeros + sliceNum + ".png";
         std::vector<unsigned char> sliceData(width * height);
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {

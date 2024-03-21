@@ -29,5 +29,6 @@ void testGaussianBlur();
 void testMedianBlur();
 void testBoxBlur();
 void testQuickSelect();
+void runFiltersTest();
 
 #endif // TEST_H

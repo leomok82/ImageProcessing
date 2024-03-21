@@ -15,7 +15,9 @@ std::unique_ptr<Filter> EdgeDetectionFilter::create(int type) {
             return std::make_unique<PrewittFilter>();
         case 3:
             return std::make_unique<ScharrFilter>();
-        // Add cases for additional filters as needed
+        case 4:
+            return std::make_unique<RobertsCrossFilter>();
+
         default:
             std::cerr << "Unknown edge detection filter type." << std::endl;
             return nullptr;
@@ -54,7 +56,12 @@ void setKernel(int type, int (&gx)[3][3], int (&gy)[3][3], int& kernel_size) {
             gy[2][0] = 3;  gy[2][1] = 10; gy[2][2] = 3;
             kernel_size = 3;
             break;
-        // Add more cases for additional filters...
+        case 4: // Robert
+            gx[0][0] = 1; gx[0][1] = 0; gx[1][0] = 0; gx[1][1] = -1;
+            gy[0][0] = 0; gy[0][1] = 1; gy[1][0] = -1; gy[1][1] = 0;
+            kernel_size = 2;
+            break;
+
         default:
             std::cerr << "Invalid edge detection type provided." << std::endl;
             return;
@@ -79,7 +86,7 @@ void applyEdgeDetectionFilter(unsigned char* data, int width, int height, int ch
 
     // Buffer for edge image
     std::vector<float> edges(width * height, 0.0f);
-
+    if (kernel_size == 3) {
     for (int y = 1; y < height - 1; ++y) {
         for (int x = 1; x < width - 1; ++x) {
             float sumX = 0.0f, sumY = 0.0f;
@@ -91,6 +98,21 @@ void applyEdgeDetectionFilter(unsigned char* data, int width, int height, int ch
             }
             edges[y * width + x] = std::sqrt(sumX * sumX + sumY * sumY);
         }
+    }
+    } else if (kernel_size == 2)
+    {
+        for (int y = 0; y < height - 1; ++y) {
+        for (int x = 0; x < width - 1; ++x) {
+            float sumX = 0.0f, sumY = 0.0f;
+            for (int ky = 0; ky <= 1; ky++) {
+                for (int kx = 0; kx <= 1; kx++) {
+                    sumX += gx[ky][kx] * grayscale[(y + ky) * width + (x + kx)];
+                    sumY += gy[ky][kx] * grayscale[(y + ky) * width + (x + kx)];
+                }
+            }
+            edges[y * width + x] = std::sqrt(sumX * sumX + sumY * sumY);
+        }
+    }
     }
 
     // Normalize and copy back
@@ -105,6 +127,7 @@ void applyEdgeDetectionFilter(unsigned char* data, int width, int height, int ch
 
 // SobelFilter apply method
 void SobelFilter::apply(unsigned char* data, int width, int height, int channels) {
+    std::cout << "Sobel Filter applied\n";
     int gx[3][3], gy[3][3], kernel_size;
     setKernel(1, gx, gy, kernel_size); // Sobel
     applyEdgeDetectionFilter(data, width, height, channels, gx, gy, kernel_size);
@@ -112,6 +135,7 @@ void SobelFilter::apply(unsigned char* data, int width, int height, int channels
 
 // PrewittFilter apply method
 void PrewittFilter::apply(unsigned char* data, int width, int height, int channels) {
+    std::cout << "Prewitt Filter applied\n";
     int gx[3][3], gy[3][3], kernel_size;
     setKernel(2, gx, gy, kernel_size); // Prewitt
     applyEdgeDetectionFilter(data, width, height, channels, gx, gy, kernel_size);
@@ -119,7 +143,14 @@ void PrewittFilter::apply(unsigned char* data, int width, int height, int channe
 
 // ScharrFilter apply method
 void ScharrFilter::apply(unsigned char* data, int width, int height, int channels) {
+    std::cout << "Scharr Filter applied\n";
     int gx[3][3], gy[3][3], kernel_size;
     setKernel(3, gx, gy, kernel_size); // Scharr
+    applyEdgeDetectionFilter(data, width, height, channels, gx, gy, kernel_size);
+}
+void RobertsCrossFilter::apply(unsigned char* data, int width, int height, int channels) {
+    int gx[3][3], gy[3][3], kernel_size;
+    std::cout << "Roberts Cross Filter applied\n";
+    setKernel(4, gx, gy, kernel_size); // Robert
     applyEdgeDetectionFilter(data, width, height, channels, gx, gy, kernel_size);
 }

@@ -77,7 +77,6 @@ int main() {
                 status = false;
             }
             
-            
             std::cout << "Would you like to filter?" << std::endl;
             std::cout << "1. Yes" << std::endl;
             std::cout << "2. No" << std::endl;

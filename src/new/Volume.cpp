@@ -1,63 +1,68 @@
 #include "Volume.h"
+#include "Image.h"
+#include "Utils.h"
 #include "stb_image_write.h"
 #include <iostream>
 #include <vector>
 #include <filesystem>
 #include <regex>
 #include <map>
+#include <set>
 
 Volume::Volume() : width(0), height(0), depth(0) {}
 
 Volume::~Volume() {}
 
 bool Volume::loadFromFolder(const std::string& folderpath) {
-    std::regex indexPattern("(\\d+)");
-    std::smatch match;
-    std::map<int, std::string> sortedFiles;
+    std::vector<std::string> filenames;
 
+    const std::set<std::string> allowedExtensions = {".png", ".jpg", ".jpeg", ".bmp", ".tiff"};
+
+    // Collect valid image filenames
     for (const auto& entry : std::filesystem::directory_iterator(folderpath)) {
         if (entry.is_regular_file()) {
-            std::string filename = entry.path().filename().string();
-            // Skip .DS_Store and other non-matching files
-            if (std::regex_search(filename, match, indexPattern)) {
-                int index = std::stoi(match[1].str());
-                sortedFiles[index] = entry.path().string();
+            std::string extension = entry.path().extension().string();
+            std::transform(extension.begin(), extension.end(), extension.begin(),
+                           [](unsigned char c) { return std::tolower(c); });
+            if (allowedExtensions.find(extension) != allowedExtensions.end()) {
+                filenames.push_back(entry.path());
             } else {
-                std::cerr << "Warning: Skipping non-indexed file: " << filename << std::endl;
+                std::cerr << "Skipping non-image file: " << entry.path().filename().string() << std::endl;
             }
         }
     }
 
-    // Now sortedFiles contains all files, sorted by their extracted index
-    int w = 0, h = 0, c = 0;
+    quickSortFilenames(filenames, 0, filenames.size() - 1);
+
+    std::map<int, std::string> sortedFiles;
+    for (int i = 0; i < filenames.size(); ++i) {
+        sortedFiles[i] = filenames[i];
+    }
+
+    // Original code follows, using sortedFiles as before
+    auto firstEntry = sortedFiles.begin();
+    Image firstImg(firstEntry->second);
+    int imgWidth, imgHeight, imgChannels;
+    firstImg.getDimensions(imgWidth, imgHeight, imgChannels);
+    width = imgWidth;
+    height = imgHeight;
+    int channels = imgChannels; // Assuming there's a channels attribute
+    data.reserve(width * height * channels * sortedFiles.size());
+
     for (const auto& [index, filePath] : sortedFiles) {
         Image img(filePath);
         
-        if (!w && !h) {
-            img.getDimensions(w, h, c);
-            width = w;
-            height = h;
-            depth = 0;
-            data.reserve(width * height * c);
-        }
-        
-        int imgWidth, imgHeight, imgChannels;
         img.getDimensions(imgWidth, imgHeight, imgChannels);
-        if (imgWidth != w || imgHeight != h || imgChannels != c) {
+        if (imgWidth != width || imgHeight != height || imgChannels != channels) {
             std::cerr << "Image dimensions or channel count do not match: " << filePath << std::endl;
             return false;
         }
         
         unsigned char* imgData = img.getData();
-        data.insert(data.end(), imgData, imgData + (w * h * c));
-        depth++;
+        data.insert(data.end(), imgData, imgData + (imgWidth * imgHeight * channels));
     }
 
-    if (depth == 0) {
-        std::cerr << "No images loaded from folder: " << folderpath << std::endl;
-        return false;
-    }
-
+    depth = sortedFiles.size();
     return true;
 }
 

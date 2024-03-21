@@ -70,10 +70,10 @@ void setKernel(int type, int (&gx)[3][3], int (&gy)[3][3], int& kernel_size) {
 
 // Common apply function for edge detection
 void applyEdgeDetectionFilter(unsigned char* data, int width, int height, int channels, int gx[3][3], int gy[3][3], int kernel_size) {
-    if (channels < 3) {
-        std::cerr << "Edge detection requires an image with at least 3 channels (RGB)." << std::endl;
-        return;
-    }
+    // if (channels < 3) {
+    //     std::cerr << "Edge detection requires an image with at least 3 channels (RGB)." << std::endl;
+    //     return;
+    // }
 
     // Convert image to grayscale
     std::vector<float> grayscale(width * height, 0.0f);
@@ -120,9 +120,17 @@ void applyEdgeDetectionFilter(unsigned char* data, int width, int height, int ch
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             unsigned char edgeVal = static_cast<unsigned char>((edges[y * width + x] / maxVal) * 255);
-            std::fill_n(&data[(y * width + x) * channels], channels, edgeVal);
+            for (int c = 0; c < channels; ++c) {
+                // Set RGB channels to the edge value or leave the alpha channel fully opaque
+                if (c < 3) { // Assuming the first three channels are RGB
+                    data[(y * width + x) * channels + c] = edgeVal;
+                } else if (c == 3) { // Specifically handle the alpha channel, if present
+                    data[(y * width + x) * channels + c] = 255; // Set alpha to fully opaque
+                }
+            }
         }
     }
+
 }
 
 // SobelFilter apply method

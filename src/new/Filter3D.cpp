@@ -181,7 +181,7 @@ void Gaussian3DFilter::apply(Volume& volume) {
     int width, height, depth;
     volume.getDimensions(width, height, depth);
 
-    double sigma = 30;
+    double sigma = 2.0;
 
     // Generate the 3D Gaussian kernel
     auto kernel = createGaussianKernel(kernelSize, sigma);

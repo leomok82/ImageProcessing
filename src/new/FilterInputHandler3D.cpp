@@ -20,7 +20,7 @@ void FilterInputHandler3D::applyFilter(int filterType, Volume& volume) {
             break;
         }
         case 2: { // 3D Median Filter - Placeholder
-            filter = std::make_unique<Median3DFilter>(kernelSize); // Placeholder for future functionality
+            filter = std::make_unique<Median3DFilter>(kernelSize); 
             break;
         }
         default:

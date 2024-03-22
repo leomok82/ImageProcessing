@@ -1,11 +1,18 @@
-// Projections.cpp
+/**
+ * Group Name: Yen
+ * Antony Krymski (agk123)
+ * Leo Mok (edsml-lm1823)
+ * Bofan Liu (edsml-bl1023)
+ * Zeyi Ke (edsml-zk23)
+ * Tianzi Zhang (acse-tz2523)
+ * Yifan Wu (acse-yw11823)
+ */
+
 #include "Projections.h"
 #include <vector>
 #include <iostream>
 
 std::vector<unsigned char> Projections::MinIP(const Volume& volume, int startSlice, int endSlice) {
-    std::cout << "Dummy MinIP from slices " << startSlice << " to " << endSlice << std::endl;
-
     //set the dimensions
     int channels = 3;
     int width, height, depth;
@@ -44,7 +51,6 @@ std::vector<unsigned char> Projections::MinIP(const Volume& volume, int startSli
 
 
 std::vector<unsigned char> Projections::MIP(const Volume& volume, int startSlice, int endSlice) {
-    std::cout << "Dummy MIP from slices " << startSlice << " to " << endSlice << std::endl;
     //set the dimensions
     int channels = 3;
     int width, height, depth;

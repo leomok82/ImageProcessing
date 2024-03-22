@@ -1,3 +1,13 @@
+/**
+ * Group Name: Yen
+ * Antony Krymski (agk123)
+ * Leo Mok (edsml-lm1823)
+ * Bofan Liu (edsml-bl1023)
+ * Zeyi Ke (edsml-zk23)
+ * Tianzi Zhang (acse-tz2523)
+ * Yifan Wu (acse-yw11823)
+ */
+
 #include "Volume.h"
 #include "Image.h"
 #include "Utils.h"
@@ -5,7 +15,6 @@
 #include <iostream>
 #include <vector>
 #include <filesystem>
-#include <regex>
 #include <map>
 #include <set>
 

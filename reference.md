@@ -1,0 +1,11 @@
+https://chat.openai.com/share/5cde9e88-97e5-48c4-8ee7-f88ee45bb6ba
+https://chat.openai.com/share/6f11849f-2b9a-4f6f-a514-4d1e8587e924
+https://chat.openai.com/share/31ec3d00-0072-4384-9cf6-b25bba7ad8f2
+https://chat.openai.com/share/c6639fad-9927-4ed1-bf3f-d3a7e69562fa
+https://chat.openai.com/share/7af5c8a8-b327-4a0a-bb25-9bd842bd5e00
+https://chat.openai.com/share/0a317cb5-512b-493d-84e5-e86c48fcb028
+https://chat.openai.com/share/55c2b7b3-fa2d-4a80-9d5b-4e07528076dc
+https://www.sciencedirect.com/science/article/pii/S0045790615002827
+https://stackoverflow.com/questions/39118528/rgb-to-hsl-conversion
+https://towardsdatascience.com/histogram-equalization-5d1013626e64
+https://www.sciencedirect.com/topics/engineering/pepper-noise

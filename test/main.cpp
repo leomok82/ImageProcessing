@@ -4,7 +4,9 @@
 #include "test2D.h"
 #include <cmath>
 #include <numeric>
-x
+
+// complie using "g++ -o test test2D.cpp ../src/new/ColourFilterCorrection.cpp ../src/new/ColorConversion.cpp ../src/new/ImageBlurFilter.cpp
+// ../src/new/EdgeDetectionFilter.cpp main.cpp -std=c++17 "
 int main() {
     testGrayscaleFilter();
     testBrightnessFilter();
@@ -15,13 +17,10 @@ int main() {
     testQuickSelect();
     testGaussianBlur();
     testBoxBlur();
-    // runFiltersTest();
     testSobelFilter();
     testPrewittFilter();
     testScharrFilter();
     testRobertFilter();
-
-    // testLoadApplyAndSaveImage();
     return 0;
 }
 

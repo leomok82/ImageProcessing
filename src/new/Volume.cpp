@@ -95,6 +95,12 @@ void Volume::getDimensions(int& w, int& h, int& d) const {
     h = height;
     d = depth;
 }
+// Methods to set Dimensions, just for tests.
+void Volume::setDimensions(int w, int h, int d){
+    width = w;
+    height = h;
+    depth = d;
+}
 
 // Method to get a reference to the volume data
 const std::vector<unsigned char>& Volume::getData() const {

@@ -1,4 +1,13 @@
-// Slice.cpp
+/**
+ * Group Name: Yen
+ * Antony Krymski (agk123)
+ * Leo Mok (edsml-lm1823)
+ * Bofan Liu (edsml-bl1023)
+ * Zeyi Ke (edsml-zk23)
+ * Tianzi Zhang (acse-tz2523)
+ * Yifan Wu (acse-yw11823)
+ */
+
 #include "Slice.h"
 #include "Volume.h"
 #include <algorithm> // For std::clamp

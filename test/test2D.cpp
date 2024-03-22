@@ -1,7 +1,7 @@
 #include "test2D.h"
-#include "../src/new/ColourFilterCorrection.h"
-#include "../src/new/ImageBlurFilter.h"
-#include "../src/new/EdgeDetectionFilter.h"
+#include "../src/ColourFilterCorrection.h"
+#include "../src/ImageBlurFilter.h"
+#include "../src/EdgeDetectionFilter.h"
 
 
 #include <iostream>

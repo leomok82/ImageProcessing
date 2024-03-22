@@ -2,11 +2,11 @@
 #define TEST_2D_H
 
 #include <string>
-#include "../src/new/ColourFilterCorrection.h"
-#include "../src/new/EdgeDetectionFilter.h"
-#include "../src/new/ImageBlurFilter.h"
-#include "../src/new/Image.h"
-#include "../src/new/Volume.h"
+#include "../src/ColourFilterCorrection.h"
+#include "../src/EdgeDetectionFilter.h"
+#include "../src/ImageBlurFilter.h"
+#include "../src/Image.h"
+#include "../src/Volume.h"
 
 #include <iostream>
 #include <cmath>

@@ -182,6 +182,10 @@ void Gaussian3DFilter::apply(Volume& volume) {
 
     double sigma = 2.0;
 
+    // ask user for sigma value and then set it to that
+    std::cout << "Enter the sigma value: ";
+    std::cin >> sigma;
+
     auto kernel = createGaussianKernel(kernelSize, sigma);
 
     std::vector<unsigned char> data = volume.getData();

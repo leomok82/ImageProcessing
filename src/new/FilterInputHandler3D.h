@@ -1,4 +1,9 @@
 /**
+ * @file FilterInputHandler3D.h
+ * @brief This file contains the declaration of the FilterInputHandler3D class.
+ * 
+ * The FilterInputHandler3D class provides a static method to apply a filter to a Volume object.
+ * 
  * Group Name: Yen
  * Antony Krymski (agk123)
  * Leo Mok (edsml-lm1823)
@@ -15,6 +20,13 @@
 
 class FilterInputHandler3D {
 public:
+    /**
+     * @brief Applies a filter to the given Volume object.
+     * 
+     * This method modifies the given Volume object by applying a filter to it.
+     * 
+     * @param volume The Volume object to apply the filter to.
+     */
     static void applyFilter(Volume& volume);
 };
 

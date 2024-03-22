@@ -1,0 +1,82 @@
+\doxysection{Gaussian\+Blur\+Filter Class Reference}
+\hypertarget{class_gaussian_blur_filter}{}\label{class_gaussian_blur_filter}\index{GaussianBlurFilter@{GaussianBlurFilter}}
+
+
+Applies a Gaussian blur filter to an image.  
+
+
+
+
+{\ttfamily \#include $<$Image\+Blur\+Filter.\+h$>$}
+
+Inheritance diagram for Gaussian\+Blur\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_gaussian_blur_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_gaussian_blur_filter_a8e6a0bbb6003170f91afcb8a2570caeb}\label{class_gaussian_blur_filter_a8e6a0bbb6003170f91afcb8a2570caeb} 
+{\bfseries Gaussian\+Blur\+Filter} (int kernel\+Size, double sigma)
+\item 
+void \mbox{\hyperlink{class_gaussian_blur_filter_a843a577a3753a4802e42aecf260e7184}{apply}} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Image\+Blur\+Filter} (int kernel\+Size)
+\item 
+virtual void {\bfseries apply} (\mbox{\hyperlink{class_image}{Image}} \&img)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type, int kernel\+Size)
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type, int kernel\+Size, double sigma)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries kernel\+Size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a Gaussian blur filter to an image. 
+
+Utilizes a Gaussian kernel to apply a blur effect, smoothing the image while preserving edge integrity better than a simple average. This method calculates Gaussian weights based on the provided sigma and applies the blur both horizontally and vertically.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to the image data array. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of color channels in the image data. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_gaussian_blur_filter_a843a577a3753a4802e42aecf260e7184}\label{class_gaussian_blur_filter_a843a577a3753a4802e42aecf260e7184} 
+\index{GaussianBlurFilter@{GaussianBlurFilter}!apply@{apply}}
+\index{apply@{apply}!GaussianBlurFilter@{GaussianBlurFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Gaussian\+Blur\+Filter\+::apply (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{channels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter}{Filter}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Image\+Blur\+Filter.\+h\item 
+Image\+Blur\+Filter.\+cpp\end{DoxyCompactItemize}

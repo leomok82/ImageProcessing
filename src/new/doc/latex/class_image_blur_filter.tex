@@ -1,0 +1,71 @@
+\doxysection{Image\+Blur\+Filter Class Reference}
+\hypertarget{class_image_blur_filter}{}\label{class_image_blur_filter}\index{ImageBlurFilter@{ImageBlurFilter}}
+
+
+Factory method to create image blur filters.  
+
+
+
+
+{\ttfamily \#include $<$Image\+Blur\+Filter.\+h$>$}
+
+Inheritance diagram for Image\+Blur\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_image_blur_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_image_blur_filter_ace40d0593096faec42cb8ec55b66ecaf}\label{class_image_blur_filter_ace40d0593096faec42cb8ec55b66ecaf} 
+{\bfseries Image\+Blur\+Filter} (int kernel\+Size)
+\item 
+\Hypertarget{class_image_blur_filter_a82d83b433c257c8c673b461a4a1942f0}\label{class_image_blur_filter_a82d83b433c257c8c673b461a4a1942f0} 
+virtual void {\bfseries apply} (\mbox{\hyperlink{class_image}{Image}} \&img)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_filter}{Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries apply} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels)=0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_image_blur_filter_add121f117a0148fb3e7893fe5f7306ef}\label{class_image_blur_filter_add121f117a0148fb3e7893fe5f7306ef} 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type, int kernel\+Size)
+\item 
+\Hypertarget{class_image_blur_filter_a234f5aac581c49a7eede434d08726255}\label{class_image_blur_filter_a234f5aac581c49a7eede434d08726255} 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type, int kernel\+Size, double sigma)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_image_blur_filter_a9c339f436f988795f5284818308a1403}\label{class_image_blur_filter_a9c339f436f988795f5284818308a1403} 
+int {\bfseries kernel\+Size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Factory method to create image blur filters. 
+
+Creates and returns a unique pointer to a \doxylink{class_filter}{Filter} object based on the specified blur type and kernel size. For Gaussian blur filters, an overloaded version of this method also accepts a sigma value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The type of blur filter to create. 1 = Median Blur, 2 = Box Blur, 3 = Gaussian Blur (requires sigma parameter in the overloaded function). \\
+\hline
+{\em kernel\+Size} & The size of the kernel to be used by the blur filter. For Gaussian blur, it also determines the spread of the blur. \\
+\hline
+{\em sigma} & (Optional) The standard deviation of the Gaussian distribution used for the Gaussian blur. Only applicable when type is 3 for Gaussian Blur. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::unique\+\_\+ptr$<$\+Filter$>$ A unique pointer to the created blur filter, or nullptr if an invalid type is specified. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Image\+Blur\+Filter.\+h\item 
+Image\+Blur\+Filter.\+cpp\end{DoxyCompactItemize}

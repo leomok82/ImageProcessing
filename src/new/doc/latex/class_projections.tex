@@ -1,0 +1,89 @@
+\doxysection{Projections Class Reference}
+\hypertarget{class_projections}{}\label{class_projections}\index{Projections@{Projections}}
+
+
+Applies the Minimum Intensity Projection (Min\+IP) to a volume.  
+
+
+
+
+{\ttfamily \#include $<$Projections.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_projections_a0a790d7fc72f119b2132e04db9767ffe}\label{class_projections_a0a790d7fc72f119b2132e04db9767ffe} 
+static std\+::vector$<$ unsigned char $>$ {\bfseries AIP} (const \mbox{\hyperlink{class_volume}{Volume}} \&volume, int start\+Slice, int end\+Slice)
+\item 
+\Hypertarget{class_projections_ac2eabb5f64d15f8babb736ed41efa0b6}\label{class_projections_ac2eabb5f64d15f8babb736ed41efa0b6} 
+static std\+::vector$<$ unsigned char $>$ {\bfseries MIP} (const \mbox{\hyperlink{class_volume}{Volume}} \&volume, int start\+Slice, int end\+Slice)
+\item 
+\Hypertarget{class_projections_ab257372461a1122931d528144d01121a}\label{class_projections_ab257372461a1122931d528144d01121a} 
+static std\+::vector$<$ unsigned char $>$ {\bfseries Min\+IP} (const \mbox{\hyperlink{class_volume}{Volume}} \&volume, int start\+Slice, int end\+Slice)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies the Minimum Intensity Projection (Min\+IP) to a volume. 
+
+Generates a 2D projection image from a specified range of slices in a 3D volume by taking the minimum intensity value across the z-\/axis (depth) for each pixel. This method is particularly useful for visualizing structures with low intensity.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & The \doxylink{class_volume}{Volume} object containing the volumetric data. \\
+\hline
+{\em start\+Slice} & The starting slice index for the projection range. \\
+\hline
+{\em end\+Slice} & The ending slice index for the projection range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$unsigned char$>$ A vector containing the pixel data of the generated 2D Min\+IP image.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The method returns an empty image (vector) if an invalid range is provided.
+\end{DoxyNote}
+Applies the Maximum Intensity Projection (MIP) to a volume.
+
+Generates a 2D projection image from a specified range of slices in a 3D volume by taking the maximum intensity value across the z-\/axis (depth) for each pixel. MIP is widely used in medical imaging to enhance the visibility of high-\/intensity structures.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & The \doxylink{class_volume}{Volume} object containing the volumetric data. \\
+\hline
+{\em start\+Slice} & The starting slice index for the projection range. \\
+\hline
+{\em end\+Slice} & The ending slice index for the projection range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$unsigned char$>$ A vector containing the pixel data of the generated 2D MIP image.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The method returns an empty image (vector) if an invalid range is provided.
+\end{DoxyNote}
+Applies the Average Intensity Projection (AIP) to a volume.
+
+Generates a 2D projection image from a specified range of slices in a 3D volume by averaging the intensity values across the z-\/axis (depth) for each pixel. AIP can be used to visualize the average properties of the volume across a specific depth range.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & The \doxylink{class_volume}{Volume} object containing the volumetric data. \\
+\hline
+{\em start\+Slice} & The starting slice index for the projection range. \\
+\hline
+{\em end\+Slice} & The ending slice index for the projection range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$unsigned char$>$ A vector containing the pixel data of the generated 2D AIP image.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The method returns an empty image (vector) if an invalid range is provided. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Projections.\+h\item 
+Projections.\+cpp\end{DoxyCompactItemize}

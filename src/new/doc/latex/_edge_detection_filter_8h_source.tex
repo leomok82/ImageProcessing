@@ -1,0 +1,55 @@
+\doxysection{Edge\+Detection\+Filter.\+h}
+\hypertarget{_edge_detection_filter_8h_source}{}\label{_edge_detection_filter_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ EDGEDETECTIONFILTER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ EDGEDETECTIONFILTER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Filter.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ @brief\ Creates\ an\ edge\ detection\ filter\ based\ on\ the\ specified\ type.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ This\ static\ method\ serves\ as\ a\ factory\ for\ creating\ different\ types\ of\ edge\ detection}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ filters.\ Each\ filter\ type\ applies\ a\ specific\ algorithm\ for\ edge\ detection\ in\ images.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ @param\ type\ An\ integer\ specifying\ the\ filter\ type\ to\ be\ created.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ 1\ -\/\ Sobel\ filter,}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ 2\ -\/\ Prewitt\ filter,}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ 3\ -\/\ Scharr\ filter,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ 4\ -\/\ Roberts\ Cross\ filter.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ @return\ A\ unique\_ptr\ to\ a\ Filter\ object\ corresponding\ to\ the\ requested\ type.\ Returns}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ nullptr\ if\ an\ unknown\ type\ is\ specified.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Abstract\ base\ class\ for\ edge\ detection\ filters}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_edge_detection_filter}{EdgeDetectionFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_filter}{Filter}}\ \{}
+\DoxyCodeLine{00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<Filter>\ create(\textcolor{keywordtype}{int}\ type);}
+\DoxyCodeLine{00025\ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00038\ \textcolor{comment}{//\ Sobel\ Filter}}
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_sobel_filter}{SobelFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_edge_detection_filter}{EdgeDetectionFilter}}\ \{}
+\DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ Prewitt\ Filter}}
+\DoxyCodeLine{00056\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_prewitt_filter}{PrewittFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_edge_detection_filter}{EdgeDetectionFilter}}\ \{}
+\DoxyCodeLine{00057\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{//\ Custom\ Edge\ Detection\ Filter\ (Example:\ Scharr)}}
+\DoxyCodeLine{00073\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_scharr_filter}{ScharrFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_edge_detection_filter}{EdgeDetectionFilter}}\ \{}
+\DoxyCodeLine{00074\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00076\ \};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_roberts_cross_filter}{RobertsCrossFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_edge_detection_filter}{EdgeDetectionFilter}}\ \{}
+\DoxyCodeLine{00090\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00092\ \};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ EDGEDETECTIONFILTER\_H}}
+
+\end{DoxyCode}

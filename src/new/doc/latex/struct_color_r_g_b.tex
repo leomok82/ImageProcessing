@@ -1,0 +1,43 @@
+\doxysection{Color\+RGB Struct Reference}
+\hypertarget{struct_color_r_g_b}{}\label{struct_color_r_g_b}\index{ColorRGB@{ColorRGB}}
+
+
+Converts an RGB color value to HSV (Hue, Saturation, Value).  
+
+
+
+
+{\ttfamily \#include $<$Color\+Conversion.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_color_r_g_b_a4dd0552df0d02c4a33c7023cd37e0129}\label{struct_color_r_g_b_a4dd0552df0d02c4a33c7023cd37e0129} 
+unsigned char {\bfseries r}
+\item 
+\Hypertarget{struct_color_r_g_b_a4b676980bb5743078fd7e3f03b7e1931}\label{struct_color_r_g_b_a4b676980bb5743078fd7e3f03b7e1931} 
+unsigned char {\bfseries g}
+\item 
+\Hypertarget{struct_color_r_g_b_a39617e053873c3d7cdf19e6fed5f9bfe}\label{struct_color_r_g_b_a39617e053873c3d7cdf19e6fed5f9bfe} 
+unsigned char {\bfseries b}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Converts an RGB color value to HSV (Hue, Saturation, Value). 
+
+The function converts an RGB color value to its equivalent in HSV color space. RGB values must be in the range \mbox{[}0, 255\mbox{]}. The Hue (H) is calculated on a scale of \mbox{[}0, 360), Saturation (S) and Value (V) are calculated on a scale of \mbox{[}0, 1\mbox{]}. This conversion is useful for color transformations that are more intuitive in the HSV space.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rgb} & The RGB color value to convert. It is an object of \doxylink{struct_color_r_g_b}{Color\+RGB}, which contains three properties\+: r, g, and b, each representing the red, green, and blue components of the color, respectively. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_color_h_s_v}{Color\+HSV} The HSV representation of the input color. It is an object of \doxylink{struct_color_h_s_v}{Color\+HSV}, which contains three properties\+: h, s, and v. h (hue) is in degrees \mbox{[}0, 360), s (saturation) and v (value) are in \mbox{[}0, 1\mbox{]}. 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Color\+Conversion.\+h\end{DoxyCompactItemize}

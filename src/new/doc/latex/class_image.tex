@@ -1,0 +1,52 @@
+\doxysection{Image Class Reference}
+\hypertarget{class_image}{}\label{class_image}\index{Image@{Image}}
+
+
+Constructs an \doxylink{class_image}{Image} object and loads image data from a specified path.  
+
+
+
+
+{\ttfamily \#include $<$Image.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_image_a910ae06464143720b7b77990a1d59734}\label{class_image_a910ae06464143720b7b77990a1d59734} 
+{\bfseries Image} (const std\+::string \&path)
+\item 
+\Hypertarget{class_image_a535a8d1fa466148c27e8af2218a276bd}\label{class_image_a535a8d1fa466148c27e8af2218a276bd} 
+bool {\bfseries save} (const std\+::string \&path)
+\item 
+\Hypertarget{class_image_afdc94363e1071ab882685ad52633b64e}\label{class_image_afdc94363e1071ab882685ad52633b64e} 
+void {\bfseries get\+Dimensions} (int \&width, int \&height, int \&channels) const
+\item 
+\Hypertarget{class_image_af64a18013b10c55f92dc79822c6954d6}\label{class_image_af64a18013b10c55f92dc79822c6954d6} 
+unsigned char \texorpdfstring{$\ast$}{*} {\bfseries get\+Data} () const
+\item 
+\Hypertarget{class_image_ac2513c9cc45162f68ad6524074fd8eec}\label{class_image_ac2513c9cc45162f68ad6524074fd8eec} 
+unsigned char \& {\bfseries at} (int x, int y, int c)
+\item 
+\Hypertarget{class_image_a71dc18d0375f39a53ab0be801e0af4f8}\label{class_image_a71dc18d0375f39a53ab0be801e0af4f8} 
+bool {\bfseries is\+Valid\+Image} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Constructs an \doxylink{class_image}{Image} object and loads image data from a specified path. 
+
+Manages the loading, manipulation, and saving of image data.
+
+The constructor checks if the provided path is a directory or an invalid image path. If the path is valid and points to an image file, it attempts to load the image data. On success, the image data, dimensions, and channel count are stored.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The filesystem path to the image file to be loaded.\\
+\hline
+\end{DoxyParams}
+This class encapsulates functionality for handling images. It supports loading images from files, accessing and modifying image data, and saving images back to disk. The class utilizes the \doxylink{stb__image_8h_source}{stb\+\_\+image.\+h} and \doxylink{stb__image__write_8h_source}{stb\+\_\+image\+\_\+write.\+h} libraries for image operations. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Image.\+h\item 
+Image.\+cpp\end{DoxyCompactItemize}

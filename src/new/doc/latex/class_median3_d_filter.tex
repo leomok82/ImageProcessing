@@ -1,0 +1,62 @@
+\doxysection{Median3\+DFilter Class Reference}
+\hypertarget{class_median3_d_filter}{}\label{class_median3_d_filter}\index{Median3DFilter@{Median3DFilter}}
+
+
+Applies a 3D Median filter to a \doxylink{class_volume}{Volume} object.  
+
+
+
+
+{\ttfamily \#include $<$Filter3\+D.\+h$>$}
+
+Inheritance diagram for Median3\+DFilter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_median3_d_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_median3_d_filter_a351651057060a44094d05c2d63a63f96}\label{class_median3_d_filter_a351651057060a44094d05c2d63a63f96} 
+{\bfseries Median3\+DFilter} (int kernel\+Size)
+\item 
+void \mbox{\hyperlink{class_median3_d_filter_a510ca1859142d0f4f3e5c268abc1809c}{apply}} (\mbox{\hyperlink{class_volume}{Volume}} \&volume) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_filter3_d}{Filter3D}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter3_d}{Filter3D}} $>$ {\bfseries create} (int type, int kernel\+Size)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a 3D Median filter to a \doxylink{class_volume}{Volume} object. 
+
+This method applies a Median filter to the volume contained within the \doxylink{class_volume}{Volume} object, using a specified kernel size. The Median filter is effective for removing noise while preserving edges by replacing each voxel\textquotesingle{}s value with the median of its neighborhood. The method iterates through each voxel in the volume, calculates the median of the voxels within the kernel\textquotesingle{}s range, and updates the voxel value accordingly.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & A reference to the \doxylink{class_volume}{Volume} object containing the volumetric data to be filtered. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_median3_d_filter_a510ca1859142d0f4f3e5c268abc1809c}\label{class_median3_d_filter_a510ca1859142d0f4f3e5c268abc1809c} 
+\index{Median3DFilter@{Median3DFilter}!apply@{apply}}
+\index{apply@{apply}!Median3DFilter@{Median3DFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Median3\+DFilter\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_volume}{Volume}} \&}]{volume }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter3_d}{Filter3D}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Filter3\+D.\+h\item 
+Filter3\+D.\+cpp\end{DoxyCompactItemize}

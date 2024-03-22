@@ -1,0 +1,50 @@
+\doxysection{Colour\+Correction\+Filter Class Reference}
+\hypertarget{class_colour_correction_filter}{}\label{class_colour_correction_filter}\index{ColourCorrectionFilter@{ColourCorrectionFilter}}
+
+
+Creates and returns a unique\+\_\+ptr to a \doxylink{class_filter}{Filter} object based on the specified type.  
+
+
+
+
+{\ttfamily \#include $<$Colour\+Filter\+Correction.\+h$>$}
+
+Inheritance diagram for Colour\+Correction\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.024096cm]{class_colour_correction_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_colour_correction_filter_a1a8e7655135a51cece0957703e38d237}\label{class_colour_correction_filter_a1a8e7655135a51cece0957703e38d237} 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_filter}{Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries apply} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels)=0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Creates and returns a unique\+\_\+ptr to a \doxylink{class_filter}{Filter} object based on the specified type. 
+
+This factory method supports the creation of various filter types for colour correction including grayscale, brightness adjustment, histogram equalization, thresholding, and salt and pepper noise addition. The method prompts the user for additional parameters required by certain filters, such as the brightness delta or the noise percentage.
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The type of filter to create. The supported types are\+: 1 for Grayscale, 2 for Brightness, 3 for Histogram Equalization, 4 for Thresholding, 5 for Salt and Pepper Noise. Any other value will result in a nullptr being returned. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::unique\+\_\+ptr$<$\+Filter$>$ A unique pointer to the created filter object, or nullptr if an unknown filter type is specified. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Colour\+Filter\+Correction.\+h\item 
+Colour\+Filter\+Correction.\+cpp\end{DoxyCompactItemize}

@@ -24,11 +24,8 @@ void SliceInputHandler::applySlice(const Volume& volume, int width, int height, 
     std::cout << "Enter the slice number (coordinate indices start from 1): ";
     std::cin >> sliceNumber;
 
-// Validate the slice number based on the chosen plane
+    // Validate the slice number based on the chosen plane
     bool isValidSlice = true;
-    std::cout << "width: " << width << std::endl;
-    std::cout << "height: " << height << std::endl;
-    std::cout << "depth: " << depth << std::endl;
 
     if ((plane == "yz" && (sliceNumber < 1 || sliceNumber > width)) ||
         (plane == "xz" && (sliceNumber < 1 || sliceNumber > height)) ||
@@ -40,14 +37,18 @@ void SliceInputHandler::applySlice(const Volume& volume, int width, int height, 
     if (isValidSlice) {
         // Create a slice
         Slice slice = Slice::fromVolume(volume, plane, sliceNumber);
-
-        // Save the slice
-        std::string outputPath;
-        std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
-        std::cin >> outputPath;
-        slice.saveToFile(outputPath);
-        std::cout << "Slice saved successfully to " << outputPath << std::endl;
+        std::string saveOption;
+        std::cout << "Do you want to save slices? (y/n): ";
+        std::cin >> saveOption;
+        if (saveOption == "y" || saveOption == "Y") {
+            // Save the slice
+            std::string outputPath;
+            std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
+            std::cin >> outputPath;
+            slice.saveToFile(outputPath);
+            std::cout << "Slice saved successfully to " << outputPath << std::endl;
+        } 
     } else {
-        std::cout << "Slice number not valid" << std::endl;
+    std::cout << "Slice number not valid" << std::endl;
     }
 }

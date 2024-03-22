@@ -3,9 +3,16 @@
 #include "Filter3D.h"
 #include <iostream>
 
-void FilterInputHandler3D::applyFilter(int filterType, Volume& volume) {
+void FilterInputHandler3D::applyFilter(Volume& volume) {
     std::unique_ptr<Filter3D> filter;
     int kernelSize;
+
+    // Filter Application
+    std::cout << "Select the type of 3D filter to apply:" << std::endl;
+    std::cout << "1. 3D Gaussian Filter" << std::endl;
+    std::cout << "2. 3D Median Filter" << std::endl;
+    int filterType;
+    std::cin >> filterType;
 
     std::cout << "Enter kernel size for the 3D Filter (3 for 3x3x3, 5 for 5x5x5): ";
     std::cin >> kernelSize;

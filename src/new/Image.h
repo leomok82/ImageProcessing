@@ -2,8 +2,6 @@
 #define IMAGE_H
 
 #include <string>
-#include "stb_image.h"
-#include "stb_image_write.h"
 
 class Image {
 public:
@@ -11,14 +9,14 @@ public:
     ~Image();
     bool save(const std::string& path);
     void getDimensions(int& width, int& height, int& channels) const;
-    unsigned char* getData() const; // Method to access the image data
-    unsigned char &at(int x, int y, int c);
-    // void setData(const unsigned char *newData, int newSize);
-    // void setPixel(int x, int y, int c, unsigned char value);
+    unsigned char* getData() const;
+    unsigned char& at(int x, int y, int c);
+    bool isValidImage() const; // New method to check if the image is valid
 
 private:
     unsigned char* data;
     int width, height, channels;
+    bool isValid; // New private member to store the image validity
 };
 
 #endif // IMAGE_H

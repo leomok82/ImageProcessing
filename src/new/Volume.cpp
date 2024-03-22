@@ -18,18 +18,32 @@ bool Volume::loadFromFolder(const std::string& folderpath) {
 
     const std::set<std::string> allowedExtensions = {".png", ".jpg", ".jpeg", ".bmp", ".tiff"};
 
-    // Collect valid image filenames
-    for (const auto& entry : std::filesystem::directory_iterator(folderpath)) {
-        if (entry.is_regular_file()) {
-            std::string extension = entry.path().extension().string();
-            std::transform(extension.begin(), extension.end(), extension.begin(),
-                           [](unsigned char c) { return std::tolower(c); });
-            if (allowedExtensions.find(extension) != allowedExtensions.end()) {
-                filenames.push_back(entry.path());
-            } else {
-                std::cerr << "Skipping non-image file: " << entry.path().filename().string() << std::endl;
+    try {
+        // Check if the path is a directory before iterating
+        if (!std::filesystem::is_directory(folderpath)) {
+            std::cerr << "Provided path is not a directory: " << folderpath << std::endl;
+            return false;
+        }
+
+        // Collect valid image filenames
+        for (const auto& entry : std::filesystem::directory_iterator(folderpath)) {
+            if (entry.is_regular_file()) {
+                std::string extension = entry.path().extension().string();
+                std::transform(extension.begin(), extension.end(), extension.begin(),
+                            [](unsigned char c) { return std::tolower(c); });
+                if (allowedExtensions.find(extension) != allowedExtensions.end()) {
+                    filenames.push_back(entry.path());
+                } else {
+                    std::cerr << "Skipping non-image file: " << entry.path().filename().string() << std::endl;
+                }
             }
         }
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Filesystem error: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Unhandled exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "Unknown error occurred." << std::endl;
     }
 
     quickSortFilenames(filenames, 0, filenames.size() - 1);
@@ -92,12 +106,20 @@ void Volume::setData(const std::vector<unsigned char>& newData) {
     data = newData;
 }
 
-void Volume::saveSlices(const std::string& directoryPath) const {
+void Volume::saveSlices() const {
+    // Prompt for saving the modified image
+    std::string outputPath;
+    std::cout << "Enter the output folder path for the slices: ";
+    std::cin >> outputPath; // Use this for saving slices
+    // Ensure the folder exists, or create it
+    std::filesystem::create_directories(outputPath);
+
+
     int numDigits = std::to_string(depth).length();
     for (int z = 0; z < depth; ++z) {
         std::string sliceNum = std::to_string(z + 1);
         std::string leadingZeros(numDigits - sliceNum.length(), '0');
-        std::string filePath = directoryPath + "/slice_" + leadingZeros + sliceNum + ".png";
+        std::string filePath = outputPath + "/slice_" + leadingZeros + sliceNum + ".png";
         std::vector<unsigned char> sliceData(width * height);
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {

@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 
+
 void FilterInputHandler::applyFilter(unsigned char* data, int width, int height, int channels) {
     std::unique_ptr<Filter> filter;
 
@@ -45,11 +46,9 @@ void FilterInputHandler::applyFilter(unsigned char* data, int width, int height,
             std::cout << "3. Gaussian" << std::endl;
 
             // Loop until a valid blur type is entered
-            while (true)
-            {
+            while (true) {
                 std::cin >> blurType;
-                if (std::cin.fail() || blurType < 1 || blurType > 3)
-                {
+                if (std::cin.fail() || blurType < 1 || blurType > 3) {
                     std::cin.clear();                                                   // Clear error flag
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore characters after wrong input
                     std::cout << "Invalid blur type. Please enter 1 for Median, 2 for Box, or 3 for Gaussian:" << std::endl;

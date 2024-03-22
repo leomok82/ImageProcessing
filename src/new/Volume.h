@@ -17,6 +17,7 @@ public:
     const std::vector<unsigned char>& getData() const;
     void setData(const std::vector<unsigned char>& newData);
     void saveSlices() const;
+    void setDimensions(int w, int h, int d); 
 
 private:
     std::vector<unsigned char> data;

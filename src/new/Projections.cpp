@@ -14,17 +14,19 @@ std::vector<unsigned char> Projections::MinIP(const Volume& volume, int startSli
     std::vector<unsigned char> result(width * height*channels, 0);
     // Create an empty image to store the result
 
-    if (startSlice< 0 || endSlice > depth || startSlice > endSlice){
+    if (startSlice<= 0 || endSlice > depth || startSlice > endSlice){
         std::cerr << "Invalid range provided." << std::endl;
         return result;
     }
+    startSlice -= 1;
+    endSlice -= 1;
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
             for (int c = 0; c < channels; c++) {
                 int minVal = 256;
                 int val;
 
-                for (int z = startSlice; z < endSlice; z++) {
+                for (int z = startSlice; z <= endSlice; z++) {
                     // Get the maximum value for each pixel across the z-axis
                     val = volume.getVoxel(x,y,z);
                     minVal = (val < minVal) ? val : minVal;
@@ -51,17 +53,19 @@ std::vector<unsigned char> Projections::MIP(const Volume& volume, int startSlice
     std::vector<unsigned char> result(width * height*channels, 0);
     // Create an empty image to store the result
 
-    if (startSlice< 0 || endSlice > depth|| startSlice > endSlice){
+    if (startSlice<= 0 || endSlice > depth|| startSlice > endSlice){
         std::cerr << "Invalid range provided." << std::endl;
         return result;
     }
+    startSlice -= 1;
+    endSlice -= 1;
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
             for (int c = 0; c < channels; c++) {
                 int maxVal = 0;
                 int val;
 
-                for (int z = startSlice; z < endSlice; z++) {
+                for (int z = startSlice; z <= endSlice; z++) {
                     // Get the maximum value for each pixel across the z-axis
                     val = volume.getVoxel(x,y,z);
                     if (val > maxVal) {
@@ -86,19 +90,23 @@ std::vector<unsigned char> Projections::AIP(const Volume& volume, int startSlice
     std::vector<unsigned char> result(width * height*channels, 0);
     // Create an empty image to store the result
 
-    if (startSlice< 0 || endSlice > depth|| startSlice > endSlice){
+    if (startSlice<= 0 || endSlice > depth|| startSlice > endSlice){
         std::cerr << "Invalid range provided." << std::endl;
         return result;
     }
+    startSlice -= 1;
+    endSlice -= 1;
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
             for (int c = 0; c < channels; c++) {
                 int sum = 0;
 
-                for (int z = startSlice; z < endSlice; z++) {
+                for (int z = startSlice; z <= endSlice; z++) {
                     sum += volume.getVoxel(x,y,z);   
                 }
-                result[(y*width+x)*channels +c] = sum/(endSlice - startSlice);
+                int layerCount = endSlice - startSlice + 1;
+                result[(y * width + x) * channels + c] = static_cast<unsigned char>(sum / static_cast<float>(layerCount));
+                //result[(y*width+x)*channels +c] = sum/(endSlice - startSlice);
             }
         }
     }

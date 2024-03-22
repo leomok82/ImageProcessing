@@ -53,13 +53,18 @@ Slice Slice::thinSlabAIP(const Volume& volume, int startSlice, int endSlice) {
     int width, height, depth;
     volume.getDimensions(width, height, depth);
     std::vector<unsigned char> projectionData(width * height, 0);
+    std::vector<float> tempProjectionData(width * height, 0.0f);
 
     for (int z = startSlice; z <= endSlice; ++z) {
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
-                projectionData[y * width + x] += volume.getVoxel(x, y, z) / static_cast<float>(endSlice - startSlice + 1);
+                //projectionData[y * width + x] += volume.getVoxel(x, y, z) / static_cast<float>(endSlice - startSlice + 1);
+                tempProjectionData[y * width + x] += static_cast<float>(volume.getVoxel(x, y, z));
             }
         }
+    }
+    for (size_t i = 0; i < tempProjectionData.size(); ++i){
+        projectionData[i] = static_cast<unsigned char>(tempProjectionData[i] / static_cast<float>(endSlice - startSlice + 1));
     }
 
     return Slice(width, height, projectionData);

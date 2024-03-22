@@ -31,7 +31,7 @@ int main() {
             Image image(path);
             if (!image.isValidImage()) {
                 std::cerr << "Error loading the image. Please ensure the path is correct and refers to an image file." << std::endl;
-                continue; // Skip the rest of the loop and prompt the user again
+                continue;
             }
             while (true) {
                 int width, height, channels;
@@ -54,7 +54,6 @@ int main() {
         } else if (operationType == 2) {
             Volume volume;
             if (!volume.loadFromFolder(path)) {
-                std::cerr << "Failed to load 3D volume data." << std::endl;
                 continue;
             }
             std::cout << "3D data volume loaded successfully!" << std::endl;

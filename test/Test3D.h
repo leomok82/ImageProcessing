@@ -6,10 +6,10 @@
 #include <functional>
 #include <string>
 #include <sstream>
-#include "../src/new/Volume.h"
-#include "../src/new/Slice.h"
-#include "../src/new/Projections.h"
-#include "../src/new/Filter3D.h"
+#include "../src/Volume.h"
+#include "../src/Slice.h"
+#include "../src/Projections.h"
+#include "../src/Filter3D.h"
 
 // Assertion macro, used to verify if an expression is true, if not, record an error message
 #define ASSERT_TRUE(expression, message)                                 \

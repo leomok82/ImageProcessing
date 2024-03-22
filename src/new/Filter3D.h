@@ -1,5 +1,14 @@
 /**
- * Group Name: Yen
+ * @file Filter3D.h
+ * @brief This file contains the declaration of the Filter3D class and its derived classes.
+ *
+ * The Filter3D class is an abstract base class that defines the interface for applying a 3D filter to a Volume object.
+ * It provides a pure virtual function `apply()` that must be implemented by derived classes.
+ *
+ * The Gaussian3DFilter class is a derived class of Filter3D that applies a Gaussian filter to a Volume object.
+ * The Median3DFilter class is a derived class of Filter3D that applies a median filter to a Volume object.
+ *
+ * @author Group Yen
  * Antony Krymski (agk123)
  * Leo Mok (edsml-lm1823)
  * Bofan Liu (edsml-bl1023)
@@ -27,45 +36,67 @@
  */
 class Filter3D {
 public:
-    virtual ~Filter3D() {}
+    /**
+     * @brief Applies the 3D filter to the given Volume object.
+     * @param volume The Volume object to apply the filter to.
+     */
     virtual void apply(Volume& volume) = 0;
+
+    /**
+     * @brief Creates a unique_ptr to a Filter3D object based on the given type and kernel size.
+     * @param type The type of the filter.
+     * @param kernelSize The size of the filter kernel.
+     * @return A unique_ptr to a Filter3D object.
+     */
     static std::unique_ptr<Filter3D> create(int type, int kernelSize);
+
+    /**
+     * @brief Virtual destructor for the Filter3D class.
+     */
+    virtual ~Filter3D() {}
 };
 
 /**
- * @brief Applies a 3D Gaussian filter to volumetric data.
+ * @class Gaussian3DFilter
+ * @brief Derived class of Filter3D that applies a Gaussian filter to a Volume object.
  *
- * This function convolves the input volumetric data with a Gaussian kernel to apply a Gaussian blur.
- * It is useful for reducing noise or smoothing a volume. The function handles edges by clamping coordinates,
- * ensuring that the convolution is applied correctly across the entire volume.
- *
- * @param kernel The 3D Gaussian kernel to use for convolution.
- * @param data A reference to a vector of unsigned chars representing the volume's voxel intensities.
- * @param width The width of the volume.
- * @param height The height of the volume.
- * @param depth The depth of the volume.
+ * The Gaussian3DFilter class is a derived class of Filter3D that applies a Gaussian filter to a Volume object.
  */
 class Gaussian3DFilter : public Filter3D {
     int kernelSize;
 public:
+    /**
+     * @brief Constructs a Gaussian3DFilter object with the specified kernel size.
+     * @param kernelSize The size of the filter kernel.
+     */
     Gaussian3DFilter(int kernelSize) : kernelSize(kernelSize) {}
+
+    /**
+     * @brief Applies the Gaussian filter to the given Volume object.
+     * @param volume The Volume object to apply the filter to.
+     */
     void apply(Volume& volume) override;
 };
 
 /**
- * @brief Applies a 3D Median filter to a Volume object.
+ * @class Median3DFilter
+ * @brief Derived class of Filter3D that applies a median filter to a Volume object.
  *
- * This method applies a Median filter to the volume contained within the Volume object, using a specified
- * kernel size. The Median filter is effective for removing noise while preserving edges by replacing each
- * voxel's value with the median of its neighborhood. The method iterates through each voxel in the volume,
- * calculates the median of the voxels within the kernel's range, and updates the voxel value accordingly.
- *
- * @param volume A reference to the Volume object containing the volumetric data to be filtered.
+ * The Median3DFilter class is a derived class of Filter3D that applies a median filter to a Volume object.
  */
 class Median3DFilter : public Filter3D {
     int kernelSize;
 public:
+    /**
+     * @brief Constructs a Median3DFilter object with the specified kernel size.
+     * @param kernelSize The size of the filter kernel.
+     */
     Median3DFilter(int kernelSize) : kernelSize(kernelSize) {}
+
+    /**
+     * @brief Applies the median filter to the given Volume object.
+     * @param volume The Volume object to apply the filter to.
+     */
     void apply(Volume& volume) override;
 };
 

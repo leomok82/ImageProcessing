@@ -1,5 +1,13 @@
 /**
- * Group Name: Yen
+ * @file ImageBlurFilter.h
+ * @brief This file contains the declaration of the ImageBlurFilter class and its derived classes.
+ * 
+ * The ImageBlurFilter class is an abstract base class that represents a generic image blur filter.
+ * It provides an interface for derived classes to implement the blur filter functionality.
+ * 
+ * The derived classes, MedianBlurFilter, BoxBlurFilter, and GaussianBlurFilter, implement specific types of blur filters.
+ * 
+ * @author Group Yen
  * Antony Krymski (agk123)
  * Leo Mok (edsml-lm1823)
  * Bofan Liu (edsml-bl1023)
@@ -10,6 +18,7 @@
 
 #ifndef IMAGEBLURFILTER_H
 #define IMAGEBLURFILTER_H
+
 #include "Image.h"
 #include "Filter.h"
 #include <cmath>
@@ -18,102 +27,168 @@
 #include "Utils.h"
 
 /**
- * @brief Factory method to create image blur filters.
+ * @class ImageBlurFilter
+ * @brief Abstract base class for image blur filters.
  * 
- * Creates and returns a unique pointer to a Filter object based on the specified blur type and kernel size. 
- * For Gaussian blur filters, an overloaded version of this method also accepts a sigma value.
- * 
- * @param type The type of blur filter to create. 
- *        1 = Median Blur, 
- *        2 = Box Blur, 
- *        3 = Gaussian Blur (requires sigma parameter in the overloaded function).
- * @param kernelSize The size of the kernel to be used by the blur filter. For Gaussian blur, it also determines the spread of the blur.
- * @param sigma (Optional) The standard deviation of the Gaussian distribution used for the Gaussian blur. 
- *        Only applicable when type is 3 for Gaussian Blur.
- * @return std::unique_ptr<Filter> A unique pointer to the created blur filter, or nullptr if an invalid type is specified.
+ * The ImageBlurFilter class provides an interface for derived classes to implement the blur filter functionality.
+ * It contains a member variable for the kernel size of the blur filter.
  */
 class ImageBlurFilter : public Filter
 {
-    // int kernelSize;
 public:
+    /**
+     * @brief Constructor for ImageBlurFilter.
+     * @param kernelSize The size of the kernel used for the blur filter.
+     */
     ImageBlurFilter(int kernelSize) : kernelSize(kernelSize) {}
 
+    /**
+     * @brief Factory method to create an instance of a blur filter.
+     * @param type The type of the blur filter.
+     * @param kernelSize The size of the kernel used for the blur filter.
+     * @return A unique pointer to the created blur filter.
+     */
     static std::unique_ptr<Filter> create(int type, int kernelSize);
+
+    /**
+     * @brief Factory method to create an instance of a blur filter with a specified sigma value.
+     * @param type The type of the blur filter.
+     * @param kernelSize The size of the kernel used for the blur filter.
+     * @param sigma The sigma value used for the Gaussian blur filter.
+     * @return A unique pointer to the created blur filter.
+     */
     static std::unique_ptr<Filter> create(int type, int kernelSize, double sigma);
 
-    // Provide interface for derived classes that need to process Image objects
+    /**
+     * @brief Applies the blur filter to an Image object.
+     * @param img The Image object to apply the blur filter to.
+     */
     virtual void apply(Image &img)
     {
-        // // Default implementation or left for subclass to override
         std::cout << "Image processing not supported by this filter." << std::endl;
     }
 
 protected:
-    int kernelSize;
+    int kernelSize; /**< The size of the kernel used for the blur filter. */
 };
 
 /**
- * @brief Applies a median blur filter to an image.
+ * @class MedianBlurFilter
+ * @brief A class that represents a median blur filter.
  * 
- * Iterates over each pixel in the image, replacing it with the median value from its neighborhood defined by the kernel size.
- * This method effectively reduces noise while preserving edges by utilizing the median filtering technique.
- * 
- * @param data Pointer to the image data array.
- * @param width The width of the image in pixels.
- * @param height The height of the image in pixels.
- * @param channels The number of color channels in the image data (e.g., 3 for RGB, 4 for RGBA).
+ * The MedianBlurFilter class is a derived class of ImageBlurFilter.
+ * It implements the apply function to apply the median blur filter to an image.
  */
 class MedianBlurFilter : public ImageBlurFilter
 {
 public:
+    /**
+     * @brief Constructor for MedianBlurFilter.
+     * @param kernelSize The size of the kernel used for the median blur filter.
+     */
     MedianBlurFilter(int kernelSize) : ImageBlurFilter(kernelSize) {}
 
+    /**
+     * @brief Applies the median blur filter to an image.
+     * @param data The pixel data of the image.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void apply(unsigned char *data, int width, int height, int channels) override;
 };
 
 /**
- * @brief Applies a box blur filter to an image.
+ * @class BoxBlurFilter
+ * @brief A class that represents a box blur filter.
  * 
- * Averages pixels within a kernel-sized box around each target pixel. The box blur is a simple form of blurring,
- * resulting in each pixel being set to the average value of the pixels in its neighborhood.
- * 
- * @param data Pointer to the image data array.
- * @param width The width of the image in pixels.
- * @param height The height of the image in pixels.
- * @param channels The number of color channels in the image data.
+ * The BoxBlurFilter class is a derived class of ImageBlurFilter.
+ * It implements the apply function to apply the box blur filter to an image.
  */
-// Concrete Box Blur filter class
 class BoxBlurFilter : public ImageBlurFilter
 {
 public:
+    /**
+     * @brief Constructor for BoxBlurFilter.
+     * @param kernelSize The size of the kernel used for the box blur filter.
+     */
     BoxBlurFilter(int kernelSize) : ImageBlurFilter(kernelSize) {}
+
+    /**
+     * @brief Applies the box blur filter to an image.
+     * @param data The pixel data of the image.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void apply(unsigned char *data, int width, int height, int channels) override;
 };
 
 /**
- * @brief Applies a Gaussian blur filter to an image.
+ * @class GaussianBlurFilter
+ * @brief A class that represents a Gaussian blur filter.
  * 
- * Utilizes a Gaussian kernel to apply a blur effect, smoothing the image while preserving edge integrity better than a simple average.
- * This method calculates Gaussian weights based on the provided sigma and applies the blur both horizontally and vertically.
- * 
- * @param data Pointer to the image data array.
- * @param width The width of the image in pixels.
- * @param height The height of the image in pixels.
- * @param channels The number of color channels in the image data.
+ * The GaussianBlurFilter class is a derived class of ImageBlurFilter.
+ * It implements the apply function to apply the Gaussian blur filter to an image.
  */
 class GaussianBlurFilter : public ImageBlurFilter
 {
 public:
-    // GaussianBlurFilter(int kernelSize) : ImageBlurFilter(kernelSize){};
+    /**
+     * @brief Constructor for GaussianBlurFilter.
+     * @param kernelSize The size of the kernel used for the Gaussian blur filter.
+     * @param sigma The sigma value used for the Gaussian blur filter.
+     */
     GaussianBlurFilter(int kernelSize, double sigma) : ImageBlurFilter(kernelSize), sigma(sigma) {}
 
+    /**
+     * @brief Applies the Gaussian blur filter to an image.
+     * @param data The pixel data of the image.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void apply(unsigned char *data, int width, int height, int channels) override;
 
 private:
-    double sigma;
+    double sigma; /**< The sigma value used for the Gaussian blur filter. */
+
+    /**
+     * @brief Calculates the Gaussian weights for the blur filter.
+     * @param sigma The sigma value used for the Gaussian blur filter.
+     * @param kernelSize The size of the kernel used for the Gaussian blur filter.
+     * @param weights The vector to store the calculated weights.
+     */
     void calculateGaussianWeights(double sigma, int kernelSize, std::vector<double> &weights);
+
+    /**
+     * @brief Mirrors an index to handle boundary cases.
+     * @param index The index to mirror.
+     * @param maxIndex The maximum index value.
+     * @return The mirrored index.
+     */
     int mirrorIndex(int index, int maxIndex);
+
+    /**
+     * @brief Applies the Gaussian blur filter on a row of pixels in the image.
+     * @param data The pixel data of the image.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     * @param weights The Gaussian weights for the blur filter.
+     * @param output The output buffer to store the blurred pixels.
+     */
     void applyGaussianBlurOnRow(unsigned char *data, int width, int height, int channels, const std::vector<double> &weights, unsigned char *output);
+
+    /**
+     * @brief Applies the Gaussian blur filter on a column of pixels in the image.
+     * @param data The pixel data of the image.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     * @param weights The Gaussian weights for the blur filter.
+     * @param output The output buffer to store the blurred pixels.
+     */
     void applyGaussianBlurOnColumn(unsigned char *data, int width, int height, int channels, const std::vector<double> &weights, unsigned char *output);
 };
 

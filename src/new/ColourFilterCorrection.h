@@ -1,11 +1,27 @@
 /**
- * Group Name: Yen
- * Antony Krymski (agk123)
- * Leo Mok (edsml-lm1823)
- * Bofan Liu (edsml-bl1023)
- * Zeyi Ke (edsml-zk23)
- * Tianzi Zhang (acse-tz2523)
- * Yifan Wu (acse-yw11823)
+ * @file ColourFilterCorrection.h
+ * @brief This file contains the declaration of various colour correction filters.
+ * 
+ * The filters included in this file are:
+ * - GrayscaleFilter: Applies the grayscale filter to an image.
+ * - BrightnessFilter: Adjusts the brightness of an image.
+ * - HistogramEqualizerFilter: Performs histogram equalization on an image.
+ * - ThresholdingFilter: Applies thresholding to an image.
+ * - SaltAndPepperNoiseFilter: Adds salt and pepper noise to an image.
+ * 
+ * The filters are implemented as concrete classes derived from the abstract base class ColourCorrectionFilter.
+ * Each filter provides a method to apply the filter to the image data.
+ * 
+ * @note This file is part of the Yen group's project for the Advanced Programming course at Imperial College London.
+ * The group members are Antony Krymski, Leo Mok, Bofan Liu, Zeyi Ke, Tianzi Zhang, and Yifan Wu.
+ * 
+ * @author Antony Krymski (agk123)
+ * @author Leo Mok (edsml-lm1823)
+ * @author Bofan Liu (edsml-bl1023)
+ * @author Zeyi Ke (edsml-zk23)
+ * @author Tianzi Zhang (acse-tz2523)
+ * @author Yifan Wu (acse-yw11823)
+ * @date October 2021
  */
 
 #ifndef COLOURCORRECTIONFILTER_H
@@ -15,167 +31,248 @@
 #include <memory>
 
 /**
- * @brief Creates and returns a unique_ptr to a Filter object based on the specified type.
+ * @class ColourCorrectionFilter
+ * @brief Abstract class for colour correction filters.
  * 
- * This factory method supports the creation of various filter types for colour correction
- * including grayscale, brightness adjustment, histogram equalization, thresholding, and
- * salt and pepper noise addition. The method prompts the user for additional parameters
- * required by certain filters, such as the brightness delta or the noise percentage.
- * 
- * @param type The type of filter to create. The supported types are:
- *             1 for Grayscale,
- *             2 for Brightness,
- *             3 for Histogram Equalization,
- *             4 for Thresholding,
- *             5 for Salt and Pepper Noise.
- *             Any other value will result in a nullptr being returned.
- * @return std::unique_ptr<Filter> A unique pointer to the created filter object, or nullptr
- *         if an unknown filter type is specified.
+ * This class serves as the base class for all colour correction filters.
+ * It provides a static factory method to create instances of specific filters.
+ * Each derived filter class must implement the apply() method to apply the filter to the image data.
  */
-// Abstract class for colour correction filters
 class ColourCorrectionFilter : public Filter {
 public:
+    /**
+     * @brief Creates a new instance of a colour correction filter based on the given type.
+     * @param type The type of the filter.
+     * @return A unique pointer to the created filter.
+     */
     static std::unique_ptr<Filter> create(int type);
 };
 
 /**
- * @brief Applies a grayscale filter to an image data buffer.
+ * @class GrayscaleFilter
+ * @brief Concrete Grayscale filter class.
  * 
- * This method converts color image data to grayscale using the luminosity method, which
- * takes a weighted sum of the RGB values. It iterates over every pixel in the image data
- * and replaces the RGB values with their grayscale equivalent. The method requires the image
- * data to have at least three channels (RGB).
- * 
- * @param data Pointer to the image data buffer.
- * @param width The width of the image in pixels.
- * @param height The height of the image in pixels.
- * @param channels The number of channels in the image data (must be at least 3 for RGB images).
+ * This class implements the grayscale filter, which converts an image to grayscale.
+ * It inherits from the ColourCorrectionFilter base class and provides an implementation of the apply() method.
  */
-// Concrete Grayscale filter class
 class GrayscaleFilter : public ColourCorrectionFilter {
 public:
+    /**
+     * @brief Applies the grayscale filter to the given image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
 /**
- * @brief Applies a brightness adjustment to the image data.
+ * @class BrightnessFilter
+ * @brief Concrete Brightness filter class.
  * 
- * This method iterates through each pixel in the image data and adjusts its brightness.
- * The brightness adjustment is applied equally to all color channels (RGB) by adding a delta
- * value to each channel. The method ensures that the final channel values remain within the 
- * 0 to 255 range. If the image data includes an alpha channel, it is left unchanged.
- * 
- * @param data Pointer to the image data buffer.
- * @param width The width of the image in pixels.
- * @param height The height of the image in pixels.
- * @param channels The number of channels in the image data (3 for RGB, 4 for RGBA).
+ * This class implements the brightness filter, which adjusts the brightness of an image.
+ * It inherits from the ColourCorrectionFilter base class and provides an implementation of the apply() method.
  */
-// Concrete Brightness filter class
 class BrightnessFilter : public ColourCorrectionFilter {
 private:
     int delta;  // Delta for brightness adjustment
 public:
-    // Constructor that sets the threshold
+    /**
+     * @brief Constructor that sets the threshold.
+     * @param brightnessValue The value to adjust the brightness.
+     */
     BrightnessFilter(int brightnessValue) : delta(brightnessValue) {}
+
+    /**
+     * @brief Sets the delta value for brightness adjustment.
+     * @param newDelta The new delta value.
+     */
     void setDelta(int newDelta) {
         delta = newDelta;
     }
+
+    /**
+     * @brief Applies the brightness filter to the given image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
 /**
- * @brief Applies histogram equalization to the image data.
+ * @class HistogramEqualizerFilter
+ * @brief Concrete HistogramEqualizer filter class.
  * 
- * This method enhances the contrast of the image using histogram equalization. It supports
- * grayscale images directly, and color images in either HSL or HSV color space by working
- * on the lightness or value channel, respectively. The choice between HSL and HSV is based
- * on the `useHSL` member variable. For grayscale images or color images, it computes the 
- * histogram of the relevant channel, calculates the cumulative distribution function, and
- * applies histogram equalization to adjust the pixel values.
- * 
- * @param data Pointer to the image data buffer.
- * @param width The width of the image in pixels.
- * @param height The height of the image in pixels.
- * @param channels The number of channels in the image data (1 for grayscale, 3 or more for color).
+ * This class implements the histogram equalizer filter, which performs histogram equalization on an image.
+ * It inherits from the ColourCorrectionFilter base class and provides an implementation of the apply() method.
  */
-// Concrete HistogramEqualizer filter class
 class HistogramEqualizerFilter : public ColourCorrectionFilter{
 public:
+    /**
+     * @brief Constructor that sets whether to use HSL.
+     * @param useHSL Whether to use HSL for equalization.
+     */
     HistogramEqualizerFilter(bool useHSL = false) : useHSL(useHSL) {}
+
+    /**
+     * @brief Sets whether to use HSL for equalization.
+     * @param newuseHSL The new value for useHSL.
+     */
     void setuseHSL(bool newuseHSL) {
         useHSL = newuseHSL;
     }
+
+    /**
+     * @brief Destructor.
+     */
     virtual ~HistogramEqualizerFilter() {}
+
+    /**
+     * @brief Applies the histogram equalizer filter to the given image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     virtual void apply(unsigned char* data, int width, int height, int channels) override;
 private:
     bool useHSL;
+
+    /**
+     * @brief Applies histogram equalization to grayscale image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     */
     void equalizeGrayscale(unsigned char* data, int width, int height);
+
+    /**
+     * @brief Applies histogram equalization to HSV image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void equalizeHSV(unsigned char* data, int width, int height, int channels);
+
+    /**
+     * @brief Applies histogram equalization to HSL image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void equalizeHSL(unsigned char* data, int width, int height, int channels);
 };
 
 /**
- * @brief Applies a threshold filter to the image data.
+ * @class ThresholdingFilter
+ * @brief Concrete ThresholdingFilter filter class.
  * 
- * This method converts the image to a binary (black and white) image based on a threshold value.
- * It supports grayscale images directly and color images in either HSL or HSV color space. For color
- * images, the method first converts the image to the selected color space (HSL or HSV), applies
- * the threshold to the lightness or value channel, and then converts it back to RGB. Pixels above
- * the threshold are set to white, while those below are set to black.
- * 
- * @param data Pointer to the image data buffer.
- * @param width The width of the image in pixels.
- * @param height The height of the image in pixels.
- * @param channels The number of channels in the image data (1 for grayscale, 3 or more for color).
+ * This class implements the thresholding filter, which applies thresholding to an image.
+ * It inherits from the ColourCorrectionFilter base class and provides an implementation of the apply() method.
  */
-// Concrete ThresholdingFilter filter class
 class ThresholdingFilter : public ColourCorrectionFilter {
 private:
     int threshold;
     bool useHSL;
+
+    /**
+     * @brief Applies thresholding to grayscale image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     */
     void thresholdGrayscale(unsigned char* data, int width, int height);
+
+    /**
+     * @brief Applies thresholding to HSV image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void thresholdHSV(unsigned char* data, int width, int height, int channels);
+
+    /**
+     * @brief Applies thresholding to HSL image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void thresholdHSL(unsigned char* data, int width, int height, int channels);
 public:
-    // Constructor that sets the threshold
+    /**
+     * @brief Constructor that sets the threshold.
+     * @param thresholdValue The threshold value.
+     * @param useHSL Whether to use HSL for thresholding.
+     */
     ThresholdingFilter(int thresholdValue, bool useHSL = false) 
         : threshold(thresholdValue), useHSL(useHSL) {}
+
+    /**
+     * @brief Sets the threshold value.
+     * @param newThreshold The new threshold value.
+     */
     void setThreshold(int newThreshold) {
         threshold = newThreshold;
     }
+
+    /**
+     * @brief Sets whether to use HSL for thresholding.
+     * @param newuseHSL The new value for useHSL.
+     */
     void setuseHSL(bool newuseHSL) {
         useHSL = newuseHSL;
     }
+
+    /**
+     * @brief Applies the thresholding filter to the given image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
 
 /**
- * @brief Applies salt and pepper noise to the image data.
+ * @class SaltAndPepperNoiseFilter
+ * @brief Concrete SaltAndPepperNoise filter class.
  * 
- * This method introduces a specified percentage of salt and pepper noise to the image. Salt
- * and pepper noise is randomly distributed black (pepper) and white (salt) pixels. The method
- * randomly selects pixels across the image and changes their value to either black or white,
- * based on the specified noise percentage. The noise is applied uniformly across all channels
- * except the alpha channel, if present.
- * 
- * @param data Pointer to the image data buffer.
- * @param width The width of the image in pixels.
- * @param height The height of the image in pixels.
- * @param channels The number of channels in the image data (3 for RGB, 4 for RGBA).
+ * This class implements the salt and pepper noise filter, which adds salt and pepper noise to an image.
+ * It inherits from the ColourCorrectionFilter base class and provides an implementation of the apply() method.
  */
-// Concrete Salt and Pepper Noise filter class
 class SaltAndPepperNoiseFilter : public ColourCorrectionFilter {
 private:
     int noisePercentage;
 public:
+    /**
+     * @brief Constructor that sets the noise percentage.
+     * @param thresholdValue The noise percentage value.
+     */
     SaltAndPepperNoiseFilter(int thresholdValue) : noisePercentage(thresholdValue) {}
+
+    /**
+     * @brief Sets the noise percentage value.
+     * @param newnoisePercentage The new noise percentage value.
+     */
     void setnoisePercentage(int newnoisePercentage) {
         noisePercentage = newnoisePercentage;
     }
-    // SaltAndPepperNoiseFilter(float noisePercentage); // Constructor to set noise percentage
+
+    /**
+     * @brief Applies the salt and pepper noise filter to the given image data.
+     * @param data The image data.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param channels The number of channels in the image.
+     */
     void apply(unsigned char* data, int width, int height, int channels) override;
 };
-
-
 
 #endif // COLOURCORRECTIONFILTER_H

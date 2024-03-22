@@ -69,22 +69,10 @@ void testBrightnessFilter() {
     int delta = 60; // Brightness increase
     BrightnessFilter filter(delta);
     filter.setDelta(delta); 
-    // std::stringstream testInput;
-    // testInput << delta << std::endl;
-    // std::streambuf* origCin = std::cin.rdbuf(testInput.rdbuf());
-    // std::cout << "Delta set in filter." << std::endl;   
     unsigned char data[3] = {100, 100, 100}; // Example RGB values
     filter.apply(data, 1, 1, 3); // Apply brightness filter
     // Calculate expected values, considering the clamping at 255
     unsigned char expectedValue = static_cast<unsigned char>(std::min(100 + delta, 255));
-
-    // std::cout << static_cast<int>(expectedValue) << "\n";
-    // std::cout << static_cast<int>(static_cast<unsigned char>(std::min(100 + delta, 255))) << "\n";
-    // // Assuming 'data' has 3 elements for RGB
-    // for (int i = 0; i < 3; i++) {
-    //     std::cout << static_cast<int>(data[i]) << (i < 2 ? ", " : "\n");
-    // }
-
     assertEquals("BrightnessFilter - Red Channel", expectedValue, data[0]);
     assertEquals("BrightnessFilter - Green Channel", expectedValue, data[1]);
     assertEquals("BrightnessFilter - Blue Channel", expectedValue, data[2]);
@@ -100,7 +88,7 @@ void testHistogramEqualizerFilter() {
     for (int i = 0; i < width * height; i++) {
         data[i] = (i * 255) / (width * height);
     }
-
+    
     filter.apply(data, width, height, 1);  // Apply histogram equalization
 
     // Compute histogram of the equalized data
@@ -134,9 +122,6 @@ void testThresholdingFilter() {
     // Assuming thresholding logic is such that value equal to threshold also becomes 255
     unsigned char expected = 255;  // Expected result after thresholding
     assertEquals<unsigned char>("ThresholdingFilter", expected, data[0]);
-
-    // // Debug and see the numeric value
-    // std::cout << "Expected: " << static_cast<int>(expected) << ", Actual: " << static_cast<int>(data[0]) << std::endl;
 }
 
 void testSaltAndPepperNoiseFilter() {
@@ -145,7 +130,6 @@ void testSaltAndPepperNoiseFilter() {
     const int dataSize = 10000;  // Larger data size for statistical relevance
     unsigned char data[dataSize];
     std::fill_n(data, dataSize, 128);  // Fill with a mid-gray value
-
     filter.apply(data, 100, 100, 1);  // Apply noise filter, assuming a 100x100 image with 1 channel
 
     // Verify the noise is applied correctly
@@ -157,7 +141,6 @@ void testSaltAndPepperNoiseFilter() {
     }
 
     double actualNoisePercentage = 100.0 * noiseCount / dataSize;
-    // std::cout << "Actual noise percentage: " << actualNoisePercentage << "%" << std::endl;
 
     // Assert that the actual noise percentage is within an acceptable range of the expected value
     double tolerance = 5.0;  // Allow some variance due to the randomness
@@ -186,8 +169,6 @@ void testMedianBlur()
 
 void testQuickSelect()
 {
-    // Test cases
-    // std::vector<unsigned char> test1 = {7, 10, 4, 3, 20, 15, 7};
     std::vector<unsigned char> test1 = {6, 5, 4, 3, 7, 1, 2};
     std::vector<unsigned char> test2 = {12, 3, 5, 7, 4, 19, 26};
 
@@ -242,14 +223,9 @@ void testGaussianBlur()
         10, 11, 12, 13, 13};
 
     int width = 5, height = 5, channels = 1, kernelsize = 3;
-    // Uncomment to print input data
-    // printImageData(inputData, width, height, channels);
     double sigma = 2.0;
     GaussianBlurFilter gaussianFilter(kernelsize, sigma);
-
     gaussianFilter.apply(inputData, width, height, channels);
-    // Uncomment to print output data
-    // printImageData(inputData, width, height, channels);
 
     // Convert the expected output data to a vector for easy comparison
     std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
@@ -278,13 +254,8 @@ void testBoxBlur()
         11, 11, 12, 12};
 
     int width = 4, height = 4, channels = 1, kernelsize = 3;
-    // Uncomment to print input data
-    // printImageData(inputData, width, height, channels);
     BoxBlurFilter boxFilter(kernelsize);
-
     boxFilter.apply(inputData, width, height, channels);
-    // Uncomment to print output data
-    // printImageData(inputData, width, height, channels);
 
     // Convert the expected output data to a vector for easy comparison
     std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
@@ -295,48 +266,6 @@ void testBoxBlur()
     // Assert if the actual output matches the expected output
     assertArrayEquals("2D BoxBlur Test:", expectedVector, actualVector);
 }
-
-// // Generate a test image with left side black and right side white
-// void generateTestImage(std::vector<unsigned char>& image, int width, int height) {
-//     // Initialize the test image, left half black, right half white
-//     for (int y = 0; y < height; ++y) {
-//         for (int x = 0; x < width; ++x) {
-//             int index = (y * width + x) * 3;
-//             if (x < width / 2) {
-//                 image[index] = image[index + 1] = image[index + 2] = 0; // Left half black
-//             } else {
-//                 image[index] = image[index + 1] = image[index + 2] = 255; // Right half white
-//             }
-//         }
-//     }
-// }
-
-// void runFiltersTest() {
-//     const int width = 3, height = 3;
-//     std::vector<unsigned char> testImage(width * height * 3);
-//     generateTestImage(testImage, width, height);
-
-//     // List of filters
-//     std::vector<std::pair<std::string, std::unique_ptr<Filter>>> filters;
-//     filters.emplace_back("Sobel Filter Test ", std::make_unique<SobelFilter>());
-//     filters.emplace_back("Prewitt Filter Test ", std::make_unique<PrewittFilter>());
-//     filters.emplace_back("Scharr Filter Test ", std::make_unique<ScharrFilter>());
-//     filters.emplace_back("Robert Filter Test with the 1st Image", std::make_unique<RobertsCrossFilter>());
-
-//     // Iterate and test each filter
-//     for (auto& filterPair : filters) {
-//         std::vector<unsigned char> imageCopy = testImage; // Create a copy of the image for each filter
-//         filterPair.second->apply(imageCopy.data(), width, height, 3); // Apply the filter
-
-//         // Verify the pixel next to the edge, expecting the first pixel on the right to be white
-//         int testIndex = (height / 2 * width + width / 2) * 3;
-//         unsigned char edgeResponse = imageCopy[testIndex];
-
-//         // Use assertEquals for verification
-//         assertEquals<unsigned char>(filterPair.first, 255, edgeResponse);
-//     }
-// }
-
 
 void testSobelFilter(){
     // Sample data, it should be replaced with your actual image data
@@ -360,9 +289,6 @@ void testSobelFilter(){
 
     // Call the apply method
     sobelFilter.apply(imageData, width, height, channels); // Assuming the image width is 3, height is 3, and channels is 1 (grayscale image)
-
-    // Print the processed pixel matrix
-    // printImageData(imageData, width, height, channels);
 
     // Convert the expected output data to a vector for easy comparison
     std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
@@ -397,10 +323,7 @@ void testPrewittFilter(){
     PrewittFilter PrewittFilter;
 
     // Call the apply method
-    PrewittFilter.apply(imageData, width, height, channels); // Assuming the image width is 3, height is 3, and channels is 1 (grayscale image)
-
-    //Print the processed pixel matrix
-    // printImageData(imageData, width, height, channels);
+    PrewittFilter.apply(imageData, width, height, channels); // Assuming the image width is 4, height is 4, and channels is 1 (grayscale image)
 
     // Convert the expected output data to a vector for easy comparison
     std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
@@ -435,10 +358,7 @@ void testScharrFilter(){
     ScharrFilter ScharrFilter;
 
     // Call the apply method
-    ScharrFilter.apply(imageData, width, height, channels); // Assuming the image width is 3, height is 3, and channels is 1 (grayscale image)
-
-    //Print the processed pixel matrix
-    // printImageData(imageData, width, height, channels);
+    ScharrFilter.apply(imageData, width, height, channels); // Assuming the image width is 4, height is 4, and channels is 1 (grayscale image)
 
     // Convert the expected output data to a vector for easy comparison
     std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));
@@ -473,10 +393,8 @@ void testRobertFilter(){
     RobertsCrossFilter RobertFilter;
 
     // Call the apply method
-    RobertFilter.apply(imageData, width, height, channels); // Assuming the image width is 3, height is 3, and channels is 1 (grayscale image)
+    RobertFilter.apply(imageData, width, height, channels); // Assuming the image width is 4, height is 4, and channels is 1 (grayscale image)
 
-    //Print the processed pixel matrix
-    // printImageData(imageData, width, height, channels);
 
     // Convert the expected output data to a vector for easy comparison
     std::vector<unsigned char> expectedVector(std::begin(expectedOutput), std::end(expectedOutput));

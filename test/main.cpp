@@ -6,6 +6,7 @@
 #include <cmath>
 #include <numeric>
 
+// complie using "g++ -o test test2D.cpp ../src/ColourFilterCorrection.cpp ../src/ColorConversion.cpp ../src/ImageBlurFilter.cpp
 int main() {
     testGrayscaleFilter();
     testBrightnessFilter();
@@ -22,8 +23,6 @@ int main() {
     testRobertFilter();
     //3D Tests
     globalTestSuite.runAll();
-
-    // testLoadApplyAndSaveImage();
     return 0;
 }
 

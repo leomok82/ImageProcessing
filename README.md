@@ -21,6 +21,11 @@ cd src
 g++ *.cpp -std=c++17
 ```
 
+To run tests you should be inside the test folder
+```
+g++ -O3 -o test *.cpp ../src/*.cpp -std=c++17
+```
+
 **Enter the Image path when prompted**
 
 Based on your choice, the subsequent options relevant would be printed. Continue picking the desired options.

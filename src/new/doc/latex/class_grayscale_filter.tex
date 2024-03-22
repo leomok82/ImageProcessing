@@ -1,0 +1,65 @@
+\doxysection{Grayscale\+Filter Class Reference}
+\hypertarget{class_grayscale_filter}{}\label{class_grayscale_filter}\index{GrayscaleFilter@{GrayscaleFilter}}
+
+
+Applies a grayscale filter to an image data buffer.  
+
+
+
+
+{\ttfamily \#include $<$Colour\+Filter\+Correction.\+h$>$}
+
+Inheritance diagram for Grayscale\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_grayscale_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_grayscale_filter_adc87c49dc20dfb1a8300f107280f05b8}{apply}} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_colour_correction_filter}{Colour\+Correction\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a grayscale filter to an image data buffer. 
+
+This method converts color image data to grayscale using the luminosity method, which takes a weighted sum of the RGB values. It iterates over every pixel in the image data and replaces the RGB values with their grayscale equivalent. The method requires the image data to have at least three channels (RGB).
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to the image data buffer. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of channels in the image data (must be at least 3 for RGB images). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_grayscale_filter_adc87c49dc20dfb1a8300f107280f05b8}\label{class_grayscale_filter_adc87c49dc20dfb1a8300f107280f05b8} 
+\index{GrayscaleFilter@{GrayscaleFilter}!apply@{apply}}
+\index{apply@{apply}!GrayscaleFilter@{GrayscaleFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Grayscale\+Filter\+::apply (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{channels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter}{Filter}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Colour\+Filter\+Correction.\+h\item 
+Colour\+Filter\+Correction.\+cpp\end{DoxyCompactItemize}

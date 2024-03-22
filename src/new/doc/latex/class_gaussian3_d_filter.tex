@@ -1,0 +1,70 @@
+\doxysection{Gaussian3\+DFilter Class Reference}
+\hypertarget{class_gaussian3_d_filter}{}\label{class_gaussian3_d_filter}\index{Gaussian3DFilter@{Gaussian3DFilter}}
+
+
+Applies a 3D Gaussian filter to volumetric data.  
+
+
+
+
+{\ttfamily \#include $<$Filter3\+D.\+h$>$}
+
+Inheritance diagram for Gaussian3\+DFilter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_gaussian3_d_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_gaussian3_d_filter_a2af7fdbd8c4ef98dc4ea1d65bff22e87}\label{class_gaussian3_d_filter_a2af7fdbd8c4ef98dc4ea1d65bff22e87} 
+{\bfseries Gaussian3\+DFilter} (int kernel\+Size)
+\item 
+void \mbox{\hyperlink{class_gaussian3_d_filter_ad63630e41c38ae71dbdbba2a5828bf22}{apply}} (\mbox{\hyperlink{class_volume}{Volume}} \&volume) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_filter3_d}{Filter3D}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter3_d}{Filter3D}} $>$ {\bfseries create} (int type, int kernel\+Size)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a 3D Gaussian filter to volumetric data. 
+
+This function convolves the input volumetric data with a Gaussian kernel to apply a Gaussian blur. It is useful for reducing noise or smoothing a volume. The function handles edges by clamping coordinates, ensuring that the convolution is applied correctly across the entire volume.
+
+
+\begin{DoxyParams}{Parameters}
+{\em kernel} & The 3D Gaussian kernel to use for convolution. \\
+\hline
+{\em data} & A reference to a vector of unsigned chars representing the volume\textquotesingle{}s voxel intensities. \\
+\hline
+{\em width} & The width of the volume. \\
+\hline
+{\em height} & The height of the volume. \\
+\hline
+{\em depth} & The depth of the volume. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_gaussian3_d_filter_ad63630e41c38ae71dbdbba2a5828bf22}\label{class_gaussian3_d_filter_ad63630e41c38ae71dbdbba2a5828bf22} 
+\index{Gaussian3DFilter@{Gaussian3DFilter}!apply@{apply}}
+\index{apply@{apply}!Gaussian3DFilter@{Gaussian3DFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Gaussian3\+DFilter\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_volume}{Volume}} \&}]{volume }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter3_d}{Filter3D}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Filter3\+D.\+h\item 
+Filter3\+D.\+cpp\end{DoxyCompactItemize}

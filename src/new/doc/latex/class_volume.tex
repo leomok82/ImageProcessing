@@ -1,0 +1,91 @@
+\doxysection{Volume Class Reference}
+\hypertarget{class_volume}{}\label{class_volume}\index{Volume@{Volume}}
+
+
+Destructor for \doxylink{class_volume}{Volume}.  
+
+
+
+
+{\ttfamily \#include $<$Volume.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_volume_a22e3722a28f70f2c984a29ebe203ea44}\label{class_volume_a22e3722a28f70f2c984a29ebe203ea44} 
+bool {\bfseries load\+From\+Folder} (const std\+::string \&folderpath)
+\item 
+\Hypertarget{class_volume_afaed2263d4a62376314d609b11783257}\label{class_volume_afaed2263d4a62376314d609b11783257} 
+unsigned char {\bfseries get\+Voxel} (int x, int y, int z) const
+\item 
+\Hypertarget{class_volume_ad3d56503c91f5fe425696c1c23ca4147}\label{class_volume_ad3d56503c91f5fe425696c1c23ca4147} 
+void {\bfseries get\+Dimensions} (int \&width, int \&height, int \&depth) const
+\item 
+\Hypertarget{class_volume_a4d4d57d55d0679d4a82ef2acdcfe0aa6}\label{class_volume_a4d4d57d55d0679d4a82ef2acdcfe0aa6} 
+const std\+::vector$<$ unsigned char $>$ \& {\bfseries get\+Data} () const
+\item 
+\Hypertarget{class_volume_ad89e0969f656b9b38f237bfbaf86561c}\label{class_volume_ad89e0969f656b9b38f237bfbaf86561c} 
+void {\bfseries set\+Data} (const std\+::vector$<$ unsigned char $>$ \&new\+Data)
+\item 
+\Hypertarget{class_volume_ae302324b280c22d66ff7574c25343b4d}\label{class_volume_ae302324b280c22d66ff7574c25343b4d} 
+void {\bfseries save\+Slices} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Destructor for \doxylink{class_volume}{Volume}. 
+
+Loads volumetric data from a directory of image files.
+
+This method loads images from a specified folder, assuming each image represents a single slice of the volume. It supports multiple image formats and orders the slices based on filename sorting. Only files with extensions matching the allowed set (.png, .jpg, .jpeg, .bmp, .tiff) are loaded.
+
+
+\begin{DoxyParams}{Parameters}
+{\em folderpath} & The path to the folder containing the slice images. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if the volume is loaded successfully, false otherwise.
+\end{DoxyReturn}
+Retrieves the intensity value of a specific voxel in the volume.
+
+This method calculates the voxel\textquotesingle{}s linear index based on its x, y, and z coordinates and returns its intensity value. It performs bounds checking to ensure the requested coordinates are within the volume. If out of bounds, an error message is printed, and a default value of 0 is returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x-\/coordinate of the voxel. \\
+\hline
+{\em y} & The y-\/coordinate of the voxel. \\
+\hline
+{\em z} & The z-\/coordinate of the voxel. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+unsigned char The intensity value of the specified voxel.
+\end{DoxyReturn}
+Gets the dimensions of the volume.
+
+Fills the provided references with the width, height, and depth of the volume, respectively.
+
+
+\begin{DoxyParams}{Parameters}
+{\em w} & Reference to where the width will be stored. \\
+\hline
+{\em h} & Reference to where the height will be stored. \\
+\hline
+{\em d} & Reference to where the depth will be stored.\\
+\hline
+\end{DoxyParams}
+Gets a reference to the volume data.
+
+\begin{DoxyReturn}{Returns}
+const std\+::vector$<$unsigned char$>$\& A constant reference to the volume\textquotesingle{}s data vector.
+\end{DoxyReturn}
+Saves each slice of the volume as an image file.
+
+Iterates through each z-\/level of the volume, saving each slice to a separate image file. The filenames are generated sequentially with leading zeros to maintain order. The method prompts the user for an output folder path where the slice images will be saved. The folder is created if it does not exist. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Volume.\+h\item 
+Volume.\+cpp\end{DoxyCompactItemize}

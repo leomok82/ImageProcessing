@@ -1,0 +1,82 @@
+\doxysection{Median\+Blur\+Filter Class Reference}
+\hypertarget{class_median_blur_filter}{}\label{class_median_blur_filter}\index{MedianBlurFilter@{MedianBlurFilter}}
+
+
+Applies a median blur filter to an image.  
+
+
+
+
+{\ttfamily \#include $<$Image\+Blur\+Filter.\+h$>$}
+
+Inheritance diagram for Median\+Blur\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_median_blur_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_median_blur_filter_a87bed2156112c8caa0c972070567d96c}\label{class_median_blur_filter_a87bed2156112c8caa0c972070567d96c} 
+{\bfseries Median\+Blur\+Filter} (int kernel\+Size)
+\item 
+void \mbox{\hyperlink{class_median_blur_filter_ad49aac9b194c30b0a8088a9a4cd122e6}{apply}} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Image\+Blur\+Filter} (int kernel\+Size)
+\item 
+virtual void {\bfseries apply} (\mbox{\hyperlink{class_image}{Image}} \&img)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type, int kernel\+Size)
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type, int kernel\+Size, double sigma)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries kernel\+Size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a median blur filter to an image. 
+
+Iterates over each pixel in the image, replacing it with the median value from its neighborhood defined by the kernel size. This method effectively reduces noise while preserving edges by utilizing the median filtering technique.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to the image data array. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of color channels in the image data (e.\+g., 3 for RGB, 4 for RGBA). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_median_blur_filter_ad49aac9b194c30b0a8088a9a4cd122e6}\label{class_median_blur_filter_ad49aac9b194c30b0a8088a9a4cd122e6} 
+\index{MedianBlurFilter@{MedianBlurFilter}!apply@{apply}}
+\index{apply@{apply}!MedianBlurFilter@{MedianBlurFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Median\+Blur\+Filter\+::apply (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{channels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter}{Filter}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Image\+Blur\+Filter.\+h\item 
+Image\+Blur\+Filter.\+cpp\end{DoxyCompactItemize}

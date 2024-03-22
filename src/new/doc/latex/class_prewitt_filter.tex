@@ -1,0 +1,65 @@
+\doxysection{Prewitt\+Filter Class Reference}
+\hypertarget{class_prewitt_filter}{}\label{class_prewitt_filter}\index{PrewittFilter@{PrewittFilter}}
+
+
+Applies the Prewitt edge detection filter to an image.  
+
+
+
+
+{\ttfamily \#include $<$Edge\+Detection\+Filter.\+h$>$}
+
+Inheritance diagram for Prewitt\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_prewitt_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_prewitt_filter_afd58138851e4f7ef8cf13a3e0f8ebe7b}{apply}} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_edge_detection_filter}{Edge\+Detection\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies the Prewitt edge detection filter to an image. 
+
+This method is specific to the Sobel filter. It sets up the Sobel convolution kernels and calls the common apply function with these kernels to detect edges in the image.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to the image data array. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of color channels in the image. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_prewitt_filter_afd58138851e4f7ef8cf13a3e0f8ebe7b}\label{class_prewitt_filter_afd58138851e4f7ef8cf13a3e0f8ebe7b} 
+\index{PrewittFilter@{PrewittFilter}!apply@{apply}}
+\index{apply@{apply}!PrewittFilter@{PrewittFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Prewitt\+Filter\+::apply (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{channels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter}{Filter}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Edge\+Detection\+Filter.\+h\item 
+Edge\+Detection\+Filter.\+cpp\end{DoxyCompactItemize}

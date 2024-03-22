@@ -1,0 +1,38 @@
+\doxysection{Filter Class Reference}
+\hypertarget{class_filter}{}\label{class_filter}\index{Filter@{Filter}}
+
+
+Abstract base class for filters.  
+
+
+
+
+{\ttfamily \#include $<$Filter.\+h$>$}
+
+Inheritance diagram for Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.935743cm]{class_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_filter_a09c82148fc76d782ec37b6a83a35e109}\label{class_filter_a09c82148fc76d782ec37b6a83a35e109} 
+virtual void {\bfseries apply} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels)=0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for filters. 
+
+This class serves as a base for various types of filters, defining a common interface for them. Filters that inherit from this class must implement the apply method, which applies the filter\textquotesingle{}s specific effect to a block of data. The class is designed to be flexible, allowing for its use in different contexts, such as image processing, where filters might be applied to manipulate or analyze image data.
+
+\begin{DoxyNote}{Note}
+This class is abstract and cannot be instantiated directly. Derived classes must provide an implementation for the apply method. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Filter.\+h\end{DoxyCompactItemize}

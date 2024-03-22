@@ -1,0 +1,25 @@
+\doxysection{Color\+Conversion.\+h}
+\hypertarget{_color_conversion_8h_source}{}\label{_color_conversion_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ COLOR\_CONVERSION\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ COLOR\_CONVERSION\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_color_r_g_b}{ColorRGB}}\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ r,\ g,\ b;}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_color_h_s_v}{ColorHSV}}\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_color_h_s_v_a15134be7ac15a2aae025f3673a0c2695}{h}},\ \mbox{\hyperlink{struct_color_h_s_v_a57a33b774fac30a58d8efd2c144ac46b}{s}},\ \mbox{\hyperlink{struct_color_h_s_v_a6d4c9ca8701154a0b45701fe2976e940}{v}};\ \textcolor{comment}{//\ Hue\ [0,\ 360),\ Saturation\ [0,\ 1],\ Value\ [0,\ 1]}}
+\DoxyCodeLine{00036\ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_color_h_s_l}{ColorHSL}}\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct_color_h_s_l_a86cacaa0de450067883af96f435c6df0}{h}},\ \mbox{\hyperlink{struct_color_h_s_l_abd4bf6bc45776f810b7b0d1cec804319}{s}},\ \mbox{\hyperlink{struct_color_h_s_l_a26053b5d36cca8df8cd79589a9b807c1}{l}};}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \mbox{\hyperlink{struct_color_h_s_v}{ColorHSV}}\ rgbToHsv(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_color_r_g_b}{ColorRGB}}\&\ rgb);}
+\DoxyCodeLine{00056\ \mbox{\hyperlink{struct_color_r_g_b}{ColorRGB}}\ hsvToRgb(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_color_h_s_v}{ColorHSV}}\&\ hsv);}
+\DoxyCodeLine{00057\ \mbox{\hyperlink{struct_color_h_s_l}{ColorHSL}}\ rgbToHsl(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_color_r_g_b}{ColorRGB}}\&\ rgb);}
+\DoxyCodeLine{00058\ \mbox{\hyperlink{struct_color_r_g_b}{ColorRGB}}\ hslToRgb(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_color_h_s_l}{ColorHSL}}\&\ hsl);}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ COLOR\_CONVERSION\_H}}
+
+\end{DoxyCode}

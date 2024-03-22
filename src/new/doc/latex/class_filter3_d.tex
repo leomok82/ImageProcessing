@@ -1,0 +1,51 @@
+\doxysection{Filter3D Class Reference}
+\hypertarget{class_filter3_d}{}\label{class_filter3_d}\index{Filter3D@{Filter3D}}
+
+
+Creates a 3D Gaussian kernel.  
+
+
+
+
+{\ttfamily \#include $<$Filter3\+D.\+h$>$}
+
+Inheritance diagram for Filter3D\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_filter3_d}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_filter3_d_a70e9ccf71e2faec686c2e54ce3365af3}\label{class_filter3_d_a70e9ccf71e2faec686c2e54ce3365af3} 
+virtual void {\bfseries apply} (\mbox{\hyperlink{class_volume}{Volume}} \&volume)=0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_filter3_d_ad205606df3d67b96071740c3f3349215}\label{class_filter3_d_ad205606df3d67b96071740c3f3349215} 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter3_d}{Filter3D}} $>$ {\bfseries create} (int type, int kernel\+Size)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Creates a 3D Gaussian kernel. 
+
+This function generates a 3D Gaussian kernel with a specified size and standard deviation (sigma). The kernel values are calculated using the Gaussian function and normalized so that their sum equals 1. This kernel is used for applying Gaussian blur to a 3D volume.
+
+
+\begin{DoxyParams}{Parameters}
+{\em kernel\+Size} & The size of the kernel along each dimension (must be an odd number). \\
+\hline
+{\em sigma} & The standard deviation of the Gaussian function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A 3D vector containing the Gaussian kernel values. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Filter3\+D.\+h\end{DoxyCompactItemize}

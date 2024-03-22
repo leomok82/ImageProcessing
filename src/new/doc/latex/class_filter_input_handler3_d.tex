@@ -1,0 +1,38 @@
+\doxysection{Filter\+Input\+Handler3D Class Reference}
+\hypertarget{class_filter_input_handler3_d}{}\label{class_filter_input_handler3_d}\index{FilterInputHandler3D@{FilterInputHandler3D}}
+
+
+Applies a user-\/selected 3D filter to volumetric data.  
+
+
+
+
+{\ttfamily \#include $<$Filter\+Input\+Handler3\+D.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_filter_input_handler3_d_a2c7aaf4c1aeb873e54aab6551f285f9f}\label{class_filter_input_handler3_d_a2c7aaf4c1aeb873e54aab6551f285f9f} 
+static void {\bfseries apply\+Filter} (\mbox{\hyperlink{class_volume}{Volume}} \&volume)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a user-\/selected 3D filter to volumetric data. 
+
+This function interacts with the user through the console to select a type of 3D filter and its corresponding kernel size. Based on the user\textquotesingle{}s choices, it creates and applies the specified 3D filter to the provided volumetric data. The function currently supports the application of 3D Gaussian and Median filters with predefined kernel sizes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & A reference to a \doxylink{class_volume}{Volume} object that encapsulates the volumetric data to be filtered. This object is expected to provide access to the volume\textquotesingle{}s data, dimensions, and potentially other relevant metadata.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The \doxylink{class_volume}{Volume} object is modified in place by the applied filter. The function ensures that only valid filter types and kernel sizes are accepted, with checks in place to prompt the user again or terminate the operation if invalid inputs are provided. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Filter\+Input\+Handler3\+D.\+h\item 
+Filter\+Input\+Handler3\+D.\+cpp\end{DoxyCompactItemize}

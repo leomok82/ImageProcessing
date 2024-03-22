@@ -1,0 +1,41 @@
+\doxysection{Projection\+Input\+Handler Class Reference}
+\hypertarget{class_projection_input_handler}{}\label{class_projection_input_handler}\index{ProjectionInputHandler@{ProjectionInputHandler}}
+
+
+Applies a selected projection technique to a volume.  
+
+
+
+
+{\ttfamily \#include $<$Projection\+Input\+Handler.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_projection_input_handler_ae4827819ead0850c98cdad30fce3f0c8}\label{class_projection_input_handler_ae4827819ead0850c98cdad30fce3f0c8} 
+static std\+::\+\_\+\+\_\+1\+::vector$<$ unsigned char $>$ {\bfseries apply\+Projection} (\mbox{\hyperlink{class_volume}{Volume}} \&volume)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a selected projection technique to a volume. 
+
+This method allows the user to select a type of projection to apply to a given volume. It supports Maximum Intensity Projection (Max IP), Minimum Intensity Projection (Min IP), and Average Intensity Projection (Average IP). The user is also prompted to specify the range of slices (start and end) to which the projection will be applied.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & A reference to the \doxylink{class_volume}{Volume} object on which the projection will be applied. This object encapsulates the volumetric data as well as metadata such as dimensions and voxel values. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::\+\_\+\+\_\+1\+::vector$<$unsigned char$>$ A vector containing the projected 2D image data resulting from the specified projection operation. The vector will be empty if an invalid projection type is selected.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This method uses std\+::\+\_\+\+\_\+1\+::vector, indicating it may be using a specific standard library implementation. You might need to adjust this to std\+::vector or another type depending on your development environment. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Projection\+Input\+Handler.\+h\item 
+Projection\+Input\+Handler.\+cpp\end{DoxyCompactItemize}

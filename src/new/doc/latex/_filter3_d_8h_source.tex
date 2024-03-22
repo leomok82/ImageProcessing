@@ -1,0 +1,34 @@
+\doxysection{Filter3\+D.\+h}
+\hypertarget{_filter3_d_8h_source}{}\label{_filter3_d_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Filter3D.h\ adjustments}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#ifndef\ FILTER3D\_H}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#define\ FILTER3D\_H}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Volume.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_filter3_d}{Filter3D}}\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_filter3_d}{\string~Filter3D}}()\ \{\}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ apply(\mbox{\hyperlink{class_volume}{Volume}}\&\ volume)\ =\ 0;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<Filter3D>\ create(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ kernelSize);}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_gaussian3_d_filter}{Gaussian3DFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_filter3_d}{Filter3D}}\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ kernelSize;}
+\DoxyCodeLine{00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{class_gaussian3_d_filter}{Gaussian3DFilter}}(\textcolor{keywordtype}{int}\ kernelSize)\ :\ kernelSize(kernelSize)\ \{\}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\mbox{\hyperlink{class_volume}{Volume}}\&\ volume)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00044\ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_median3_d_filter}{Median3DFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_filter3_d}{Filter3D}}\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{int}\ kernelSize;}
+\DoxyCodeLine{00058\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{class_median3_d_filter}{Median3DFilter}}(\textcolor{keywordtype}{int}\ kernelSize)\ :\ kernelSize(kernelSize)\ \{\}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\mbox{\hyperlink{class_volume}{Volume}}\&\ volume)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00061\ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ FILTER3D\_H}}
+
+\end{DoxyCode}

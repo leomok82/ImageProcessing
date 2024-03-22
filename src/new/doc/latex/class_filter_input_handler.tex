@@ -1,0 +1,46 @@
+\doxysection{Filter\+Input\+Handler Class Reference}
+\hypertarget{class_filter_input_handler}{}\label{class_filter_input_handler}\index{FilterInputHandler@{FilterInputHandler}}
+
+
+Applies a selected image processing filter to a 2D image.  
+
+
+
+
+{\ttfamily \#include $<$Filter\+Input\+Handler.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_filter_input_handler_a19ef91186c067878e5a9dc91295725ff}\label{class_filter_input_handler_a19ef91186c067878e5a9dc91295725ff} 
+static void {\bfseries apply\+Filter} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a selected image processing filter to a 2D image. 
+
+This function prompts the user to select a type of filter for image processing, including options for colour correction, image blur, and edge detection. Depending on the selected filter, further input may be requested from the user to specify additional parameters (e.\+g., kernel size for blur filters). The selected filter is then applied to the image data provided.
+
+Note\+: This function relies on user input from the standard input (std\+::cin) and therefore is best suited for console applications.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & A pointer to the image data array. This array is expected to contain the pixel data for the image, organized in row-\/major order, with each pixel represented by \textquotesingle{}channels\textquotesingle{} number of unsigned char values. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of color channels in the image data (e.\+g., 3 for RGB, 4 for RGBA).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The image data ({\ttfamily data}) is modified in place by the applied filter. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Filter\+Input\+Handler.\+h\item 
+Filter\+Input\+Handler.\+cpp\end{DoxyCompactItemize}

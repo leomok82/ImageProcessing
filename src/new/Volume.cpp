@@ -18,18 +18,32 @@ bool Volume::loadFromFolder(const std::string& folderpath) {
 
     const std::set<std::string> allowedExtensions = {".png", ".jpg", ".jpeg", ".bmp", ".tiff"};
 
-    // Collect valid image filenames
-    for (const auto& entry : std::filesystem::directory_iterator(folderpath)) {
-        if (entry.is_regular_file()) {
-            std::string extension = entry.path().extension().string();
-            std::transform(extension.begin(), extension.end(), extension.begin(),
-                           [](unsigned char c) { return std::tolower(c); });
-            if (allowedExtensions.find(extension) != allowedExtensions.end()) {
-                filenames.push_back(entry.path());
-            } else {
-                std::cerr << "Skipping non-image file: " << entry.path().filename().string() << std::endl;
+    try {
+        // Check if the path is a directory before iterating
+        if (!std::filesystem::is_directory(folderpath)) {
+            std::cerr << "Provided path is not a directory: " << folderpath << std::endl;
+            return false;
+        }
+
+        // Collect valid image filenames
+        for (const auto& entry : std::filesystem::directory_iterator(folderpath)) {
+            if (entry.is_regular_file()) {
+                std::string extension = entry.path().extension().string();
+                std::transform(extension.begin(), extension.end(), extension.begin(),
+                            [](unsigned char c) { return std::tolower(c); });
+                if (allowedExtensions.find(extension) != allowedExtensions.end()) {
+                    filenames.push_back(entry.path());
+                } else {
+                    std::cerr << "Skipping non-image file: " << entry.path().filename().string() << std::endl;
+                }
             }
         }
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Filesystem error: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Unhandled exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "Unknown error occurred." << std::endl;
     }
 
     quickSortFilenames(filenames, 0, filenames.size() - 1);

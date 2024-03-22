@@ -1,10 +1,20 @@
 #include "Image.h"
+#include <filesystem>
 #include <iostream>
+#include "stb_image.h"
+#include "stb_image_write.h"
 
-Image::Image(const std::string& path) : data(nullptr), width(0), height(0), channels(0) {
+Image::Image(const std::string& path) : data(nullptr), width(0), height(0), channels(0), isValid(true) {
+    if (std::filesystem::is_directory(path)) {
+        std::cerr << "Provided path is a directory, not an image file: " << path << std::endl;
+        isValid = false;
+        return;
+    }
+
     data = stbi_load(path.c_str(), &width, &height, &channels, 0);
     if (data == nullptr) {
         std::cerr << "Failed to load image: " << path << std::endl;
+        isValid = false;
     }
 }
 
@@ -32,6 +42,16 @@ void Image::getDimensions(int& width, int& height, int& channels) const {
 unsigned char* Image::getData() const {
     return data;
 }
+
+unsigned char &Image::at(int x, int y, int c) {
+    return data[(y * width + x) * channels + c];
+}
+
+bool Image::isValidImage() const {
+    return isValid;
+}
+
+
 // void Image::setData(const unsigned char *newData, int newSize)
 // {
 //     if (newSize != width * height * channels)
@@ -64,7 +84,3 @@ unsigned char* Image::getData() const {
 // }
 // The current at function is used only to simulate a two-dimensional matrix
 // on a one-dimensional array
-unsigned char &Image::at(int x, int y, int c)
-{
-    return data[(y * width + x) * channels + c];
-}

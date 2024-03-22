@@ -4,7 +4,7 @@
 #include "Filter3D.h"
 #include <iostream>
 
-std::__1::vector<unsigned char> ProjectionInputHandler3D::applyFilter(Volume& volume) {
+std::__1::vector<unsigned char> ProjectionInputHandler::applyProjection(Volume& volume) {
     //Projection application
     std::cout << "Select the type of projection to apply:" << std::endl;
     std::cout << "1. Max IP" << std::endl;

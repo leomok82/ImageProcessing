@@ -8,6 +8,7 @@
 #include "Volume.h"
 #include <vector>
 #include <string>
+#include "stb_image_write.h"
 
 Slice Slice::fromVolume(const Volume& volume, const std::string& plane, int coordinate) {
     int width, height, depth;

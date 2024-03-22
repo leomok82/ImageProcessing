@@ -182,16 +182,12 @@ void Gaussian3DFilter::apply(Volume& volume) {
 
     double sigma = 2.0;
 
-    // Generate the 3D Gaussian kernel
     auto kernel = createGaussianKernel(kernelSize, sigma);
 
-    // Retrieve volume data
     std::vector<unsigned char> data = volume.getData();
 
-    // Apply the 3D Gaussian filter
     applyGaussianFilter3D(kernel, data, width, height, depth);
 
-    // Update the volume data
     volume.setData(data);
 
     std::cout << "3D Gaussian filter applied successfully." << std::endl;

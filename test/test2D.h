@@ -1,5 +1,5 @@
-#ifndef TEST_H
-#define TEST_H
+#ifndef TEST_2D_H
+#define TEST_2D_H
 
 #include <string>
 #include "../src/new/ColourFilterCorrection.h"
@@ -29,6 +29,11 @@ void testGaussianBlur();
 void testMedianBlur();
 void testBoxBlur();
 void testQuickSelect();
-void runFiltersTest();
+// void runFiltersTest();
+void testSobelFilter();
+void testPrewittFilter();
+void testScharrFilter();
+void testRobertFilter();
 
-#endif // TEST_H
+
+#endif // TEST_2D_H

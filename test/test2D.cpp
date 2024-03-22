@@ -1,4 +1,4 @@
-#include "test.h"
+#include "test2D.h"
 #include "../src/new/ColourFilterCorrection.h"
 #include "../src/new/ImageBlurFilter.h"
 #include "../src/new/EdgeDetectionFilter.h"

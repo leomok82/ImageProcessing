@@ -52,17 +52,3 @@ void SliceInputHandler::applySlice(const Volume& volume, int width, int height, 
     std::cout << "Slice number not valid" << std::endl;
     }
 }
-
-// if (isValidSlice) {
-//         // Create a slice
-//         Slice slice = Slice::fromVolume(volume, plane, sliceNumber);
-
-//         // Save the slice
-//         std::string outputPath;
-//         std::cout << "Enter the output file path (including extension, e.g., 'output.png'): ";
-//         std::cin >> outputPath;
-//         slice.saveToFile(outputPath);
-//         std::cout << "Slice saved successfully to " << outputPath << std::endl;
-//     } else {
-//         std::cout << "Slice number not valid" << std::endl;
-//     }

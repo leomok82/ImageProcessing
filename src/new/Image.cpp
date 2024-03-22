@@ -50,37 +50,3 @@ unsigned char &Image::at(int x, int y, int c) {
 bool Image::isValidImage() const {
     return isValid;
 }
-
-
-// void Image::setData(const unsigned char *newData, int newSize)
-// {
-//     if (newSize != width * height * channels)
-//     {
-//         throw std::invalid_argument("New data size does not match the existing image size.");
-//     }
-//     if (!data)
-//     {
-//         data = new unsigned char[newSize];
-//     }
-//     std::memcpy(data, newData, newSize);
-// }
-// void Image::setPixel(int x, int y, int c, unsigned char value)
-// {
-//     if (x < 0 || x >= width || y < 0 || y >= height || c < 0 || c >= channels)
-//     {
-//         throw std::out_of_range("Pixel coordinates or channel index out of range.");
-//     }
-//     data[(y * width + x) * channels + c] = value;
-// }
-
-// The intention is to simulate two-dimensional matrix access through the `at` function
-// while handling logic for mirroring the boundaries, to be completed.
-// unsigned char &Image::at(int x, int y, int c)
-// {
-//     // Mirror borders if out of bounds.This function  left edge and down edge need to be fixed.
-//     x = x < 0 ? -x : (x >= width ? 2 * width - x - 2 : x);
-//     y = y < 0 ? -y : (y >= height ? 2 * height - y - 2 : y);
-//     return data[(y * width + x) * channels + c];
-// }
-// The current at function is used only to simulate a two-dimensional matrix
-// on a one-dimensional array

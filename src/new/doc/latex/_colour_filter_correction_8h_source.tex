@@ -1,0 +1,89 @@
+\doxysection{Colour\+Filter\+Correction.\+h}
+\hypertarget{_colour_filter_correction_8h_source}{}\label{_colour_filter_correction_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ COLOURCORRECTIONFILTER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ COLOURCORRECTIONFILTER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Filter.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ Abstract\ class\ for\ colour\ correction\ filters}}
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_colour_correction_filter}{ColourCorrectionFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_filter}{Filter}}\ \{}
+\DoxyCodeLine{00027\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<Filter>\ create(\textcolor{keywordtype}{int}\ type);}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ Concrete\ Grayscale\ filter\ class}}
+\DoxyCodeLine{00045\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_grayscale_filter}{GrayscaleFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_colour_correction_filter}{ColourCorrectionFilter}}\ \{}
+\DoxyCodeLine{00046\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ Concrete\ Brightness\ filter\ class}}
+\DoxyCodeLine{00064\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_brightness_filter}{BrightnessFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_colour_correction_filter}{ColourCorrectionFilter}}\ \{}
+\DoxyCodeLine{00065\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{int}\ delta;\ \ \textcolor{comment}{//\ Delta\ for\ brightness\ adjustment}}
+\DoxyCodeLine{00067\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Constructor\ that\ sets\ the\ threshold}}
+\DoxyCodeLine{00069\ \ \ \ \ \mbox{\hyperlink{class_brightness_filter}{BrightnessFilter}}(\textcolor{keywordtype}{int}\ brightnessValue)\ :\ delta(brightnessValue)\ \{\}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ setDelta(\textcolor{keywordtype}{int}\ newDelta)\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ delta\ =\ newDelta;}
+\DoxyCodeLine{00072\ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00074\ \};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00091\ \textcolor{comment}{//\ Concrete\ HistogramEqualizer\ filter\ class}}
+\DoxyCodeLine{00092\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_histogram_equalizer_filter}{HistogramEqualizerFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_colour_correction_filter}{ColourCorrectionFilter}}\{}
+\DoxyCodeLine{00093\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{class_histogram_equalizer_filter}{HistogramEqualizerFilter}}(\textcolor{keywordtype}{bool}\ useHSL\ =\ \textcolor{keyword}{false})\ :\ useHSL(useHSL)\ \{\}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ setuseHSL(\textcolor{keywordtype}{bool}\ newuseHSL)\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ useHSL\ =\ newuseHSL;}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_histogram_equalizer_filter}{\string~HistogramEqualizerFilter}}()\ \{\}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00100\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ useHSL;}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ equalizeGrayscale(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ equalizeHSV(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ equalizeHSL(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels);}
+\DoxyCodeLine{00105\ \};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00121\ \textcolor{comment}{//\ Concrete\ ThresholdingFilter\ filter\ class}}
+\DoxyCodeLine{00122\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_thresholding_filter}{ThresholdingFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_colour_correction_filter}{ColourCorrectionFilter}}\ \{}
+\DoxyCodeLine{00123\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{int}\ threshold;}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ useHSL;}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ thresholdGrayscale(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ thresholdHSV(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels);}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ thresholdHSL(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels);}
+\DoxyCodeLine{00129\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Constructor\ that\ sets\ the\ threshold}}
+\DoxyCodeLine{00131\ \ \ \ \ \mbox{\hyperlink{class_thresholding_filter}{ThresholdingFilter}}(\textcolor{keywordtype}{int}\ thresholdValue,\ \textcolor{keywordtype}{bool}\ useHSL\ =\ \textcolor{keyword}{false})\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ :\ threshold(thresholdValue),\ useHSL(useHSL)\ \{\}}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ setThreshold(\textcolor{keywordtype}{int}\ newThreshold)\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ threshold\ =\ newThreshold;}
+\DoxyCodeLine{00135\ \ \ \ \ \}}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ setuseHSL(\textcolor{keywordtype}{bool}\ newuseHSL)\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ useHSL\ =\ newuseHSL;}
+\DoxyCodeLine{00138\ \ \ \ \ \}}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00140\ \};}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00156\ \textcolor{comment}{//\ Concrete\ Salt\ and\ Pepper\ Noise\ filter\ class}}
+\DoxyCodeLine{00157\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_salt_and_pepper_noise_filter}{SaltAndPepperNoiseFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_colour_correction_filter}{ColourCorrectionFilter}}\ \{}
+\DoxyCodeLine{00158\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{int}\ noisePercentage;}
+\DoxyCodeLine{00160\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00161\ \ \ \ \ \mbox{\hyperlink{class_salt_and_pepper_noise_filter}{SaltAndPepperNoiseFilter}}(\textcolor{keywordtype}{int}\ thresholdValue)\ :\ noisePercentage(thresholdValue)\ \{\}}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{void}\ setnoisePercentage(\textcolor{keywordtype}{int}\ newnoisePercentage)\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ noisePercentage\ =\ newnoisePercentage;}
+\DoxyCodeLine{00164\ \ \ \ \ \}}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{comment}{//\ SaltAndPepperNoiseFilter(float\ noisePercentage);\ //\ Constructor\ to\ set\ noise\ percentage}}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00167\ \};}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ COLOURCORRECTIONFILTER\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,71 @@
+\doxysection{Histogram\+Equalizer\+Filter Class Reference}
+\hypertarget{class_histogram_equalizer_filter}{}\label{class_histogram_equalizer_filter}\index{HistogramEqualizerFilter@{HistogramEqualizerFilter}}
+
+
+Applies histogram equalization to the image data.  
+
+
+
+
+{\ttfamily \#include $<$Colour\+Filter\+Correction.\+h$>$}
+
+Inheritance diagram for Histogram\+Equalizer\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_histogram_equalizer_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_histogram_equalizer_filter_aa21135be012f75785653a0fec27337a8}\label{class_histogram_equalizer_filter_aa21135be012f75785653a0fec27337a8} 
+{\bfseries Histogram\+Equalizer\+Filter} (bool use\+HSL=false)
+\item 
+\Hypertarget{class_histogram_equalizer_filter_aaafd29e3dc37efca68ed379e774e0ccf}\label{class_histogram_equalizer_filter_aaafd29e3dc37efca68ed379e774e0ccf} 
+void {\bfseries setuse\+HSL} (bool newuse\+HSL)
+\item 
+virtual void \mbox{\hyperlink{class_histogram_equalizer_filter_ad5c1c3fcc1c945af8581c08ea5c358b3}{apply}} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_colour_correction_filter}{Colour\+Correction\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies histogram equalization to the image data. 
+
+This method enhances the contrast of the image using histogram equalization. It supports grayscale images directly, and color images in either HSL or HSV color space by working on the lightness or value channel, respectively. The choice between HSL and HSV is based on the {\ttfamily use\+HSL} member variable. For grayscale images or color images, it computes the histogram of the relevant channel, calculates the cumulative distribution function, and applies histogram equalization to adjust the pixel values.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to the image data buffer. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of channels in the image data (1 for grayscale, 3 or more for color). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_histogram_equalizer_filter_ad5c1c3fcc1c945af8581c08ea5c358b3}\label{class_histogram_equalizer_filter_ad5c1c3fcc1c945af8581c08ea5c358b3} 
+\index{HistogramEqualizerFilter@{HistogramEqualizerFilter}!apply@{apply}}
+\index{apply@{apply}!HistogramEqualizerFilter@{HistogramEqualizerFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Histogram\+Equalizer\+Filter\+::apply (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{channels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter}{Filter}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Colour\+Filter\+Correction.\+h\item 
+Colour\+Filter\+Correction.\+cpp\end{DoxyCompactItemize}

@@ -23,6 +23,17 @@
 #include "Volume.h"
 #include <memory>
 
+/**
+ * @brief Creates a 3D Gaussian kernel.
+ *
+ * This function generates a 3D Gaussian kernel with a specified size and standard deviation (sigma).
+ * The kernel values are calculated using the Gaussian function and normalized so that their sum equals 1.
+ * This kernel is used for applying Gaussian blur to a 3D volume.
+ *
+ * @param kernelSize The size of the kernel along each dimension (must be an odd number).
+ * @param sigma The standard deviation of the Gaussian function.
+ * @return A 3D vector containing the Gaussian kernel values.
+ */
 class Filter3D {
 public:
     /**

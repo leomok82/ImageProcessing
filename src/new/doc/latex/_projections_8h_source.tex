@@ -1,0 +1,21 @@
+\doxysection{Projections.\+h}
+\hypertarget{_projections_8h_source}{}\label{_projections_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Projections.h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#ifndef\ PROJECTIONS\_H}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#define\ PROJECTIONS\_H}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Volume.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Slice.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_projections}{Projections}}\ \{}
+\DoxyCodeLine{00051\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Static\ methods\ for\ creating\ projections\ from\ a\ volume}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<unsigned\ char>\ AIP(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_volume}{Volume}}\&\ volume,\ \textcolor{keywordtype}{int}\ startSlice,\ \textcolor{keywordtype}{int}\ endSlice);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<unsigned\ char>\ MIP(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_volume}{Volume}}\&\ volume,\ \textcolor{keywordtype}{int}\ startSlice,\ \textcolor{keywordtype}{int}\ endSlice);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<unsigned\ char>\ MinIP(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_volume}{Volume}}\&\ volume,\ \textcolor{keywordtype}{int}\ startSlice,\ \textcolor{keywordtype}{int}\ endSlice);}
+\DoxyCodeLine{00056\ \};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ PROJECTIONS\_H}}
+
+\end{DoxyCode}

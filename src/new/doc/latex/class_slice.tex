@@ -1,0 +1,107 @@
+\doxysection{Slice Class Reference}
+\hypertarget{class_slice}{}\label{class_slice}\index{Slice@{Slice}}
+
+
+Generates a slice from a 3D volume based on the specified plane and coordinate.  
+
+
+
+
+{\ttfamily \#include $<$Slice.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_slice_a77ad736a5a888e1ae2dc55a21e4b41da}\label{class_slice_a77ad736a5a888e1ae2dc55a21e4b41da} 
+{\bfseries Slice} (int width, int height, const std\+::vector$<$ unsigned char $>$ \&data)
+\item 
+\Hypertarget{class_slice_aa6ce7319236e342cd53f468443c0e8e9}\label{class_slice_aa6ce7319236e342cd53f468443c0e8e9} 
+void {\bfseries save\+To\+File} (const std\+::string \&file\+Path) const
+\item 
+\Hypertarget{class_slice_a5ab2ec6b314ee37615267352d459946a}\label{class_slice_a5ab2ec6b314ee37615267352d459946a} 
+int {\bfseries get\+Width} () const
+\item 
+\Hypertarget{class_slice_a050c2ad6b7bd0e6dc81f214f9abd4c81}\label{class_slice_a050c2ad6b7bd0e6dc81f214f9abd4c81} 
+int {\bfseries get\+Height} () const
+\item 
+\Hypertarget{class_slice_ab08c98a09fe45117ca7cec9b7d209529}\label{class_slice_ab08c98a09fe45117ca7cec9b7d209529} 
+std\+::vector$<$ unsigned char $>$ {\bfseries get\+Data} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_slice_a56680fa04628ab75c8c48a4b9a8e6eb0}\label{class_slice_a56680fa04628ab75c8c48a4b9a8e6eb0} 
+static \mbox{\hyperlink{class_slice}{Slice}} {\bfseries from\+Volume} (const \mbox{\hyperlink{class_volume}{Volume}} \&volume, const std\+::string \&plane, int coordinate)
+\item 
+\Hypertarget{class_slice_abb9e175b73cbbe0dbda588a00e885aef}\label{class_slice_abb9e175b73cbbe0dbda588a00e885aef} 
+static \mbox{\hyperlink{class_slice}{Slice}} {\bfseries thin\+Slab\+AIP} (const \mbox{\hyperlink{class_volume}{Volume}} \&volume, int start\+Slice, int end\+Slice)
+\item 
+\Hypertarget{class_slice_aaf10b48fca47932352ab902302245bae}\label{class_slice_aaf10b48fca47932352ab902302245bae} 
+static \mbox{\hyperlink{class_slice}{Slice}} {\bfseries thin\+Slab\+MIP} (const \mbox{\hyperlink{class_volume}{Volume}} \&volume, int start\+Slice, int end\+Slice)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Generates a slice from a 3D volume based on the specified plane and coordinate. 
+
+Extracts a 2D slice from a given 3D volume along one of three orthogonal planes (XY, XZ, or YZ) at a specified coordinate. The plane is defined by the user, and the coordinate specifies the depth along the axis perpendicular to the chosen plane.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & The source \doxylink{class_volume}{Volume} object from which the slice is extracted. \\
+\hline
+{\em plane} & A string indicating the plane of the slice\+: "{}xy"{}, "{}xz"{}, or "{}yz"{}. \\
+\hline
+{\em coordinate} & The coordinate along the axis perpendicular to the slice plane. Note\+: Assumes 1-\/based indexing as provided by users, but adjusts to 0-\/based indexing internally. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{class_slice}{Slice} An instance of the \doxylink{class_slice}{Slice} class containing the extracted slice data.
+\end{DoxyReturn}
+Generates a thin slab using Average Intensity Projection (AIP) from a volume.
+
+Calculates the AIP within a specified range of slices in the volume. This method averages the intensity values across the specified z-\/axis range for each pixel, effectively compressing a 3D volume into a 2D representation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & The \doxylink{class_volume}{Volume} object from which the slab is generated. \\
+\hline
+{\em start\+Slice} & The first slice in the range to include in the projection. \\
+\hline
+{\em end\+Slice} & The last slice in the range to include in the projection. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{class_slice}{Slice} An instance of the \doxylink{class_slice}{Slice} class containing the AIP data.
+\end{DoxyReturn}
+Generates a thin slab using Maximum Intensity Projection (MIP) from a volume.
+
+Identifies the maximum intensity value for each pixel across a specified range of slices and creates a 2D representation based on these maximum values. MIP is particularly useful for visualizing high-\/intensity structures within the volume.
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & The \doxylink{class_volume}{Volume} object from which the slab is generated. \\
+\hline
+{\em start\+Slice} & The first slice in the range to include in the projection. \\
+\hline
+{\em end\+Slice} & The last slice in the range to include in the projection. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{class_slice}{Slice} An instance of the \doxylink{class_slice}{Slice} class containing the MIP data.
+\end{DoxyReturn}
+Saves the slice data to a file in PNG format.
+
+Writes the slice\textquotesingle{}s pixel data to the specified file path as a grayscale PNG image. This method uses the STB \doxylink{class_image}{Image} Write library for image saving functionalities.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & The file path where the slice image will be saved. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Slice.\+h\item 
+Slice.\+cpp\end{DoxyCompactItemize}

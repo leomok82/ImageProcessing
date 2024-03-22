@@ -1,0 +1,93 @@
+\doxysection{Utils.\+h}
+\hypertarget{_utils_8h_source}{}\label{_utils_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Utils.h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00010\ \textcolor{keywordtype}{void}\ swap(T\ \&a,\ T\ \&b)}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ T\ temp\ =\ a;}
+\DoxyCodeLine{00013\ \ \ \ \ a\ =\ b;}
+\DoxyCodeLine{00014\ \ \ \ \ b\ =\ temp;}
+\DoxyCodeLine{00015\ \}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00018\ \textcolor{keywordtype}{int}\ partition(std::vector<T>\ \&arr,\ \textcolor{keywordtype}{int}\ low,\ \textcolor{keywordtype}{int}\ high)}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ T\ pivot\ =\ arr[high];}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ (low\ -\/\ 1);}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ low;\ j\ <=\ high\ -\/\ 1;\ j++)}
+\DoxyCodeLine{00024\ \ \ \ \ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arr[j]\ <\ pivot)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ swap(arr[i],\ arr[j]);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ swap(arr[i\ +\ 1],\ arr[high]);}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{return}\ (i\ +\ 1);}
+\DoxyCodeLine{00033\ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00036\ T\ quickSelect(std::vector<T>\ \&arr,\ \textcolor{keywordtype}{int}\ low,\ \textcolor{keywordtype}{int}\ high,\ \textcolor{keywordtype}{int}\ k)}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{if}\ (k\ >\ 0\ \&\&\ k\ <=\ high\ -\/\ low\ +\ 1)}
+\DoxyCodeLine{00039\ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ partition(arr,\ low,\ high);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index\ -\/\ low\ ==\ k\ -\/\ 1)}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ arr[index];}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index\ -\/\ low\ >\ k\ -\/\ 1)}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ quickSelect(arr,\ low,\ index\ -\/\ 1,\ k);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ quickSelect(arr,\ index\ +\ 1,\ high,\ k\ -\/\ index\ +\ low\ -\/\ 1);}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Index\ out\ of\ bounds"{}});}
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ extractNumericPart(\textcolor{keyword}{const}\ std::string\&\ filename)\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ std::string\ numberStr;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}\ c\ :\ filename)\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::isdigit(c))\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ numberStr\ +=\ c;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{return}\ !numberStr.empty()\ ?\ std::stoll(numberStr)\ :\ 0;}
+\DoxyCodeLine{00062\ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ partitionFilenames(std::vector<std::string>\ \&arr,\ \textcolor{keywordtype}{int}\ low,\ \textcolor{keywordtype}{int}\ high)\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ pivot\ =\ extractNumericPart(arr[high]);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ (low\ -\/\ 1);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ low;\ j\ <=\ high\ -\/\ 1;\ j++)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (extractNumericPart(arr[j])\ <\ pivot)\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ swap(arr[i],\ arr[j]);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ swap(arr[i\ +\ 1],\ arr[high]);}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ (i\ +\ 1);}
+\DoxyCodeLine{00077\ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ quickSortFilenames(std::vector<std::string>\ \&arr,\ \textcolor{keywordtype}{int}\ low,\ \textcolor{keywordtype}{int}\ high)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{if}\ (low\ <\ high)\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pi\ =\ partitionFilenames(arr,\ low,\ high);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ quickSortFilenames(arr,\ low,\ pi\ -\/\ 1);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ quickSortFilenames(arr,\ pi\ +\ 1,\ high);}
+\DoxyCodeLine{00085\ \ \ \ \ \}}
+\DoxyCodeLine{00086\ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_H}}
+
+\end{DoxyCode}

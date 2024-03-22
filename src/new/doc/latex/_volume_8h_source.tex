@@ -1,0 +1,31 @@
+\doxysection{Volume.\+h}
+\hypertarget{_volume_8h_source}{}\label{_volume_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ VOLUME\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ VOLUME\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Image.h"{}}\ \textcolor{comment}{//\ Update\ to\ include\ Image.h\ instead\ of\ stb\_image.h}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_volume}{Volume}}\ \{}
+\DoxyCodeLine{00062\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{class_volume}{Volume}}();}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{class_volume}{\string~Volume}}();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadFromFolder(\textcolor{keyword}{const}\ std::string\&\ folderpath);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ getVoxel(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ z)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ getDimensions(\textcolor{keywordtype}{int}\&\ width,\ \textcolor{keywordtype}{int}\&\ height,\ \textcolor{keywordtype}{int}\&\ depth)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<unsigned\ char>\&\ getData()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ setData(\textcolor{keyword}{const}\ std::vector<unsigned\ char>\&\ newData);}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ saveSlices()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00074\ \ \ \ \ std::vector<unsigned\ char>\ data;}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{int}\ width,\ height,\ depth;}
+\DoxyCodeLine{00076\ \};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ VOLUME\_H}}
+
+\end{DoxyCode}

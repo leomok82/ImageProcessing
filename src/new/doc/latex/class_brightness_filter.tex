@@ -1,0 +1,71 @@
+\doxysection{Brightness\+Filter Class Reference}
+\hypertarget{class_brightness_filter}{}\label{class_brightness_filter}\index{BrightnessFilter@{BrightnessFilter}}
+
+
+Applies a brightness adjustment to the image data.  
+
+
+
+
+{\ttfamily \#include $<$Colour\+Filter\+Correction.\+h$>$}
+
+Inheritance diagram for Brightness\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_brightness_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_brightness_filter_a5a80e8de855f53c32949c50286058aff}\label{class_brightness_filter_a5a80e8de855f53c32949c50286058aff} 
+{\bfseries Brightness\+Filter} (int brightness\+Value)
+\item 
+\Hypertarget{class_brightness_filter_a8bd9c539dc59ed7f764608bd836242c7}\label{class_brightness_filter_a8bd9c539dc59ed7f764608bd836242c7} 
+void {\bfseries set\+Delta} (int new\+Delta)
+\item 
+void \mbox{\hyperlink{class_brightness_filter_af1d9deebeded9e745244e1751bb869e0}{apply}} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_colour_correction_filter}{Colour\+Correction\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a brightness adjustment to the image data. 
+
+This method iterates through each pixel in the image data and adjusts its brightness. The brightness adjustment is applied equally to all color channels (RGB) by adding a delta value to each channel. The method ensures that the final channel values remain within the 0 to 255 range. If the image data includes an alpha channel, it is left unchanged.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to the image data buffer. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of channels in the image data (3 for RGB, 4 for RGBA). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_brightness_filter_af1d9deebeded9e745244e1751bb869e0}\label{class_brightness_filter_af1d9deebeded9e745244e1751bb869e0} 
+\index{BrightnessFilter@{BrightnessFilter}!apply@{apply}}
+\index{apply@{apply}!BrightnessFilter@{BrightnessFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Brightness\+Filter\+::apply (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{channels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter}{Filter}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Colour\+Filter\+Correction.\+h\item 
+Colour\+Filter\+Correction.\+cpp\end{DoxyCompactItemize}

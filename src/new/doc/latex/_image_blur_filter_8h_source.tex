@@ -1,0 +1,67 @@
+\doxysection{Image\+Blur\+Filter.\+h}
+\hypertarget{_image_blur_filter_8h_source}{}\label{_image_blur_filter_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ IMAGEBLURFILTER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ IMAGEBLURFILTER\_H}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Image.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Filter.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Utils.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_image_blur_filter}{ImageBlurFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_filter}{Filter}}}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ int\ kernelSize;}}
+\DoxyCodeLine{00028\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_image_blur_filter}{ImageBlurFilter}}(\textcolor{keywordtype}{int}\ kernelSize)\ :\ kernelSize(kernelSize)\ \{\}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<Filter>\ create(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ kernelSize);}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ std::unique\_ptr<Filter>\ create(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ kernelSize,\ \textcolor{keywordtype}{double}\ sigma);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Provide\ interface\ for\ derived\ classes\ that\ need\ to\ process\ Image\ objects}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ apply(\mbox{\hyperlink{class_image}{Image}}\ \&img)}
+\DoxyCodeLine{00036\ \ \ \ \ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ //\ Default\ implementation\ or\ left\ for\ subclass\ to\ override}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Image\ processing\ not\ supported\ by\ this\ filter."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00039\ \ \ \ \ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ kernelSize;}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_median_blur_filter}{MedianBlurFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_image_blur_filter}{ImageBlurFilter}}}
+\DoxyCodeLine{00057\ \{}
+\DoxyCodeLine{00058\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{class_median_blur_filter}{MedianBlurFilter}}(\textcolor{keywordtype}{int}\ kernelSize)\ :\ \mbox{\hyperlink{class_image_blur_filter}{ImageBlurFilter}}(kernelSize)\ \{\}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00062\ \};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00075\ \textcolor{comment}{//\ Concrete\ Box\ Blur\ filter\ class}}
+\DoxyCodeLine{00076\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_box_blur_filter}{BoxBlurFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_image_blur_filter}{ImageBlurFilter}}}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{class_box_blur_filter}{BoxBlurFilter}}(\textcolor{keywordtype}{int}\ kernelSize)\ :\ \mbox{\hyperlink{class_image_blur_filter}{ImageBlurFilter}}(kernelSize)\ \{\}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00081\ \};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_gaussian_blur_filter}{GaussianBlurFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_image_blur_filter}{ImageBlurFilter}}}
+\DoxyCodeLine{00095\ \{}
+\DoxyCodeLine{00096\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ GaussianBlurFilter(int\ kernelSize)\ :\ ImageBlurFilter(kernelSize)\{\};}}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{class_gaussian_blur_filter}{GaussianBlurFilter}}(\textcolor{keywordtype}{int}\ kernelSize,\ \textcolor{keywordtype}{double}\ sigma)\ :\ \mbox{\hyperlink{class_image_blur_filter}{ImageBlurFilter}}(kernelSize),\ sigma(sigma)\ \{\}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ apply(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{double}\ sigma;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ calculateGaussianWeights(\textcolor{keywordtype}{double}\ sigma,\ \textcolor{keywordtype}{int}\ kernelSize,\ std::vector<double>\ \&weights);}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{int}\ mirrorIndex(\textcolor{keywordtype}{int}\ index,\ \textcolor{keywordtype}{int}\ maxIndex);}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ applyGaussianBlurOnRow(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels,\ \textcolor{keyword}{const}\ std::vector<double>\ \&weights,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *output);}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ applyGaussianBlurOnColumn(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *data,\ \textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height,\ \textcolor{keywordtype}{int}\ channels,\ \textcolor{keyword}{const}\ std::vector<double>\ \&weights,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *output);}
+\DoxyCodeLine{00108\ \};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ IMAGEBLURFILTER\_H}}
+
+\end{DoxyCode}

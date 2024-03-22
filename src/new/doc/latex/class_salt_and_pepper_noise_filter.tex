@@ -1,0 +1,71 @@
+\doxysection{Salt\+And\+Pepper\+Noise\+Filter Class Reference}
+\hypertarget{class_salt_and_pepper_noise_filter}{}\label{class_salt_and_pepper_noise_filter}\index{SaltAndPepperNoiseFilter@{SaltAndPepperNoiseFilter}}
+
+
+Applies salt and pepper noise to the image data.  
+
+
+
+
+{\ttfamily \#include $<$Colour\+Filter\+Correction.\+h$>$}
+
+Inheritance diagram for Salt\+And\+Pepper\+Noise\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_salt_and_pepper_noise_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_salt_and_pepper_noise_filter_a2eed38747a07aff5498c33ab1ed3a3c9}\label{class_salt_and_pepper_noise_filter_a2eed38747a07aff5498c33ab1ed3a3c9} 
+{\bfseries Salt\+And\+Pepper\+Noise\+Filter} (int threshold\+Value)
+\item 
+\Hypertarget{class_salt_and_pepper_noise_filter_a627aaf52389ddeaa9e2d94cc8d33b74b}\label{class_salt_and_pepper_noise_filter_a627aaf52389ddeaa9e2d94cc8d33b74b} 
+void {\bfseries setnoise\+Percentage} (int newnoise\+Percentage)
+\item 
+void \mbox{\hyperlink{class_salt_and_pepper_noise_filter_a2ed4fcad5499f831ce96035532dbe6ff}{apply}} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_colour_correction_filter}{Colour\+Correction\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies salt and pepper noise to the image data. 
+
+This method introduces a specified percentage of salt and pepper noise to the image. Salt and pepper noise is randomly distributed black (pepper) and white (salt) pixels. The method randomly selects pixels across the image and changes their value to either black or white, based on the specified noise percentage. The noise is applied uniformly across all channels except the alpha channel, if present.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to the image data buffer. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of channels in the image data (3 for RGB, 4 for RGBA). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_salt_and_pepper_noise_filter_a2ed4fcad5499f831ce96035532dbe6ff}\label{class_salt_and_pepper_noise_filter_a2ed4fcad5499f831ce96035532dbe6ff} 
+\index{SaltAndPepperNoiseFilter@{SaltAndPepperNoiseFilter}!apply@{apply}}
+\index{apply@{apply}!SaltAndPepperNoiseFilter@{SaltAndPepperNoiseFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Salt\+And\+Pepper\+Noise\+Filter\+::apply (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{channels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter}{Filter}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Colour\+Filter\+Correction.\+h\item 
+Colour\+Filter\+Correction.\+cpp\end{DoxyCompactItemize}

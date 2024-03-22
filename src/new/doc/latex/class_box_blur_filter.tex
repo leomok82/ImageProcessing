@@ -1,0 +1,82 @@
+\doxysection{Box\+Blur\+Filter Class Reference}
+\hypertarget{class_box_blur_filter}{}\label{class_box_blur_filter}\index{BoxBlurFilter@{BoxBlurFilter}}
+
+
+Applies a box blur filter to an image.  
+
+
+
+
+{\ttfamily \#include $<$Image\+Blur\+Filter.\+h$>$}
+
+Inheritance diagram for Box\+Blur\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_box_blur_filter}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_box_blur_filter_a709825839aba9fc646cf3bdb2732efe2}\label{class_box_blur_filter_a709825839aba9fc646cf3bdb2732efe2} 
+{\bfseries Box\+Blur\+Filter} (int kernel\+Size)
+\item 
+void \mbox{\hyperlink{class_box_blur_filter_af225f6eb7bd3fb34f9a2ea54d299c42d}{apply}} (unsigned char \texorpdfstring{$\ast$}{*}data, int width, int height, int channels) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Image\+Blur\+Filter} (int kernel\+Size)
+\item 
+virtual void {\bfseries apply} (\mbox{\hyperlink{class_image}{Image}} \&img)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type, int kernel\+Size)
+\item 
+static std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_filter}{Filter}} $>$ {\bfseries create} (int type, int kernel\+Size, double sigma)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_blur_filter}{Image\+Blur\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries kernel\+Size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Applies a box blur filter to an image. 
+
+Averages pixels within a kernel-\/sized box around each target pixel. The box blur is a simple form of blurring, resulting in each pixel being set to the average value of the pixels in its neighborhood.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to the image data array. \\
+\hline
+{\em width} & The width of the image in pixels. \\
+\hline
+{\em height} & The height of the image in pixels. \\
+\hline
+{\em channels} & The number of color channels in the image data. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_box_blur_filter_af225f6eb7bd3fb34f9a2ea54d299c42d}\label{class_box_blur_filter_af225f6eb7bd3fb34f9a2ea54d299c42d} 
+\index{BoxBlurFilter@{BoxBlurFilter}!apply@{apply}}
+\index{apply@{apply}!BoxBlurFilter@{BoxBlurFilter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Box\+Blur\+Filter\+::apply (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{data,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{channels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_filter}{Filter}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Image\+Blur\+Filter.\+h\item 
+Image\+Blur\+Filter.\+cpp\end{DoxyCompactItemize}

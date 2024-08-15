@@ -1,10 +1,10 @@
-# Advanced Programming Group Project- Team Yen
+# Advanced Programming Project
 This is a versatile tool for processing both 2D and 3D image data, offering a range of features including filters, color correction, volume slicing, and projections.
 
 
 # CT Scans
 Download CT Scan datasets here:
-https://imperiallondon-my.sharepoint.com/:u:/g/personal/tmd02_ic_ac_uk/EafXMuNsbcNGnRpa8K62FjkBvIKvCswl1riz7hPDHpHdSQ
+*Redacted*
 
 ## Prerequisites
 
